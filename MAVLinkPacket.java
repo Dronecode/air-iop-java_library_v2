@@ -914,6 +914,12 @@ public class MAVLinkPacket implements Serializable {
             case msg_group_end.MAVLINK_MSG_ID_GROUP_END:
                 return  new msg_group_end(this);
              
+            case msg_available_modes.MAVLINK_MSG_ID_AVAILABLE_MODES:
+                return  new msg_available_modes(this);
+             
+            case msg_current_mode.MAVLINK_MSG_ID_CURRENT_MODE:
+                return  new msg_current_mode(this);
+             
             case msg_wheel_distance.MAVLINK_MSG_ID_WHEEL_DISTANCE:
                 return  new msg_wheel_distance(this);
              

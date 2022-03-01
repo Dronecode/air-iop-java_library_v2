@@ -11,7 +11,7 @@ import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
         
 /**
- * File transfer message
+ * File transfer protocol message: https://mavlink.io/en/services/ftp.html.
  */
 public class msg_file_transfer_protocol extends MAVLinkMessage {
 
@@ -36,7 +36,7 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
     public short target_component;
       
     /**
-     * Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields.  The entire content of this block is opaque unless you understand any the encoding message_type.  The particular encoding used can be extension specific and might not always be documented as part of the mavlink specification.
+     * Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields. The content/format of this block is defined in https://mavlink.io/en/services/ftp.html.
      */
     public short payload[] = new short[251];
     
