@@ -890,6 +890,9 @@ public class MAVLinkPacket implements Serializable {
             case msg_component_information_basic.MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC:
                 return  new msg_component_information_basic(this);
              
+            case msg_component_metadata.MAVLINK_MSG_ID_COMPONENT_METADATA:
+                return  new msg_component_metadata(this);
+             
             case msg_play_tune_v2.MAVLINK_MSG_ID_PLAY_TUNE_V2:
                 return  new msg_play_tune_v2(this);
              

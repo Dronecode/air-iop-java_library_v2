@@ -11,12 +11,12 @@ import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
         
 /**
- * Data for filling the OpenDroneID System message. The System Message contains general system information including the operator location and possible aircraft group information.
+ * Data for filling the OpenDroneID System message. The System Message contains general system information including the operator location/altitude and possible aircraft group and/or category/class information.
  */
 public class msg_open_drone_id_system extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM = 12904;
-    public static final int MAVLINK_MSG_LENGTH = 50;
+    public static final int MAVLINK_MSG_LENGTH = 54;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM;
 
       
@@ -44,6 +44,11 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
      * Geodetic altitude of the operator relative to WGS84. If unknown: -1000 m.
      */
     public float operator_altitude_geo;
+      
+    /**
+     * 32 bit Unix Timestamp in seconds since 00:00:00 01/01/2019.
+     */
+    public long timestamp;
       
     /**
      * Number of aircraft in the area, group or formation (default 1).
@@ -107,6 +112,7 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
         packet.payload.putFloat(area_ceiling);
         packet.payload.putFloat(area_floor);
         packet.payload.putFloat(operator_altitude_geo);
+        packet.payload.putUnsignedInt(timestamp);
         packet.payload.putUnsignedShort(area_count);
         packet.payload.putUnsignedShort(area_radius);
         packet.payload.putUnsignedByte(target_system);
@@ -141,6 +147,7 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
         this.area_ceiling = payload.getFloat();
         this.area_floor = payload.getFloat();
         this.operator_altitude_geo = payload.getFloat();
+        this.timestamp = payload.getUnsignedInt();
         this.area_count = payload.getUnsignedShort();
         this.area_radius = payload.getUnsignedShort();
         this.target_system = payload.getUnsignedByte();
@@ -170,7 +177,7 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_open_drone_id_system( int operator_latitude, int operator_longitude, float area_ceiling, float area_floor, float operator_altitude_geo, int area_count, int area_radius, short target_system, short target_component, short[] id_or_mac, short operator_location_type, short classification_type, short category_eu, short class_eu) {
+    public msg_open_drone_id_system( int operator_latitude, int operator_longitude, float area_ceiling, float area_floor, float operator_altitude_geo, long timestamp, int area_count, int area_radius, short target_system, short target_component, short[] id_or_mac, short operator_location_type, short classification_type, short category_eu, short class_eu) {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM;
 
         this.operator_latitude = operator_latitude;
@@ -178,6 +185,7 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
         this.area_ceiling = area_ceiling;
         this.area_floor = area_floor;
         this.operator_altitude_geo = operator_altitude_geo;
+        this.timestamp = timestamp;
         this.area_count = area_count;
         this.area_radius = area_radius;
         this.target_system = target_system;
@@ -193,7 +201,7 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_open_drone_id_system( int operator_latitude, int operator_longitude, float area_ceiling, float area_floor, float operator_altitude_geo, int area_count, int area_radius, short target_system, short target_component, short[] id_or_mac, short operator_location_type, short classification_type, short category_eu, short class_eu, int sysid, int compid, boolean isMavlink2) {
+    public msg_open_drone_id_system( int operator_latitude, int operator_longitude, float area_ceiling, float area_floor, float operator_altitude_geo, long timestamp, int area_count, int area_radius, short target_system, short target_component, short[] id_or_mac, short operator_location_type, short classification_type, short category_eu, short class_eu, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM;
         this.sysid = sysid;
         this.compid = compid;
@@ -204,6 +212,7 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
         this.area_ceiling = area_ceiling;
         this.area_floor = area_floor;
         this.operator_altitude_geo = operator_altitude_geo;
+        this.timestamp = timestamp;
         this.area_count = area_count;
         this.area_radius = area_radius;
         this.target_system = target_system;
@@ -230,13 +239,13 @@ public class msg_open_drone_id_system extends MAVLinkMessage {
         unpack(mavLinkPacket.payload);
     }
 
-                                
+                                  
     /**
      * Returns a string with the MSG name and data
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM - sysid:"+sysid+" compid:"+compid+" operator_latitude:"+operator_latitude+" operator_longitude:"+operator_longitude+" area_ceiling:"+area_ceiling+" area_floor:"+area_floor+" operator_altitude_geo:"+operator_altitude_geo+" area_count:"+area_count+" area_radius:"+area_radius+" target_system:"+target_system+" target_component:"+target_component+" id_or_mac:"+id_or_mac+" operator_location_type:"+operator_location_type+" classification_type:"+classification_type+" category_eu:"+category_eu+" class_eu:"+class_eu+"";
+        return "MAVLINK_MSG_ID_OPEN_DRONE_ID_SYSTEM - sysid:"+sysid+" compid:"+compid+" operator_latitude:"+operator_latitude+" operator_longitude:"+operator_longitude+" area_ceiling:"+area_ceiling+" area_floor:"+area_floor+" operator_altitude_geo:"+operator_altitude_geo+" timestamp:"+timestamp+" area_count:"+area_count+" area_radius:"+area_radius+" target_system:"+target_system+" target_component:"+target_component+" id_or_mac:"+id_or_mac+" operator_location_type:"+operator_location_type+" classification_type:"+classification_type+" category_eu:"+category_eu+" class_eu:"+class_eu+"";
     }
     
     /**

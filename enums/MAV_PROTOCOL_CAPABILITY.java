@@ -18,7 +18,9 @@ public class MAV_PROTOCOL_CAPABILITY {
           Note that this flag must always be set if missions are supported, because missions must always use MISSION_ITEM_INT (rather than MISSION_ITEM, which is deprecated).
          | */
    public static final int MAV_PROTOCOL_CAPABILITY_COMMAND_INT = 8; /* Autopilot supports COMMAND_INT scaled integer message type. | */
-   public static final int MAV_PROTOCOL_CAPABILITY_PARAM_UNION = 16; /* Autopilot supports the new param union message type. | */
+   public static final int MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_BYTEWISE = 16; /* Parameter protocol uses byte-wise encoding of parameter values into param_value (float) fields: https://mavlink.io/en/services/parameter.html#parameter-encoding.
+          Note that either this flag or MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_BYTEWISE should be set if the parameter protocol is supported.
+         | */
    public static final int MAV_PROTOCOL_CAPABILITY_FTP = 32; /* Autopilot supports the File Transfer Protocol v1: https://mavlink.io/en/services/ftp.html. | */
    public static final int MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET = 64; /* Autopilot supports commanding attitude offboard. | */
    public static final int MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED = 128; /* Autopilot supports commanding position and velocity targets in local NED frame. | */
@@ -31,6 +33,9 @@ public class MAV_PROTOCOL_CAPABILITY {
    public static final int MAV_PROTOCOL_CAPABILITY_MISSION_FENCE = 16384; /* Autopilot supports mission fence protocol. | */
    public static final int MAV_PROTOCOL_CAPABILITY_MISSION_RALLY = 32768; /* Autopilot supports mission rally point protocol. | */
    public static final int MAV_PROTOCOL_CAPABILITY_RESERVED2 = 65536; /* Reserved for future use. | */
-   public static final int MAV_PROTOCOL_CAPABILITY_ENUM_END = 65537; /*  | */
+   public static final int MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_C_CAST = 131072; /* Parameter protocol uses C-cast of parameter values to set the param_value (float) fields: https://mavlink.io/en/services/parameter.html#parameter-encoding.
+          Note that either this flag or MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_BYTEWISE should be set if the parameter protocol is supported.
+         | */
+   public static final int MAV_PROTOCOL_CAPABILITY_ENUM_END = 131073; /*  | */
 }
             

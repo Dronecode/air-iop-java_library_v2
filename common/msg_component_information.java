@@ -13,13 +13,6 @@ import com.MAVLink.Messages.MAVLinkPayload;
 /**
  * 
         Component information message, which may be requested using MAV_CMD_REQUEST_MESSAGE.
-        
-        This contains MAVLink FTP URIs for the component's general and peripherals metadata files along with their CRCs (which can be used for file caching).
-        The files must be hosted on the component, and may be xz compressed.
-        The general metadata file can be read to get the locations of additional metadata files (COMP_METADATA_TYPE), which may be hosted either on the vehicle or the Internet.
-        For more information see: https://mavlink.io/en/services/component_information.html.
-        
-        Note: Camera components should use CAMERA_INFORMATION instead, and autopilots may use both this message and AUTOPILOT_VERSION.
       
  */
 public class msg_component_information extends MAVLinkMessage {
@@ -45,12 +38,12 @@ public class msg_component_information extends MAVLinkMessage {
     public long peripherals_metadata_file_crc;
       
     /**
-     * MAVLink FTP URI for the general metadata file (COMP_METADATA_TYPE_GENERAL), which may be compressed with xz. The file contains general component metadata, and may contain URI links for additional metadata (see COMP_METADATA_TYPE). The information is static from boot, and may be generated at compile time.
+     * MAVLink FTP URI for the general metadata file (COMP_METADATA_TYPE_GENERAL), which may be compressed with xz. The file contains general component metadata, and may contain URI links for additional metadata (see COMP_METADATA_TYPE). The information is static from boot, and may be generated at compile time. The string needs to be zero terminated.
      */
     public byte general_metadata_uri[] = new byte[100];
       
     /**
-     * (Optional) MAVLink FTP URI for the peripherals metadata file (COMP_METADATA_TYPE_PERIPHERALS), which may be compressed with xz. This contains data about "attached components" such as UAVCAN nodes. The peripherals are in a separate file because the information must be generated dynamically at runtime.
+     * (Optional) MAVLink FTP URI for the peripherals metadata file (COMP_METADATA_TYPE_PERIPHERALS), which may be compressed with xz. This contains data about "attached components" such as UAVCAN nodes. The peripherals are in a separate file because the information must be generated dynamically at runtime. The string needs to be zero terminated.
      */
     public byte peripherals_metadata_uri[] = new byte[100];
     
