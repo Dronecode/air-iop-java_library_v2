@@ -28,10 +28,16 @@ public class MAV_FRAME {
    public static final int MAV_FRAME_GLOBAL = 0; /* Global (WGS84) coordinate frame + MSL altitude. First value / x: latitude, second value / y: longitude, third value / z: positive altitude over mean sea level (MSL). | */
    public static final int MAV_FRAME_LOCAL_NED = 1; /* NED local tangent frame (x: North, y: East, z: Down) with origin fixed relative to earth. | */
    public static final int MAV_FRAME_MISSION = 2; /* NOT a coordinate frame, indicates a mission command. | */
-   public static final int MAV_FRAME_GLOBAL_RELATIVE_ALT = 3; /* Global (WGS84) coordinate frame + altitude relative to the home position. First value / x: latitude, second value / y: longitude, third value / z: positive altitude with 0 being at the altitude of the home location. | */
+   public static final int MAV_FRAME_GLOBAL_RELATIVE_ALT = 3; /* 
+          Global (WGS84) coordinate frame + altitude relative to the home position.
+          First value / x: latitude, second value / y: longitude, third value / z: positive altitude with 0 being at the altitude of the home position.
+         | */
    public static final int MAV_FRAME_LOCAL_ENU = 4; /* ENU local tangent frame (x: East, y: North, z: Up) with origin fixed relative to earth. | */
    public static final int MAV_FRAME_GLOBAL_INT = 5; /* Global (WGS84) coordinate frame (scaled) + MSL altitude. First value / x: latitude in degrees*1E7, second value / y: longitude in degrees*1E7, third value / z: positive altitude over mean sea level (MSL). | */
-   public static final int MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6; /* Global (WGS84) coordinate frame (scaled) + altitude relative to the home position. First value / x: latitude in degrees*1E7, second value / y: longitude in degrees*1E7, third value / z: positive altitude with 0 being at the altitude of the home location. | */
+   public static final int MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6; /* 
+          Global (WGS84) coordinate frame (scaled) + altitude relative to the home position.
+          First value / x: latitude in degrees*1E7, second value / y: longitude in degrees*1E7, third value / z: positive altitude with 0 being at the altitude of the home position.
+         | */
    public static final int MAV_FRAME_LOCAL_OFFSET_NED = 7; /* NED local tangent frame (x: North, y: East, z: Down) with origin that travels with the vehicle. | */
    public static final int MAV_FRAME_BODY_NED = 8; /* Same as MAV_FRAME_LOCAL_NED when used to represent position values. Same as MAV_FRAME_BODY_FRD when used with velocity/accelaration values. | */
    public static final int MAV_FRAME_BODY_OFFSET_NED = 9; /* This is the same as MAV_FRAME_BODY_FRD. | */

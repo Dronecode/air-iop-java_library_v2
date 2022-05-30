@@ -857,6 +857,9 @@ public class MAVLinkPacket implements Serializable {
             case msg_orbit_execution_status.MAVLINK_MSG_ID_ORBIT_EXECUTION_STATUS:
                 return  new msg_orbit_execution_status(this);
              
+            case msg_figure_eight_execution_status.MAVLINK_MSG_ID_FIGURE_EIGHT_EXECUTION_STATUS:
+                return  new msg_figure_eight_execution_status(this);
+             
             case msg_smart_battery_info.MAVLINK_MSG_ID_SMART_BATTERY_INFO:
                 return  new msg_smart_battery_info(this);
              

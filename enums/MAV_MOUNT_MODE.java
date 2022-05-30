@@ -16,7 +16,7 @@ public class MAV_MOUNT_MODE {
    public static final int MAV_MOUNT_MODE_RC_TARGETING = 3; /* Load neutral position and start RC Roll,Pitch,Yaw control with stabilization | */
    public static final int MAV_MOUNT_MODE_GPS_POINT = 4; /* Load neutral position and start to point to Lat,Lon,Alt | */
    public static final int MAV_MOUNT_MODE_SYSID_TARGET = 5; /* Gimbal tracks system with specified system ID | */
-   public static final int MAV_MOUNT_MODE_HOME_LOCATION = 6; /* Gimbal tracks home location | */
+   public static final int MAV_MOUNT_MODE_HOME_LOCATION = 6; /* Gimbal tracks home position | */
    public static final int MAV_MOUNT_MODE_ENUM_END = 7; /*  | */
 }
             

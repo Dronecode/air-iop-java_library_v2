@@ -220,6 +220,7 @@ public class CRC {
         MAVLINK_MESSAGE_CRCS.put(340, 99);
         MAVLINK_MESSAGE_CRCS.put(350, 232);
         MAVLINK_MESSAGE_CRCS.put(360, 11);
+        MAVLINK_MESSAGE_CRCS.put(361, 93);
         MAVLINK_MESSAGE_CRCS.put(370, 75);
         MAVLINK_MESSAGE_CRCS.put(373, 117);
         MAVLINK_MESSAGE_CRCS.put(375, 251);
