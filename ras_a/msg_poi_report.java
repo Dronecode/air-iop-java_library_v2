@@ -17,7 +17,9 @@ import com.MAVLink.Messages.MAVLinkPayload;
         Detection time happens once for the same UID, while time of update changes when a specific metadata of that POI gets changed (e.g. position).
         The time of update should be changed on the sending system, based on the determined data in regards to that specific POI.
         So, POIs that are received again should be updated if the time of update has changed.
-        Note: The sending system should repeat the current POIs at a fixed default rate of 2Hz to keep the protocol stateless). The fixed rate though can be set by the receiver using MAV_CMD_SET_MESSAGE_INTERVAL, which is advised for POIs that are not static or for which the state updates are high - decision on the rates of some specific POIs is at the implementers consideration.
+        Note: The sending system should repeat the current POIs at a fixed default rate of at 2Hz to keep the protocol stateless.
+        The fixed rate though can be set by the receiver using MAV_CMD_SET_MESSAGE_INTERVAL, which is advised for POIs that are not static or for which
+        the state updates are high - decision on the rates of some specific POIs is at the implementers consideration.
       
  */
 public class msg_poi_report extends MAVLinkMessage {
