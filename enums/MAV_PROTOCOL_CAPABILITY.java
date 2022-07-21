@@ -36,6 +36,10 @@ public class MAV_PROTOCOL_CAPABILITY {
    public static final int MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_C_CAST = 131072; /* Parameter protocol uses C-cast of parameter values to set the param_value (float) fields: https://mavlink.io/en/services/parameter.html#parameter-encoding.
           Note that either this flag or MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_BYTEWISE should be set if the parameter protocol is supported.
          | */
-   public static final int MAV_PROTOCOL_CAPABILITY_ENUM_END = 131073; /*  | */
+   public static final int MAV_PROTOCOL_CAPABILITY_INDOOR_OBSTACLE_AVOIDANCE = 262144; /* Autopilot is capable of indoor obstacle avoidance. The obstacle visualization range (i.e. omnidirectional or single direction) is not determined by this flag and is system specific. | */
+   public static final int MAV_PROTOCOL_CAPABILITY_OUTDOOR_OBSTACLE_AVOIDANCE = 524288; /* Autopilot is capable of outdoor obstacle avoidance. The obstacle visualization range (i.e. omnidirectional or single direction) is not determined by this flag and is system specific. | */
+   public static final int MAV_PROTOCOL_CAPABILITY_VIO_AUTONOMOUS_NAVIGATION = 1048576; /* Autopilot is capable of autonomous navigation using Visual-Inertial Odometry algorithms and/or subsystems. | */
+   public static final int MAV_PROTOCOL_CAPABILITY_AUTONOMOUS_EXPLORATION = 2097152; /* Autopilot is capable of autonomous exploration tasks in indoor/outdoor environments. This necessarily means that the vehicle is capable of autonomous navigation and obstacle avoidance. | */
+   public static final int MAV_PROTOCOL_CAPABILITY_ENUM_END = 2097153; /*  | */
 }
             
