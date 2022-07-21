@@ -16,7 +16,7 @@ import com.MAVLink.Messages.MAVLinkPayload;
 public class msg_odometry extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_ODOMETRY = 331;
-    public static final int MAVLINK_MSG_LENGTH = 232;
+    public static final int MAVLINK_MSG_LENGTH = 233;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ODOMETRY;
 
       
@@ -104,6 +104,11 @@ public class msg_odometry extends MAVLinkMessage {
      * Type of estimator that is providing the odometry.
      */
     public short estimator_type;
+      
+    /**
+     * Optional odometry quality metric as a percentage. -1 = odometry has failed, 0 = unknown/unset quality, 1 = worst quality, 100 = best quality
+     */
+    public byte quality;
     
 
     /**
@@ -148,6 +153,7 @@ public class msg_odometry extends MAVLinkMessage {
         if (isMavlink2) {
              packet.payload.putUnsignedByte(reset_counter);
              packet.payload.putUnsignedByte(estimator_type);
+             packet.payload.putByte(quality);
             
         }
         return packet;
@@ -193,6 +199,7 @@ public class msg_odometry extends MAVLinkMessage {
         if (isMavlink2) {
              this.reset_counter = payload.getUnsignedByte();
              this.estimator_type = payload.getUnsignedByte();
+             this.quality = payload.getByte();
             
         }
     }
@@ -207,7 +214,7 @@ public class msg_odometry extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_odometry( long time_usec, float x, float y, float z, float[] q, float vx, float vy, float vz, float rollspeed, float pitchspeed, float yawspeed, float[] pose_covariance, float[] velocity_covariance, short frame_id, short child_frame_id, short reset_counter, short estimator_type) {
+    public msg_odometry( long time_usec, float x, float y, float z, float[] q, float vx, float vy, float vz, float rollspeed, float pitchspeed, float yawspeed, float[] pose_covariance, float[] velocity_covariance, short frame_id, short child_frame_id, short reset_counter, short estimator_type, byte quality) {
         this.msgid = MAVLINK_MSG_ID_ODOMETRY;
 
         this.time_usec = time_usec;
@@ -227,13 +234,14 @@ public class msg_odometry extends MAVLinkMessage {
         this.child_frame_id = child_frame_id;
         this.reset_counter = reset_counter;
         this.estimator_type = estimator_type;
+        this.quality = quality;
         
     }
     
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_odometry( long time_usec, float x, float y, float z, float[] q, float vx, float vy, float vz, float rollspeed, float pitchspeed, float yawspeed, float[] pose_covariance, float[] velocity_covariance, short frame_id, short child_frame_id, short reset_counter, short estimator_type, int sysid, int compid, boolean isMavlink2) {
+    public msg_odometry( long time_usec, float x, float y, float z, float[] q, float vx, float vy, float vz, float rollspeed, float pitchspeed, float yawspeed, float[] pose_covariance, float[] velocity_covariance, short frame_id, short child_frame_id, short reset_counter, short estimator_type, byte quality, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_ODOMETRY;
         this.sysid = sysid;
         this.compid = compid;
@@ -256,6 +264,7 @@ public class msg_odometry extends MAVLinkMessage {
         this.child_frame_id = child_frame_id;
         this.reset_counter = reset_counter;
         this.estimator_type = estimator_type;
+        this.quality = quality;
         
     }
 
@@ -273,13 +282,13 @@ public class msg_odometry extends MAVLinkMessage {
         unpack(mavLinkPacket.payload);
     }
 
-                                      
+                                        
     /**
      * Returns a string with the MSG name and data
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_ODOMETRY - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" vx:"+vx+" vy:"+vy+" vz:"+vz+" rollspeed:"+rollspeed+" pitchspeed:"+pitchspeed+" yawspeed:"+yawspeed+" pose_covariance:"+pose_covariance+" velocity_covariance:"+velocity_covariance+" frame_id:"+frame_id+" child_frame_id:"+child_frame_id+" reset_counter:"+reset_counter+" estimator_type:"+estimator_type+"";
+        return "MAVLINK_MSG_ID_ODOMETRY - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" vx:"+vx+" vy:"+vy+" vz:"+vz+" rollspeed:"+rollspeed+" pitchspeed:"+pitchspeed+" yawspeed:"+yawspeed+" pose_covariance:"+pose_covariance+" velocity_covariance:"+velocity_covariance+" frame_id:"+frame_id+" child_frame_id:"+child_frame_id+" reset_counter:"+reset_counter+" estimator_type:"+estimator_type+" quality:"+quality+"";
     }
     
     /**

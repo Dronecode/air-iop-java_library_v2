@@ -20,7 +20,7 @@ public class MAV_WINCH_STATUS_FLAG {
    public static final int MAV_WINCH_STATUS_GROUND_SENSE = 128; /* Winch is using torque measurements to sense the ground. | */
    public static final int MAV_WINCH_STATUS_RETRACTING = 256; /* Winch is returning to the fully retracted position. | */
    public static final int MAV_WINCH_STATUS_REDELIVER = 512; /* Winch is redelivering the payload. This is a failover state if the line tension goes above a threshold during RETRACTING. | */
-   public static final int MAV_WINCH_STATUS_ABANDON_LINE = 1024; /* Winch is abandoning the line and possibly payload. Winch unspools the entire calculated line length. This is a failover state from REDELIVER if the number of attemps exceeds a threshold. | */
+   public static final int MAV_WINCH_STATUS_ABANDON_LINE = 1024; /* Winch is abandoning the line and possibly payload. Winch unspools the entire calculated line length. This is a failover state from REDELIVER if the number of attempts exceeds a threshold. | */
    public static final int MAV_WINCH_STATUS_FLAG_ENUM_END = 1025; /*  | */
 }
             

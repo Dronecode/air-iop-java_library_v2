@@ -7,10 +7,10 @@
 package com.MAVLink.enums;
 
 /** 
- * Co-ordinate frames used by MAVLink. Not all frames are supported by all commands, messages, or vehicles.
+ * Coordinate frames used by MAVLink. Not all frames are supported by all commands, messages, or vehicles.
       
       Global frames use the following naming conventions:
-      - "GLOBAL": Global co-ordinate frame with WGS84 latitude/longitude and altitude positive over mean sea level (MSL) by default. 
+      - "GLOBAL": Global coordinate frame with WGS84 latitude/longitude and altitude positive over mean sea level (MSL) by default. 
         The following modifiers may be used with "GLOBAL":
         - "RELATIVE_ALT": Altitude is relative to the vehicle home position rather than MSL.
         - "TERRAIN_ALT": Altitude is relative to ground level rather than MSL.
@@ -39,7 +39,7 @@ public class MAV_FRAME {
           First value / x: latitude in degrees*1E7, second value / y: longitude in degrees*1E7, third value / z: positive altitude with 0 being at the altitude of the home position.
          | */
    public static final int MAV_FRAME_LOCAL_OFFSET_NED = 7; /* NED local tangent frame (x: North, y: East, z: Down) with origin that travels with the vehicle. | */
-   public static final int MAV_FRAME_BODY_NED = 8; /* Same as MAV_FRAME_LOCAL_NED when used to represent position values. Same as MAV_FRAME_BODY_FRD when used with velocity/accelaration values. | */
+   public static final int MAV_FRAME_BODY_NED = 8; /* Same as MAV_FRAME_LOCAL_NED when used to represent position values. Same as MAV_FRAME_BODY_FRD when used with velocity/acceleration values. | */
    public static final int MAV_FRAME_BODY_OFFSET_NED = 9; /* This is the same as MAV_FRAME_BODY_FRD. | */
    public static final int MAV_FRAME_GLOBAL_TERRAIN_ALT = 10; /* Global (WGS84) coordinate frame with AGL altitude (at the waypoint coordinate). First value / x: latitude in degrees, second value / y: longitude in degrees, third value / z: positive altitude in meters with 0 being at ground level in terrain model. | */
    public static final int MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11; /* Global (WGS84) coordinate frame (scaled) with AGL altitude (at the waypoint coordinate). First value / x: latitude in degrees*1E7, second value / y: longitude in degrees*1E7, third value / z: positive altitude in meters with 0 being at ground level in terrain model. | */

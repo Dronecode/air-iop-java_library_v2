@@ -36,7 +36,7 @@ public class msg_mission_changed extends MAVLinkMessage {
     public short origin_sysid;
       
     /**
-     * Compnent ID of the author of the new mission.
+     * Component ID of the author of the new mission.
      */
     public short origin_compid;
       

@@ -36,7 +36,7 @@ public class msg_open_drone_id_message_pack extends MAVLinkMessage {
     public short id_or_mac[] = new short[20];
       
     /**
-     * This field must currently always be equal to 25 (bytes), since all encoded OpenDroneID messages are specificed to have this length.
+     * This field must currently always be equal to 25 (bytes), since all encoded OpenDroneID messages are specified to have this length.
      */
     public short single_message_size;
       

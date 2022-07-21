@@ -41,7 +41,7 @@ public class msg_component_information_basic extends MAVLinkMessage {
     public short model_name[] = new short[32];
       
     /**
-     * Sofware version. The version format can be custom, recommended is SEMVER 'major.minor.patch'.
+     * Software version. The version format can be custom, recommended is SEMVER 'major.minor.patch'.
      */
     public byte software_version[] = new byte[24];
       
