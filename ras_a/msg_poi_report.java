@@ -25,14 +25,9 @@ import com.MAVLink.Messages.MAVLinkPayload;
 public class msg_poi_report extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_POI_REPORT = 238;
-    public static final int MAVLINK_MSG_LENGTH = 219;
+    public static final int MAVLINK_MSG_LENGTH = 215;
     private static final long serialVersionUID = MAVLINK_MSG_ID_POI_REPORT;
 
-      
-    /**
-     * Unique ID for a given POI. Updates to a POIs information should use the same uid. 0 means unknown.
-     */
-    public long uid;
       
     /**
      * Timestamp (time since UNIX epoch) of the POI detection, in UTC. 0 for unknown.
@@ -43,6 +38,11 @@ public class msg_poi_report extends MAVLinkMessage {
      * Timestamp (time since UNIX epoch) of the last POI update, in UTC. 0 for unknown.
      */
     public long time_utc_updated;
+      
+    /**
+     * Unique ID for a given POI. Updates to a POIs information should use the same uid. Maximum integer to use is 2,147,483,647 (for the purposes of type-safety when converting back and forth to floating-point fields). 0 means unknown.
+     */
+    public long uid;
       
     /**
      * Timestamp (time since system boot).
@@ -211,9 +211,9 @@ public class msg_poi_report extends MAVLinkMessage {
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_POI_REPORT;
         
-        packet.payload.putUnsignedLong(uid);
         packet.payload.putUnsignedLong(time_utc_detected);
         packet.payload.putUnsignedLong(time_utc_updated);
+        packet.payload.putUnsignedInt(uid);
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putInt(latitude);
         packet.payload.putInt(longitude);
@@ -285,9 +285,9 @@ public class msg_poi_report extends MAVLinkMessage {
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
         
-        this.uid = payload.getUnsignedLong();
         this.time_utc_detected = payload.getUnsignedLong();
         this.time_utc_updated = payload.getUnsignedLong();
+        this.uid = payload.getUnsignedInt();
         this.time_boot_ms = payload.getUnsignedInt();
         this.latitude = payload.getInt();
         this.longitude = payload.getInt();
@@ -359,12 +359,12 @@ public class msg_poi_report extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_poi_report( long uid, long time_utc_detected, long time_utc_updated, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, float height, float width, float depth, float[] approach_vector_start, float[] approach_vector_end, float[] approach_velocity, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, short geometry, byte[] name, byte[] app6_symbol) {
+    public msg_poi_report( long time_utc_detected, long time_utc_updated, long uid, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, float height, float width, float depth, float[] approach_vector_start, float[] approach_vector_end, float[] approach_velocity, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, short geometry, byte[] name, byte[] app6_symbol) {
         this.msgid = MAVLINK_MSG_ID_POI_REPORT;
 
-        this.uid = uid;
         this.time_utc_detected = time_utc_detected;
         this.time_utc_updated = time_utc_updated;
+        this.uid = uid;
         this.time_boot_ms = time_boot_ms;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -402,15 +402,15 @@ public class msg_poi_report extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_poi_report( long uid, long time_utc_detected, long time_utc_updated, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, float height, float width, float depth, float[] approach_vector_start, float[] approach_vector_end, float[] approach_velocity, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, short geometry, byte[] name, byte[] app6_symbol, int sysid, int compid, boolean isMavlink2) {
+    public msg_poi_report( long time_utc_detected, long time_utc_updated, long uid, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, float height, float width, float depth, float[] approach_vector_start, float[] approach_vector_end, float[] approach_velocity, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, short geometry, byte[] name, byte[] app6_symbol, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_POI_REPORT;
         this.sysid = sysid;
         this.compid = compid;
         this.isMavlink2 = isMavlink2;
 
-        this.uid = uid;
         this.time_utc_detected = time_utc_detected;
         this.time_utc_updated = time_utc_updated;
+        this.uid = uid;
         this.time_boot_ms = time_boot_ms;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -523,7 +523,7 @@ public class msg_poi_report extends MAVLinkMessage {
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_POI_REPORT - sysid:"+sysid+" compid:"+compid+" uid:"+uid+" time_utc_detected:"+time_utc_detected+" time_utc_updated:"+time_utc_updated+" time_boot_ms:"+time_boot_ms+" latitude:"+latitude+" longitude:"+longitude+" alt_msl:"+alt_msl+" alt_ellip:"+alt_ellip+" alt_ground:"+alt_ground+" classification:"+classification+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" dist:"+dist+" vel_n:"+vel_n+" vel_e:"+vel_e+" vel_d:"+vel_d+" hdg:"+hdg+" height:"+height+" width:"+width+" depth:"+depth+" approach_vector_start:"+approach_vector_start+" approach_vector_end:"+approach_vector_end+" approach_velocity:"+approach_velocity+" ttl:"+ttl+" confidence_overall:"+confidence_overall+" confidence_detection:"+confidence_detection+" confidence_classification:"+confidence_classification+" confidence_localization:"+confidence_localization+" status_flags:"+status_flags+" geometry:"+geometry+" name:"+name+" app6_symbol:"+app6_symbol+"";
+        return "MAVLINK_MSG_ID_POI_REPORT - sysid:"+sysid+" compid:"+compid+" time_utc_detected:"+time_utc_detected+" time_utc_updated:"+time_utc_updated+" uid:"+uid+" time_boot_ms:"+time_boot_ms+" latitude:"+latitude+" longitude:"+longitude+" alt_msl:"+alt_msl+" alt_ellip:"+alt_ellip+" alt_ground:"+alt_ground+" classification:"+classification+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" dist:"+dist+" vel_n:"+vel_n+" vel_e:"+vel_e+" vel_d:"+vel_d+" hdg:"+hdg+" height:"+height+" width:"+width+" depth:"+depth+" approach_vector_start:"+approach_vector_start+" approach_vector_end:"+approach_vector_end+" approach_velocity:"+approach_velocity+" ttl:"+ttl+" confidence_overall:"+confidence_overall+" confidence_detection:"+confidence_detection+" confidence_classification:"+confidence_classification+" confidence_localization:"+confidence_localization+" status_flags:"+status_flags+" geometry:"+geometry+" name:"+name+" app6_symbol:"+app6_symbol+"";
     }
     
     /**
