@@ -17,7 +17,7 @@ import com.MAVLink.Messages.MAVLinkPayload;
         Detection time happens once for the same UID, while time of update changes when a specific metadata of that POI gets changed (e.g. position).
         The time of update should be changed on the sending system, based on the determined data in regards to that specific POI.
         So, POIs that are received again should be updated if the time of update has changed.
-        Note: The sending system should repeat the current POIs at a fixed default rate of at 2Hz to keep the protocol stateless.
+        Note: The sending system should repeat the current POIs at a max rate of 5Hz, in order to conserve bandwidth.
         The fixed rate though can be set by the receiver using MAV_CMD_SET_MESSAGE_INTERVAL, which is advised for POIs that are not static or for which
         the state updates are high - decision on the rates of some specific POIs is at the implementers consideration.
       
@@ -25,7 +25,7 @@ import com.MAVLink.Messages.MAVLinkPayload;
 public class msg_poi_report extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_POI_REPORT = 238;
-    public static final int MAVLINK_MSG_LENGTH = 215;
+    public static final int MAVLINK_MSG_LENGTH = 103;
     private static final long serialVersionUID = MAVLINK_MSG_ID_POI_REPORT;
 
       
@@ -125,36 +125,6 @@ public class msg_poi_report extends MAVLinkMessage {
     public float hdg;
       
     /**
-     * Height of the POI shape. When the geometry is a circle, sphere or cylinder, represents the radius. NAN if unknown.
-     */
-    public float height;
-      
-    /**
-     * Width of the POI shape. NAN if unknown.
-     */
-    public float width;
-      
-    /**
-     * Depth of the POI shape. NAN if unknown.
-     */
-    public float depth;
-      
-    /**
-     * Recommended vector start point, in the NED frame, for vehicle approach to the POI. This can either be determined by the end system where the POI was detected or by a system forwarding the information to another vehicle. Unknown is NaN, NaN, NaN.
-     */
-    public float approach_vector_start[] = new float[3];
-      
-    /**
-     * Recommended vector end point, in the NED frame, for vehicle approach to the POI. This can either be determined by the end system where the POI was detected or by a system forwarding the information to another vehicle. Unknown is NaN, NaN, NaN.
-     */
-    public float approach_vector_end[] = new float[3];
-      
-    /**
-     * Recommended NED velocity for vehicle approach to the POI. This can either be determined by the end system where the POI was detected ir by a system forwarding the information to another vehicle. Unknown is NaN, NaN, NaN.
-     */
-    public float approach_velocity[] = new float[3];
-      
-    /**
      * Time to live: If this time has elapsed since last update, the POI should be deleted on the receiver side. A value of 0 should indicate no timeout.
      */
     public int ttl;
@@ -183,21 +153,6 @@ public class msg_poi_report extends MAVLinkMessage {
      * Bitmask for POI status. Bit 1: POI is in focus on camera, Bit 8: POI has been cleared and should be deleted.
      */
     public short status_flags;
-      
-    /**
-     * POI geometry type.
-     */
-    public short geometry;
-      
-    /**
-     * Name of the POI, if the system provides one. NULL terminated string.
-     */
-    public byte name[] = new byte[32];
-      
-    /**
-     * APP-6(D) standard symbol 30-digit Symbol Identification Code (SIDC) that provides the necessary information to display a tactical symbol. The SIDC is formed with eleven elements which are presented in two sets of ten digits and an additional set of ten digits composed of three elements, which are optional. Any unspecified element should be set to '0'. The way these codes are built can be checked on the Annex A to the APP-6 - NATO Joint Military Symbology, version D. NULL terminated string.
-     */
-    public byte app6_symbol[] = new byte[31];
     
 
     /**
@@ -234,41 +189,12 @@ public class msg_poi_report extends MAVLinkMessage {
         packet.payload.putFloat(vel_e);
         packet.payload.putFloat(vel_d);
         packet.payload.putFloat(hdg);
-        packet.payload.putFloat(height);
-        packet.payload.putFloat(width);
-        packet.payload.putFloat(depth);
-        
-        for (int i = 0; i < approach_vector_start.length; i++) {
-            packet.payload.putFloat(approach_vector_start[i]);
-        }
-                    
-        
-        for (int i = 0; i < approach_vector_end.length; i++) {
-            packet.payload.putFloat(approach_vector_end[i]);
-        }
-                    
-        
-        for (int i = 0; i < approach_velocity.length; i++) {
-            packet.payload.putFloat(approach_velocity[i]);
-        }
-                    
         packet.payload.putUnsignedShort(ttl);
         packet.payload.putUnsignedByte(confidence_overall);
         packet.payload.putUnsignedByte(confidence_detection);
         packet.payload.putUnsignedByte(confidence_classification);
         packet.payload.putUnsignedByte(confidence_localization);
         packet.payload.putUnsignedByte(status_flags);
-        packet.payload.putUnsignedByte(geometry);
-        
-        for (int i = 0; i < name.length; i++) {
-            packet.payload.putByte(name[i]);
-        }
-                    
-        
-        for (int i = 0; i < app6_symbol.length; i++) {
-            packet.payload.putByte(app6_symbol[i]);
-        }
-                    
         
         if (isMavlink2) {
             
@@ -308,41 +234,12 @@ public class msg_poi_report extends MAVLinkMessage {
         this.vel_e = payload.getFloat();
         this.vel_d = payload.getFloat();
         this.hdg = payload.getFloat();
-        this.height = payload.getFloat();
-        this.width = payload.getFloat();
-        this.depth = payload.getFloat();
-         
-        for (int i = 0; i < this.approach_vector_start.length; i++) {
-            this.approach_vector_start[i] = payload.getFloat();
-        }
-                
-         
-        for (int i = 0; i < this.approach_vector_end.length; i++) {
-            this.approach_vector_end[i] = payload.getFloat();
-        }
-                
-         
-        for (int i = 0; i < this.approach_velocity.length; i++) {
-            this.approach_velocity[i] = payload.getFloat();
-        }
-                
         this.ttl = payload.getUnsignedShort();
         this.confidence_overall = payload.getUnsignedByte();
         this.confidence_detection = payload.getUnsignedByte();
         this.confidence_classification = payload.getUnsignedByte();
         this.confidence_localization = payload.getUnsignedByte();
         this.status_flags = payload.getUnsignedByte();
-        this.geometry = payload.getUnsignedByte();
-         
-        for (int i = 0; i < this.name.length; i++) {
-            this.name[i] = payload.getByte();
-        }
-                
-         
-        for (int i = 0; i < this.app6_symbol.length; i++) {
-            this.app6_symbol[i] = payload.getByte();
-        }
-                
         
         if (isMavlink2) {
             
@@ -359,7 +256,7 @@ public class msg_poi_report extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_poi_report( long time_utc_detected, long time_utc_updated, long uid, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, float height, float width, float depth, float[] approach_vector_start, float[] approach_vector_end, float[] approach_velocity, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, short geometry, byte[] name, byte[] app6_symbol) {
+    public msg_poi_report( long time_utc_detected, long time_utc_updated, long uid, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags) {
         this.msgid = MAVLINK_MSG_ID_POI_REPORT;
 
         this.time_utc_detected = time_utc_detected;
@@ -381,28 +278,19 @@ public class msg_poi_report extends MAVLinkMessage {
         this.vel_e = vel_e;
         this.vel_d = vel_d;
         this.hdg = hdg;
-        this.height = height;
-        this.width = width;
-        this.depth = depth;
-        this.approach_vector_start = approach_vector_start;
-        this.approach_vector_end = approach_vector_end;
-        this.approach_velocity = approach_velocity;
         this.ttl = ttl;
         this.confidence_overall = confidence_overall;
         this.confidence_detection = confidence_detection;
         this.confidence_classification = confidence_classification;
         this.confidence_localization = confidence_localization;
         this.status_flags = status_flags;
-        this.geometry = geometry;
-        this.name = name;
-        this.app6_symbol = app6_symbol;
         
     }
     
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_poi_report( long time_utc_detected, long time_utc_updated, long uid, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, float height, float width, float depth, float[] approach_vector_start, float[] approach_vector_end, float[] approach_velocity, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, short geometry, byte[] name, byte[] app6_symbol, int sysid, int compid, boolean isMavlink2) {
+    public msg_poi_report( long time_utc_detected, long time_utc_updated, long uid, long time_boot_ms, int latitude, int longitude, float alt_msl, float alt_ellip, float alt_ground, long classification, float x, float y, float z, float[] q, float dist, float vel_n, float vel_e, float vel_d, float hdg, int ttl, short confidence_overall, short confidence_detection, short confidence_classification, short confidence_localization, short status_flags, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_POI_REPORT;
         this.sysid = sysid;
         this.compid = compid;
@@ -427,21 +315,12 @@ public class msg_poi_report extends MAVLinkMessage {
         this.vel_e = vel_e;
         this.vel_d = vel_d;
         this.hdg = hdg;
-        this.height = height;
-        this.width = width;
-        this.depth = depth;
-        this.approach_vector_start = approach_vector_start;
-        this.approach_vector_end = approach_vector_end;
-        this.approach_velocity = approach_velocity;
         this.ttl = ttl;
         this.confidence_overall = confidence_overall;
         this.confidence_detection = confidence_detection;
         this.confidence_classification = confidence_classification;
         this.confidence_localization = confidence_localization;
         this.status_flags = status_flags;
-        this.geometry = geometry;
-        this.name = name;
-        this.app6_symbol = app6_symbol;
         
     }
 
@@ -459,71 +338,13 @@ public class msg_poi_report extends MAVLinkMessage {
         unpack(mavLinkPacket.payload);
     }
 
-                                                                     
-    /**
-    * Sets the buffer of this message with a string, adds the necessary padding
-    */
-    public void setName(String str) {
-        int len = Math.min(str.length(), 32);
-        for (int i=0; i<len; i++) {
-            name[i] = (byte) str.charAt(i);
-        }
-
-        for (int i=len; i<32; i++) {            // padding for the rest of the buffer
-            name[i] = 0;
-        }
-    }
-
-    /**
-    * Gets the message, formatted as a string
-    */
-    public String getName() {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < 32; i++) {
-            if (name[i] != 0)
-                buf.append((char) name[i]);
-            else
-                break;
-        }
-        return buf.toString();
-
-    }
-                          
-    /**
-    * Sets the buffer of this message with a string, adds the necessary padding
-    */
-    public void setApp6_Symbol(String str) {
-        int len = Math.min(str.length(), 31);
-        for (int i=0; i<len; i++) {
-            app6_symbol[i] = (byte) str.charAt(i);
-        }
-
-        for (int i=len; i<31; i++) {            // padding for the rest of the buffer
-            app6_symbol[i] = 0;
-        }
-    }
-
-    /**
-    * Gets the message, formatted as a string
-    */
-    public String getApp6_Symbol() {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < 31; i++) {
-            if (app6_symbol[i] != 0)
-                buf.append((char) app6_symbol[i]);
-            else
-                break;
-        }
-        return buf.toString();
-
-    }
-                         
+                                                      
     /**
      * Returns a string with the MSG name and data
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_POI_REPORT - sysid:"+sysid+" compid:"+compid+" time_utc_detected:"+time_utc_detected+" time_utc_updated:"+time_utc_updated+" uid:"+uid+" time_boot_ms:"+time_boot_ms+" latitude:"+latitude+" longitude:"+longitude+" alt_msl:"+alt_msl+" alt_ellip:"+alt_ellip+" alt_ground:"+alt_ground+" classification:"+classification+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" dist:"+dist+" vel_n:"+vel_n+" vel_e:"+vel_e+" vel_d:"+vel_d+" hdg:"+hdg+" height:"+height+" width:"+width+" depth:"+depth+" approach_vector_start:"+approach_vector_start+" approach_vector_end:"+approach_vector_end+" approach_velocity:"+approach_velocity+" ttl:"+ttl+" confidence_overall:"+confidence_overall+" confidence_detection:"+confidence_detection+" confidence_classification:"+confidence_classification+" confidence_localization:"+confidence_localization+" status_flags:"+status_flags+" geometry:"+geometry+" name:"+name+" app6_symbol:"+app6_symbol+"";
+        return "MAVLINK_MSG_ID_POI_REPORT - sysid:"+sysid+" compid:"+compid+" time_utc_detected:"+time_utc_detected+" time_utc_updated:"+time_utc_updated+" uid:"+uid+" time_boot_ms:"+time_boot_ms+" latitude:"+latitude+" longitude:"+longitude+" alt_msl:"+alt_msl+" alt_ellip:"+alt_ellip+" alt_ground:"+alt_ground+" classification:"+classification+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" dist:"+dist+" vel_n:"+vel_n+" vel_e:"+vel_e+" vel_d:"+vel_d+" hdg:"+hdg+" ttl:"+ttl+" confidence_overall:"+confidence_overall+" confidence_detection:"+confidence_detection+" confidence_classification:"+confidence_classification+" confidence_localization:"+confidence_localization+" status_flags:"+status_flags+"";
     }
     
     /**
