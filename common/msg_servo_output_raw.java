@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Superseded by ACTUATOR_OUTPUT_STATUS. The RAW values of the servo outputs (for RC input from the remote, use the RC_CHANNELS messages). The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%.
  */
@@ -19,95 +21,131 @@ public class msg_servo_output_raw extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 37;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SERVO_OUTPUT_RAW;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Servo output 1 value
      */
+    @Description("Servo output 1 value")
+    @Units("us")
     public int servo1_raw;
-      
+    
     /**
      * Servo output 2 value
      */
+    @Description("Servo output 2 value")
+    @Units("us")
     public int servo2_raw;
-      
+    
     /**
      * Servo output 3 value
      */
+    @Description("Servo output 3 value")
+    @Units("us")
     public int servo3_raw;
-      
+    
     /**
      * Servo output 4 value
      */
+    @Description("Servo output 4 value")
+    @Units("us")
     public int servo4_raw;
-      
+    
     /**
      * Servo output 5 value
      */
+    @Description("Servo output 5 value")
+    @Units("us")
     public int servo5_raw;
-      
+    
     /**
      * Servo output 6 value
      */
+    @Description("Servo output 6 value")
+    @Units("us")
     public int servo6_raw;
-      
+    
     /**
      * Servo output 7 value
      */
+    @Description("Servo output 7 value")
+    @Units("us")
     public int servo7_raw;
-      
+    
     /**
      * Servo output 8 value
      */
+    @Description("Servo output 8 value")
+    @Units("us")
     public int servo8_raw;
-      
+    
     /**
      * Servo output port (set of 8 outputs = 1 port). Flight stacks running on Pixhawk should use: 0 = MAIN, 1 = AUX.
      */
+    @Description("Servo output port (set of 8 outputs = 1 port). Flight stacks running on Pixhawk should use: 0 = MAIN, 1 = AUX.")
+    @Units("")
     public short port;
-      
+    
     /**
      * Servo output 9 value
      */
+    @Description("Servo output 9 value")
+    @Units("us")
     public int servo9_raw;
-      
+    
     /**
      * Servo output 10 value
      */
+    @Description("Servo output 10 value")
+    @Units("us")
     public int servo10_raw;
-      
+    
     /**
      * Servo output 11 value
      */
+    @Description("Servo output 11 value")
+    @Units("us")
     public int servo11_raw;
-      
+    
     /**
      * Servo output 12 value
      */
+    @Description("Servo output 12 value")
+    @Units("us")
     public int servo12_raw;
-      
+    
     /**
      * Servo output 13 value
      */
+    @Description("Servo output 13 value")
+    @Units("us")
     public int servo13_raw;
-      
+    
     /**
      * Servo output 14 value
      */
+    @Description("Servo output 14 value")
+    @Units("us")
     public int servo14_raw;
-      
+    
     /**
      * Servo output 15 value
      */
+    @Description("Servo output 15 value")
+    @Units("us")
     public int servo15_raw;
-      
+    
     /**
      * Servo output 16 value
      */
+    @Description("Servo output 16 value")
+    @Units("us")
     public int servo16_raw;
     
 
@@ -121,7 +159,7 @@ public class msg_servo_output_raw extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SERVO_OUTPUT_RAW;
-        
+
         packet.payload.putUnsignedInt(time_usec);
         packet.payload.putUnsignedShort(servo1_raw);
         packet.payload.putUnsignedShort(servo2_raw);
@@ -155,7 +193,7 @@ public class msg_servo_output_raw extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedInt();
         this.servo1_raw = payload.getUnsignedShort();
         this.servo2_raw = payload.getUnsignedShort();
@@ -186,7 +224,7 @@ public class msg_servo_output_raw extends MAVLinkMessage {
     public msg_servo_output_raw() {
         this.msgid = MAVLINK_MSG_ID_SERVO_OUTPUT_RAW;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -213,7 +251,7 @@ public class msg_servo_output_raw extends MAVLinkMessage {
         this.servo16_raw = servo16_raw;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -251,7 +289,7 @@ public class msg_servo_output_raw extends MAVLinkMessage {
      */
     public msg_servo_output_raw(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SERVO_OUTPUT_RAW;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -266,7 +304,7 @@ public class msg_servo_output_raw extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SERVO_OUTPUT_RAW - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" servo1_raw:"+servo1_raw+" servo2_raw:"+servo2_raw+" servo3_raw:"+servo3_raw+" servo4_raw:"+servo4_raw+" servo5_raw:"+servo5_raw+" servo6_raw:"+servo6_raw+" servo7_raw:"+servo7_raw+" servo8_raw:"+servo8_raw+" port:"+port+" servo9_raw:"+servo9_raw+" servo10_raw:"+servo10_raw+" servo11_raw:"+servo11_raw+" servo12_raw:"+servo12_raw+" servo13_raw:"+servo13_raw+" servo14_raw:"+servo14_raw+" servo15_raw:"+servo15_raw+" servo16_raw:"+servo16_raw+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

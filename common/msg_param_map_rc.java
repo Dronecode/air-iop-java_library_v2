@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Bind a RC channel to a parameter. The parameter should change according to the RC channel value.
  */
@@ -19,50 +21,68 @@ public class msg_param_map_rc extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 37;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PARAM_MAP_RC;
 
-      
+    
     /**
      * Initial parameter value
      */
+    @Description("Initial parameter value")
+    @Units("")
     public float param_value0;
-      
+    
     /**
      * Scale, maps the RC range [-1, 1] to a parameter value
      */
+    @Description("Scale, maps the RC range [-1, 1] to a parameter value")
+    @Units("")
     public float scale;
-      
+    
     /**
      * Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends on implementation)
      */
+    @Description("Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends on implementation)")
+    @Units("")
     public float param_value_min;
-      
+    
     /**
      * Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends on implementation)
      */
+    @Description("Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends on implementation)")
+    @Units("")
     public float param_value_max;
-      
+    
     /**
      * Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored), send -2 to disable any existing map for this rc_channel_index.
      */
+    @Description("Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored), send -2 to disable any existing map for this rc_channel_index.")
+    @Units("")
     public short param_index;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
      */
+    @Description("Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string")
+    @Units("")
     public byte param_id[] = new byte[16];
-      
+    
     /**
      * Index of parameter RC channel. Not equal to the RC channel id. Typically corresponds to a potentiometer-knob on the RC.
      */
+    @Description("Index of parameter RC channel. Not equal to the RC channel id. Typically corresponds to a potentiometer-knob on the RC.")
+    @Units("")
     public short parameter_rc_channel_index;
     
 
@@ -76,7 +96,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PARAM_MAP_RC;
-        
+
         packet.payload.putFloat(param_value0);
         packet.payload.putFloat(scale);
         packet.payload.putFloat(param_value_min);
@@ -105,7 +125,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.param_value0 = payload.getFloat();
         this.scale = payload.getFloat();
         this.param_value_min = payload.getFloat();
@@ -113,7 +133,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
         this.param_index = payload.getShort();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.param_id.length; i++) {
             this.param_id[i] = payload.getByte();
         }
@@ -131,7 +151,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
     public msg_param_map_rc() {
         this.msgid = MAVLINK_MSG_ID_PARAM_MAP_RC;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -149,7 +169,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
         this.parameter_rc_channel_index = parameter_rc_channel_index;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -178,7 +198,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
      */
     public msg_param_map_rc(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PARAM_MAP_RC;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -222,7 +242,7 @@ public class msg_param_map_rc extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PARAM_MAP_RC - sysid:"+sysid+" compid:"+compid+" param_value0:"+param_value0+" scale:"+scale+" param_value_min:"+param_value_min+" param_value_max:"+param_value_max+" param_index:"+param_index+" target_system:"+target_system+" target_component:"+target_component+" param_id:"+param_id+" parameter_rc_channel_index:"+parameter_rc_channel_index+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

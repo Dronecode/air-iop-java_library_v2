@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Current status about a high level gimbal manager. This message should be broadcast at a low regular rate (e.g. 5Hz).
  */
@@ -19,40 +21,54 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 13;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GIMBAL_MANAGER_STATUS;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * High level gimbal manager flags currently applied.
      */
+    @Description("High level gimbal manager flags currently applied.")
+    @Units("")
     public long flags;
-      
+    
     /**
      * Gimbal device ID that this gimbal manager is responsible for.
      */
+    @Description("Gimbal device ID that this gimbal manager is responsible for.")
+    @Units("")
     public short gimbal_device_id;
-      
+    
     /**
      * System ID of MAVLink component with primary control, 0 for none.
      */
+    @Description("System ID of MAVLink component with primary control, 0 for none.")
+    @Units("")
     public short primary_control_sysid;
-      
+    
     /**
      * Component ID of MAVLink component with primary control, 0 for none.
      */
+    @Description("Component ID of MAVLink component with primary control, 0 for none.")
+    @Units("")
     public short primary_control_compid;
-      
+    
     /**
      * System ID of MAVLink component with secondary control, 0 for none.
      */
+    @Description("System ID of MAVLink component with secondary control, 0 for none.")
+    @Units("")
     public short secondary_control_sysid;
-      
+    
     /**
      * Component ID of MAVLink component with secondary control, 0 for none.
      */
+    @Description("Component ID of MAVLink component with secondary control, 0 for none.")
+    @Units("")
     public short secondary_control_compid;
     
 
@@ -66,7 +82,7 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_STATUS;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putUnsignedInt(flags);
         packet.payload.putUnsignedByte(gimbal_device_id);
@@ -89,7 +105,7 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.flags = payload.getUnsignedInt();
         this.gimbal_device_id = payload.getUnsignedByte();
@@ -109,7 +125,7 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
     public msg_gimbal_manager_status() {
         this.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
         this.secondary_control_compid = secondary_control_compid;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
      */
     public msg_gimbal_manager_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_gimbal_manager_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GIMBAL_MANAGER_STATUS - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" flags:"+flags+" gimbal_device_id:"+gimbal_device_id+" primary_control_sysid:"+primary_control_sysid+" primary_control_compid:"+primary_control_compid+" secondary_control_sysid:"+secondary_control_sysid+" secondary_control_compid:"+secondary_control_compid+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

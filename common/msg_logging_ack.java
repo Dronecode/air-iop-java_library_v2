@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * An ack for a LOGGING_DATA_ACKED message
  */
@@ -19,20 +21,26 @@ public class msg_logging_ack extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 4;
     private static final long serialVersionUID = MAVLINK_MSG_ID_LOGGING_ACK;
 
-      
+    
     /**
      * sequence number (must match the one in LOGGING_DATA_ACKED)
      */
+    @Description("sequence number (must match the one in LOGGING_DATA_ACKED)")
+    @Units("")
     public int sequence;
-      
+    
     /**
      * system ID of the target
      */
+    @Description("system ID of the target")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * component ID of the target
      */
+    @Description("component ID of the target")
+    @Units("")
     public short target_component;
     
 
@@ -46,7 +54,7 @@ public class msg_logging_ack extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_LOGGING_ACK;
-        
+
         packet.payload.putUnsignedShort(sequence);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -65,7 +73,7 @@ public class msg_logging_ack extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.sequence = payload.getUnsignedShort();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
@@ -81,7 +89,7 @@ public class msg_logging_ack extends MAVLinkMessage {
     public msg_logging_ack() {
         this.msgid = MAVLINK_MSG_ID_LOGGING_ACK;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -93,7 +101,7 @@ public class msg_logging_ack extends MAVLinkMessage {
         this.target_component = target_component;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +124,7 @@ public class msg_logging_ack extends MAVLinkMessage {
      */
     public msg_logging_ack(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_LOGGING_ACK;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +139,7 @@ public class msg_logging_ack extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_LOGGING_ACK - sysid:"+sysid+" compid:"+compid+" sequence:"+sequence+" target_system:"+target_system+" target_component:"+target_component+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

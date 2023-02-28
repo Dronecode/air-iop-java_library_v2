@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Power supply status
  */
@@ -19,20 +21,26 @@ public class msg_power_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 6;
     private static final long serialVersionUID = MAVLINK_MSG_ID_POWER_STATUS;
 
-      
+    
     /**
      * 5V rail voltage.
      */
+    @Description("5V rail voltage.")
+    @Units("mV")
     public int Vcc;
-      
+    
     /**
      * Servo rail voltage.
      */
+    @Description("Servo rail voltage.")
+    @Units("mV")
     public int Vservo;
-      
+    
     /**
      * Bitmap of power supply status flags.
      */
+    @Description("Bitmap of power supply status flags.")
+    @Units("")
     public int flags;
     
 
@@ -46,7 +54,7 @@ public class msg_power_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_POWER_STATUS;
-        
+
         packet.payload.putUnsignedShort(Vcc);
         packet.payload.putUnsignedShort(Vservo);
         packet.payload.putUnsignedShort(flags);
@@ -65,7 +73,7 @@ public class msg_power_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.Vcc = payload.getUnsignedShort();
         this.Vservo = payload.getUnsignedShort();
         this.flags = payload.getUnsignedShort();
@@ -81,7 +89,7 @@ public class msg_power_status extends MAVLinkMessage {
     public msg_power_status() {
         this.msgid = MAVLINK_MSG_ID_POWER_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -93,7 +101,7 @@ public class msg_power_status extends MAVLinkMessage {
         this.flags = flags;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +124,7 @@ public class msg_power_status extends MAVLinkMessage {
      */
     public msg_power_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_POWER_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +139,7 @@ public class msg_power_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_POWER_STATUS - sysid:"+sysid+" compid:"+compid+" Vcc:"+Vcc+" Vservo:"+Vservo+" flags:"+flags+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

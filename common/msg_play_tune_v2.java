@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Play vehicle tone/tune (buzzer). Supersedes message PLAY_TUNE.
  */
@@ -19,25 +21,33 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 254;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PLAY_TUNE_V2;
 
-      
+    
     /**
      * Tune format
      */
+    @Description("Tune format")
+    @Units("")
     public long format;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Tune definition as a NULL-terminated string.
      */
+    @Description("Tune definition as a NULL-terminated string.")
+    @Units("")
     public byte tune[] = new byte[248];
     
 
@@ -51,7 +61,7 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PLAY_TUNE_V2;
-        
+
         packet.payload.putUnsignedInt(format);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -75,11 +85,11 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.format = payload.getUnsignedInt();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.tune.length; i++) {
             this.tune[i] = payload.getByte();
         }
@@ -96,7 +106,7 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
     public msg_play_tune_v2() {
         this.msgid = MAVLINK_MSG_ID_PLAY_TUNE_V2;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +119,7 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
         this.tune = tune;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -133,7 +143,7 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
      */
     public msg_play_tune_v2(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PLAY_TUNE_V2;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -177,7 +187,7 @@ public class msg_play_tune_v2 extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PLAY_TUNE_V2 - sysid:"+sysid+" compid:"+compid+" format:"+format+" target_system:"+target_system+" target_component:"+target_component+" tune:"+tune+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

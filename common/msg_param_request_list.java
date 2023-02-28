@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Request all parameters of this component. After this request, all parameters are emitted. The parameter microservice is documented at https://mavlink.io/en/services/parameter.html
  */
@@ -19,15 +21,19 @@ public class msg_param_request_list extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 2;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PARAM_REQUEST_LIST;
 
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
     
 
@@ -41,7 +47,7 @@ public class msg_param_request_list extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PARAM_REQUEST_LIST;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
         
@@ -59,7 +65,7 @@ public class msg_param_request_list extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
         
@@ -74,7 +80,7 @@ public class msg_param_request_list extends MAVLinkMessage {
     public msg_param_request_list() {
         this.msgid = MAVLINK_MSG_ID_PARAM_REQUEST_LIST;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +91,7 @@ public class msg_param_request_list extends MAVLinkMessage {
         this.target_component = target_component;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -107,7 +113,7 @@ public class msg_param_request_list extends MAVLinkMessage {
      */
     public msg_param_request_list(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PARAM_REQUEST_LIST;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -122,7 +128,7 @@ public class msg_param_request_list extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PARAM_REQUEST_LIST - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" target_component:"+target_component+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Parachute actions. Trigger release and enable/disable auto-release.
  */
 public class PARACHUTE_ACTION {

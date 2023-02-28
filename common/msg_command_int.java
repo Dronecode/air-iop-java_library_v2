@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Message encoding a command with parameters as scaled integers. Scaling depends on the actual command value. NaN or INT32_MAX may be used in float/integer params (respectively) to indicate optional/default values (e.g. to use the component's current latitude, yaw rather than a specific value). The command microservice is documented at https://mavlink.io/en/services/command.html
  */
@@ -19,70 +21,96 @@ public class msg_command_int extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 35;
     private static final long serialVersionUID = MAVLINK_MSG_ID_COMMAND_INT;
 
-      
+    
     /**
      * PARAM1, see MAV_CMD enum
      */
+    @Description("PARAM1, see MAV_CMD enum")
+    @Units("")
     public float param1;
-      
+    
     /**
      * PARAM2, see MAV_CMD enum
      */
+    @Description("PARAM2, see MAV_CMD enum")
+    @Units("")
     public float param2;
-      
+    
     /**
      * PARAM3, see MAV_CMD enum
      */
+    @Description("PARAM3, see MAV_CMD enum")
+    @Units("")
     public float param3;
-      
+    
     /**
      * PARAM4, see MAV_CMD enum
      */
+    @Description("PARAM4, see MAV_CMD enum")
+    @Units("")
     public float param4;
-      
+    
     /**
      * PARAM5 / local: x position in meters * 1e4, global: latitude in degrees * 10^7
      */
+    @Description("PARAM5 / local: x position in meters * 1e4, global: latitude in degrees * 10^7")
+    @Units("")
     public int x;
-      
+    
     /**
      * PARAM6 / local: y position in meters * 1e4, global: longitude in degrees * 10^7
      */
+    @Description("PARAM6 / local: y position in meters * 1e4, global: longitude in degrees * 10^7")
+    @Units("")
     public int y;
-      
+    
     /**
      * PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame).
      */
+    @Description("PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame).")
+    @Units("")
     public float z;
-      
+    
     /**
      * The scheduled action for the mission item.
      */
+    @Description("The scheduled action for the mission item.")
+    @Units("")
     public int command;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * The coordinate system of the COMMAND.
      */
+    @Description("The coordinate system of the COMMAND.")
+    @Units("")
     public short frame;
-      
+    
     /**
      * Not used.
      */
+    @Description("Not used.")
+    @Units("")
     public short current;
-      
+    
     /**
      * Not used (set 0).
      */
+    @Description("Not used (set 0).")
+    @Units("")
     public short autocontinue;
     
 
@@ -96,7 +124,7 @@ public class msg_command_int extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_COMMAND_INT;
-        
+
         packet.payload.putFloat(param1);
         packet.payload.putFloat(param2);
         packet.payload.putFloat(param3);
@@ -125,7 +153,7 @@ public class msg_command_int extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.param1 = payload.getFloat();
         this.param2 = payload.getFloat();
         this.param3 = payload.getFloat();
@@ -151,7 +179,7 @@ public class msg_command_int extends MAVLinkMessage {
     public msg_command_int() {
         this.msgid = MAVLINK_MSG_ID_COMMAND_INT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -173,7 +201,7 @@ public class msg_command_int extends MAVLinkMessage {
         this.autocontinue = autocontinue;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -206,7 +234,7 @@ public class msg_command_int extends MAVLinkMessage {
      */
     public msg_command_int(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_COMMAND_INT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -221,7 +249,7 @@ public class msg_command_int extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_COMMAND_INT - sysid:"+sysid+" compid:"+compid+" param1:"+param1+" param2:"+param2+" param3:"+param3+" param4:"+param4+" x:"+x+" y:"+y+" z:"+z+" command:"+command+" target_system:"+target_system+" target_component:"+target_component+" frame:"+frame+" current:"+current+" autocontinue:"+autocontinue+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

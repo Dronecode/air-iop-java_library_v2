@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * 
         Point-of-Interest classification. Used on the the POI_REPORT 'classification' field. Provides default classes (0 to 2147483647).
       

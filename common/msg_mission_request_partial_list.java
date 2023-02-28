@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Request a partial list of mission items from the system/component. https://mavlink.io/en/services/mission.html. If start and end index are the same, just send one waypoint.
  */
@@ -19,30 +21,40 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 7;
     private static final long serialVersionUID = MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST;
 
-      
+    
     /**
      * Start index
      */
+    @Description("Start index")
+    @Units("")
     public short start_index;
-      
+    
     /**
      * End index, -1 by default (-1: send list to end). Else a valid index of the list
      */
+    @Description("End index, -1 by default (-1: send list to end). Else a valid index of the list")
+    @Units("")
     public short end_index;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Mission type.
      */
+    @Description("Mission type.")
+    @Units("")
     public short mission_type;
     
 
@@ -56,7 +68,7 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST;
-        
+
         packet.payload.putShort(start_index);
         packet.payload.putShort(end_index);
         packet.payload.putUnsignedByte(target_system);
@@ -77,7 +89,7 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.start_index = payload.getShort();
         this.end_index = payload.getShort();
         this.target_system = payload.getUnsignedByte();
@@ -95,7 +107,7 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
     public msg_mission_request_partial_list() {
         this.msgid = MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +121,7 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
         this.mission_type = mission_type;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -134,7 +146,7 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
      */
     public msg_mission_request_partial_list(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -149,7 +161,7 @@ public class msg_mission_request_partial_list extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST - sysid:"+sysid+" compid:"+compid+" start_index:"+start_index+" end_index:"+end_index+" target_system:"+target_system+" target_component:"+target_component+" mission_type:"+mission_type+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

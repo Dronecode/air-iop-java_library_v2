@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * WiFi wireless security protocols.
  */
 public class WIFI_NETWORK_SECURITY {

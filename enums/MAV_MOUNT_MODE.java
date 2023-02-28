@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Enumeration of possible mount operation modes. This message is used by obsolete/deprecated gimbal messages.
  */
 public class MAV_MOUNT_MODE {

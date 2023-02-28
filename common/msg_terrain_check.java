@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Request that the vehicle report terrain height at the given location (expected response is a TERRAIN_REPORT). Used by GCS to check if vehicle has all terrain data needed for a mission.
  */
@@ -19,15 +21,19 @@ public class msg_terrain_check extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 8;
     private static final long serialVersionUID = MAVLINK_MSG_ID_TERRAIN_CHECK;
 
-      
+    
     /**
      * Latitude
      */
+    @Description("Latitude")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude
      */
+    @Description("Longitude")
+    @Units("degE7")
     public int lon;
     
 
@@ -41,7 +47,7 @@ public class msg_terrain_check extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_TERRAIN_CHECK;
-        
+
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
         
@@ -59,7 +65,7 @@ public class msg_terrain_check extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.lat = payload.getInt();
         this.lon = payload.getInt();
         
@@ -74,7 +80,7 @@ public class msg_terrain_check extends MAVLinkMessage {
     public msg_terrain_check() {
         this.msgid = MAVLINK_MSG_ID_TERRAIN_CHECK;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +91,7 @@ public class msg_terrain_check extends MAVLinkMessage {
         this.lon = lon;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -107,7 +113,7 @@ public class msg_terrain_check extends MAVLinkMessage {
      */
     public msg_terrain_check(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_TERRAIN_CHECK;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -122,7 +128,7 @@ public class msg_terrain_check extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_TERRAIN_CHECK - sysid:"+sysid+" compid:"+compid+" lat:"+lat+" lon:"+lon+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

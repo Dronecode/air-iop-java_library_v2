@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Message appropriate for high latency connections like Iridium (version 2)
  */
@@ -19,140 +21,194 @@ public class msg_high_latency2 extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 42;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIGH_LATENCY2;
 
-      
+    
     /**
      * Timestamp (milliseconds since boot or Unix epoch)
      */
+    @Description("Timestamp (milliseconds since boot or Unix epoch)")
+    @Units("ms")
     public long timestamp;
-      
+    
     /**
      * Latitude
      */
+    @Description("Latitude")
+    @Units("degE7")
     public int latitude;
-      
+    
     /**
      * Longitude
      */
+    @Description("Longitude")
+    @Units("degE7")
     public int longitude;
-      
+    
     /**
      * A bitfield for use for autopilot-specific flags (2 byte version).
      */
+    @Description("A bitfield for use for autopilot-specific flags (2 byte version).")
+    @Units("")
     public int custom_mode;
-      
+    
     /**
      * Altitude above mean sea level
      */
+    @Description("Altitude above mean sea level")
+    @Units("m")
     public short altitude;
-      
+    
     /**
      * Altitude setpoint
      */
+    @Description("Altitude setpoint")
+    @Units("m")
     public short target_altitude;
-      
+    
     /**
      * Distance to target waypoint or position
      */
+    @Description("Distance to target waypoint or position")
+    @Units("dam")
     public int target_distance;
-      
+    
     /**
      * Current waypoint number
      */
+    @Description("Current waypoint number")
+    @Units("")
     public int wp_num;
-      
+    
     /**
      * Bitmap of failure flags.
      */
+    @Description("Bitmap of failure flags.")
+    @Units("")
     public int failure_flags;
-      
+    
     /**
      * Type of the MAV (quadrotor, helicopter, etc.)
      */
+    @Description("Type of the MAV (quadrotor, helicopter, etc.)")
+    @Units("")
     public short type;
-      
+    
     /**
      * Autopilot type / class. Use MAV_AUTOPILOT_INVALID for components that are not flight controllers.
      */
+    @Description("Autopilot type / class. Use MAV_AUTOPILOT_INVALID for components that are not flight controllers.")
+    @Units("")
     public short autopilot;
-      
+    
     /**
      * Heading
      */
+    @Description("Heading")
+    @Units("deg/2")
     public short heading;
-      
+    
     /**
      * Heading setpoint
      */
+    @Description("Heading setpoint")
+    @Units("deg/2")
     public short target_heading;
-      
+    
     /**
      * Throttle
      */
+    @Description("Throttle")
+    @Units("%")
     public short throttle;
-      
+    
     /**
      * Airspeed
      */
+    @Description("Airspeed")
+    @Units("m/s*5")
     public short airspeed;
-      
+    
     /**
      * Airspeed setpoint
      */
+    @Description("Airspeed setpoint")
+    @Units("m/s*5")
     public short airspeed_sp;
-      
+    
     /**
      * Groundspeed
      */
+    @Description("Groundspeed")
+    @Units("m/s*5")
     public short groundspeed;
-      
+    
     /**
      * Windspeed
      */
+    @Description("Windspeed")
+    @Units("m/s*5")
     public short windspeed;
-      
+    
     /**
      * Wind heading
      */
+    @Description("Wind heading")
+    @Units("deg/2")
     public short wind_heading;
-      
+    
     /**
      * Maximum error horizontal position since last message
      */
+    @Description("Maximum error horizontal position since last message")
+    @Units("dm")
     public short eph;
-      
+    
     /**
      * Maximum error vertical position since last message
      */
+    @Description("Maximum error vertical position since last message")
+    @Units("dm")
     public short epv;
-      
+    
     /**
      * Air temperature from airspeed sensor
      */
+    @Description("Air temperature from airspeed sensor")
+    @Units("degC")
     public byte temperature_air;
-      
+    
     /**
      * Maximum climb rate magnitude since last message
      */
+    @Description("Maximum climb rate magnitude since last message")
+    @Units("dm/s")
     public byte climb_rate;
-      
+    
     /**
      * Battery level (-1 if field not provided).
      */
+    @Description("Battery level (-1 if field not provided).")
+    @Units("%")
     public byte battery;
-      
+    
     /**
      * Field for custom payload.
      */
+    @Description("Field for custom payload.")
+    @Units("")
     public byte custom0;
-      
+    
     /**
      * Field for custom payload.
      */
+    @Description("Field for custom payload.")
+    @Units("")
     public byte custom1;
-      
+    
     /**
      * Field for custom payload.
      */
+    @Description("Field for custom payload.")
+    @Units("")
     public byte custom2;
     
 
@@ -166,7 +222,7 @@ public class msg_high_latency2 extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIGH_LATENCY2;
-        
+
         packet.payload.putUnsignedInt(timestamp);
         packet.payload.putInt(latitude);
         packet.payload.putInt(longitude);
@@ -209,7 +265,7 @@ public class msg_high_latency2 extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.timestamp = payload.getUnsignedInt();
         this.latitude = payload.getInt();
         this.longitude = payload.getInt();
@@ -249,7 +305,7 @@ public class msg_high_latency2 extends MAVLinkMessage {
     public msg_high_latency2() {
         this.msgid = MAVLINK_MSG_ID_HIGH_LATENCY2;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -285,7 +341,7 @@ public class msg_high_latency2 extends MAVLinkMessage {
         this.custom2 = custom2;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -332,7 +388,7 @@ public class msg_high_latency2 extends MAVLinkMessage {
      */
     public msg_high_latency2(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIGH_LATENCY2;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -347,7 +403,7 @@ public class msg_high_latency2 extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIGH_LATENCY2 - sysid:"+sysid+" compid:"+compid+" timestamp:"+timestamp+" latitude:"+latitude+" longitude:"+longitude+" custom_mode:"+custom_mode+" altitude:"+altitude+" target_altitude:"+target_altitude+" target_distance:"+target_distance+" wp_num:"+wp_num+" failure_flags:"+failure_flags+" type:"+type+" autopilot:"+autopilot+" heading:"+heading+" target_heading:"+target_heading+" throttle:"+throttle+" airspeed:"+airspeed+" airspeed_sp:"+airspeed_sp+" groundspeed:"+groundspeed+" windspeed:"+windspeed+" wind_heading:"+wind_heading+" eph:"+eph+" epv:"+epv+" temperature_air:"+temperature_air+" climb_rate:"+climb_rate+" battery:"+battery+" custom0:"+custom0+" custom1:"+custom1+" custom2:"+custom2+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

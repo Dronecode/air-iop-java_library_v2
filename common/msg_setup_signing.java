@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Setup a MAVLink2 signing key. If called with secret_key of all zero and zero initial_timestamp will disable signing
  */
@@ -19,25 +21,33 @@ public class msg_setup_signing extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 42;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SETUP_SIGNING;
 
-      
+    
     /**
      * initial timestamp
      */
+    @Description("initial timestamp")
+    @Units("")
     public long initial_timestamp;
-      
+    
     /**
      * system id of the target
      */
+    @Description("system id of the target")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * component ID of the target
      */
+    @Description("component ID of the target")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * signing key
      */
+    @Description("signing key")
+    @Units("")
     public short secret_key[] = new short[32];
     
 
@@ -51,7 +61,7 @@ public class msg_setup_signing extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SETUP_SIGNING;
-        
+
         packet.payload.putUnsignedLong(initial_timestamp);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -75,11 +85,11 @@ public class msg_setup_signing extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.initial_timestamp = payload.getUnsignedLong();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.secret_key.length; i++) {
             this.secret_key[i] = payload.getUnsignedByte();
         }
@@ -96,7 +106,7 @@ public class msg_setup_signing extends MAVLinkMessage {
     public msg_setup_signing() {
         this.msgid = MAVLINK_MSG_ID_SETUP_SIGNING;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +119,7 @@ public class msg_setup_signing extends MAVLinkMessage {
         this.secret_key = secret_key;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -133,7 +143,7 @@ public class msg_setup_signing extends MAVLinkMessage {
      */
     public msg_setup_signing(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SETUP_SIGNING;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -148,7 +158,7 @@ public class msg_setup_signing extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SETUP_SIGNING - sysid:"+sysid+" compid:"+compid+" initial_timestamp:"+initial_timestamp+" target_system:"+target_system+" target_component:"+target_component+" secret_key:"+secret_key+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

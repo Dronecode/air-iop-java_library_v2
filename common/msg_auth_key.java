@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Emit an encrypted signature / key identifying this system. PLEASE NOTE: This protocol has been kept simple, so transmitting the key requires an encrypted channel for true safety.
  */
@@ -19,10 +21,12 @@ public class msg_auth_key extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 32;
     private static final long serialVersionUID = MAVLINK_MSG_ID_AUTH_KEY;
 
-      
+    
     /**
      * key
      */
+    @Description("key")
+    @Units("")
     public byte key[] = new byte[32];
     
 
@@ -36,7 +40,7 @@ public class msg_auth_key extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_AUTH_KEY;
-        
+
         
         for (int i = 0; i < key.length; i++) {
             packet.payload.putByte(key[i]);
@@ -57,8 +61,8 @@ public class msg_auth_key extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
+
         
-         
         for (int i = 0; i < this.key.length; i++) {
             this.key[i] = payload.getByte();
         }
@@ -75,7 +79,7 @@ public class msg_auth_key extends MAVLinkMessage {
     public msg_auth_key() {
         this.msgid = MAVLINK_MSG_ID_AUTH_KEY;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +89,7 @@ public class msg_auth_key extends MAVLinkMessage {
         this.key = key;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -106,7 +110,7 @@ public class msg_auth_key extends MAVLinkMessage {
      */
     public msg_auth_key(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_AUTH_KEY;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -150,7 +154,7 @@ public class msg_auth_key extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_AUTH_KEY - sysid:"+sysid+" compid:"+compid+" key:"+key+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

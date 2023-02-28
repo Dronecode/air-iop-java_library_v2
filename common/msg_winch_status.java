@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Winch status.
  */
@@ -19,45 +21,61 @@ public class msg_winch_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 34;
     private static final long serialVersionUID = MAVLINK_MSG_ID_WINCH_STATUS;
 
-      
+    
     /**
      * Timestamp (synced to UNIX time or since system boot).
      */
+    @Description("Timestamp (synced to UNIX time or since system boot).")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Length of line released. NaN if unknown
      */
+    @Description("Length of line released. NaN if unknown")
+    @Units("m")
     public float line_length;
-      
+    
     /**
      * Speed line is being released or retracted. Positive values if being released, negative values if being retracted, NaN if unknown
      */
+    @Description("Speed line is being released or retracted. Positive values if being released, negative values if being retracted, NaN if unknown")
+    @Units("m/s")
     public float speed;
-      
+    
     /**
      * Tension on the line. NaN if unknown
      */
+    @Description("Tension on the line. NaN if unknown")
+    @Units("kg")
     public float tension;
-      
+    
     /**
      * Voltage of the battery supplying the winch. NaN if unknown
      */
+    @Description("Voltage of the battery supplying the winch. NaN if unknown")
+    @Units("V")
     public float voltage;
-      
+    
     /**
      * Current draw from the winch. NaN if unknown
      */
+    @Description("Current draw from the winch. NaN if unknown")
+    @Units("A")
     public float current;
-      
+    
     /**
      * Status flags
      */
+    @Description("Status flags")
+    @Units("")
     public long status;
-      
+    
     /**
      * Temperature of the motor. INT16_MAX if unknown
      */
+    @Description("Temperature of the motor. INT16_MAX if unknown")
+    @Units("degC")
     public short temperature;
     
 
@@ -71,7 +89,7 @@ public class msg_winch_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_WINCH_STATUS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(line_length);
         packet.payload.putFloat(speed);
@@ -95,7 +113,7 @@ public class msg_winch_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.line_length = payload.getFloat();
         this.speed = payload.getFloat();
@@ -116,7 +134,7 @@ public class msg_winch_status extends MAVLinkMessage {
     public msg_winch_status() {
         this.msgid = MAVLINK_MSG_ID_WINCH_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +151,7 @@ public class msg_winch_status extends MAVLinkMessage {
         this.temperature = temperature;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -161,7 +179,7 @@ public class msg_winch_status extends MAVLinkMessage {
      */
     public msg_winch_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_WINCH_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -176,7 +194,7 @@ public class msg_winch_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_WINCH_STATUS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" line_length:"+line_length+" speed:"+speed+" tension:"+tension+" voltage:"+voltage+" current:"+current+" status:"+status+" temperature:"+temperature+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

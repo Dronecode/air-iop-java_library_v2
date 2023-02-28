@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Vibration levels and accelerometer clipping
  */
@@ -19,40 +21,54 @@ public class msg_vibration extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 32;
     private static final long serialVersionUID = MAVLINK_MSG_ID_VIBRATION;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Vibration levels on X-axis
      */
+    @Description("Vibration levels on X-axis")
+    @Units("")
     public float vibration_x;
-      
+    
     /**
      * Vibration levels on Y-axis
      */
+    @Description("Vibration levels on Y-axis")
+    @Units("")
     public float vibration_y;
-      
+    
     /**
      * Vibration levels on Z-axis
      */
+    @Description("Vibration levels on Z-axis")
+    @Units("")
     public float vibration_z;
-      
+    
     /**
      * first accelerometer clipping count
      */
+    @Description("first accelerometer clipping count")
+    @Units("")
     public long clipping_0;
-      
+    
     /**
      * second accelerometer clipping count
      */
+    @Description("second accelerometer clipping count")
+    @Units("")
     public long clipping_1;
-      
+    
     /**
      * third accelerometer clipping count
      */
+    @Description("third accelerometer clipping count")
+    @Units("")
     public long clipping_2;
     
 
@@ -66,7 +82,7 @@ public class msg_vibration extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_VIBRATION;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(vibration_x);
         packet.payload.putFloat(vibration_y);
@@ -89,7 +105,7 @@ public class msg_vibration extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.vibration_x = payload.getFloat();
         this.vibration_y = payload.getFloat();
@@ -109,7 +125,7 @@ public class msg_vibration extends MAVLinkMessage {
     public msg_vibration() {
         this.msgid = MAVLINK_MSG_ID_VIBRATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_vibration extends MAVLinkMessage {
         this.clipping_2 = clipping_2;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_vibration extends MAVLinkMessage {
      */
     public msg_vibration(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_VIBRATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_vibration extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_VIBRATION - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" vibration_x:"+vibration_x+" vibration_y:"+vibration_y+" vibration_z:"+vibration_z+" clipping_0:"+clipping_0+" clipping_1:"+clipping_1+" clipping_2:"+clipping_2+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

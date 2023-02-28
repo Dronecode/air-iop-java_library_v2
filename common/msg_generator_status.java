@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Telemetry of power generation system. Alternator or mechanical generator.
  */
@@ -19,60 +21,82 @@ public class msg_generator_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 42;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GENERATOR_STATUS;
 
-      
+    
     /**
      * Status flags.
      */
+    @Description("Status flags.")
+    @Units("")
     public long status;
-      
+    
     /**
      * Current into/out of battery. Positive for out. Negative for in. NaN: field not provided.
      */
+    @Description("Current into/out of battery. Positive for out. Negative for in. NaN: field not provided.")
+    @Units("A")
     public float battery_current;
-      
+    
     /**
      * Current going to the UAV. If battery current not available this is the DC current from the generator. Positive for out. Negative for in. NaN: field not provided
      */
+    @Description("Current going to the UAV. If battery current not available this is the DC current from the generator. Positive for out. Negative for in. NaN: field not provided")
+    @Units("A")
     public float load_current;
-      
+    
     /**
      * The power being generated. NaN: field not provided
      */
+    @Description("The power being generated. NaN: field not provided")
+    @Units("W")
     public float power_generated;
-      
+    
     /**
      * Voltage of the bus seen at the generator, or battery bus if battery bus is controlled by generator and at a different voltage to main bus.
      */
+    @Description("Voltage of the bus seen at the generator, or battery bus if battery bus is controlled by generator and at a different voltage to main bus.")
+    @Units("V")
     public float bus_voltage;
-      
+    
     /**
      * The target battery current. Positive for out. Negative for in. NaN: field not provided
      */
+    @Description("The target battery current. Positive for out. Negative for in. NaN: field not provided")
+    @Units("A")
     public float bat_current_setpoint;
-      
+    
     /**
      * Seconds this generator has run since it was rebooted. UINT32_MAX: field not provided.
      */
+    @Description("Seconds this generator has run since it was rebooted. UINT32_MAX: field not provided.")
+    @Units("s")
     public long runtime;
-      
+    
     /**
      * Seconds until this generator requires maintenance.  A negative value indicates maintenance is past-due. INT32_MAX: field not provided.
      */
+    @Description("Seconds until this generator requires maintenance.  A negative value indicates maintenance is past-due. INT32_MAX: field not provided.")
+    @Units("s")
     public int time_until_maintenance;
-      
+    
     /**
      * Speed of electrical generator or alternator. UINT16_MAX: field not provided.
      */
+    @Description("Speed of electrical generator or alternator. UINT16_MAX: field not provided.")
+    @Units("rpm")
     public int generator_speed;
-      
+    
     /**
      * The temperature of the rectifier or power converter. INT16_MAX: field not provided.
      */
+    @Description("The temperature of the rectifier or power converter. INT16_MAX: field not provided.")
+    @Units("degC")
     public short rectifier_temperature;
-      
+    
     /**
      * The temperature of the mechanical motor, fuel cell core or generator. INT16_MAX: field not provided.
      */
+    @Description("The temperature of the mechanical motor, fuel cell core or generator. INT16_MAX: field not provided.")
+    @Units("degC")
     public short generator_temperature;
     
 
@@ -86,7 +110,7 @@ public class msg_generator_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GENERATOR_STATUS;
-        
+
         packet.payload.putUnsignedLong(status);
         packet.payload.putFloat(battery_current);
         packet.payload.putFloat(load_current);
@@ -113,7 +137,7 @@ public class msg_generator_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.status = payload.getUnsignedLong();
         this.battery_current = payload.getFloat();
         this.load_current = payload.getFloat();
@@ -137,7 +161,7 @@ public class msg_generator_status extends MAVLinkMessage {
     public msg_generator_status() {
         this.msgid = MAVLINK_MSG_ID_GENERATOR_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +181,7 @@ public class msg_generator_status extends MAVLinkMessage {
         this.generator_temperature = generator_temperature;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -188,7 +212,7 @@ public class msg_generator_status extends MAVLinkMessage {
      */
     public msg_generator_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GENERATOR_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -203,7 +227,7 @@ public class msg_generator_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GENERATOR_STATUS - sysid:"+sysid+" compid:"+compid+" status:"+status+" battery_current:"+battery_current+" load_current:"+load_current+" power_generated:"+power_generated+" bus_voltage:"+bus_voltage+" bat_current_setpoint:"+bat_current_setpoint+" runtime:"+runtime+" time_until_maintenance:"+time_until_maintenance+" generator_speed:"+generator_speed+" rectifier_temperature:"+rectifier_temperature+" generator_temperature:"+generator_temperature+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

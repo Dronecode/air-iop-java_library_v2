@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Regular broadcast for the current latest event sequence number for a component. This is used to check for dropped events.
  */
@@ -19,15 +21,19 @@ public class msg_current_event_sequence extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 3;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CURRENT_EVENT_SEQUENCE;
 
-      
+    
     /**
      * Sequence number.
      */
+    @Description("Sequence number.")
+    @Units("")
     public int sequence;
-      
+    
     /**
      * Flag bitset.
      */
+    @Description("Flag bitset.")
+    @Units("")
     public short flags;
     
 
@@ -41,7 +47,7 @@ public class msg_current_event_sequence extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CURRENT_EVENT_SEQUENCE;
-        
+
         packet.payload.putUnsignedShort(sequence);
         packet.payload.putUnsignedByte(flags);
         
@@ -59,7 +65,7 @@ public class msg_current_event_sequence extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.sequence = payload.getUnsignedShort();
         this.flags = payload.getUnsignedByte();
         
@@ -74,7 +80,7 @@ public class msg_current_event_sequence extends MAVLinkMessage {
     public msg_current_event_sequence() {
         this.msgid = MAVLINK_MSG_ID_CURRENT_EVENT_SEQUENCE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +91,7 @@ public class msg_current_event_sequence extends MAVLinkMessage {
         this.flags = flags;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -107,7 +113,7 @@ public class msg_current_event_sequence extends MAVLinkMessage {
      */
     public msg_current_event_sequence(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CURRENT_EVENT_SEQUENCE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -122,7 +128,7 @@ public class msg_current_event_sequence extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CURRENT_EVENT_SEQUENCE - sysid:"+sysid+" compid:"+compid+" sequence:"+sequence+" flags:"+flags+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

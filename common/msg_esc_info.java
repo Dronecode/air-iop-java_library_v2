@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * ESC information for lower rate streaming. Recommended streaming rate 1Hz. See ESC_STATUS for higher-rate ESC data.
  */
@@ -19,50 +21,68 @@ public class msg_esc_info extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 46;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ESC_INFO;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Number of reported errors by each ESC since boot.
      */
+    @Description("Number of reported errors by each ESC since boot.")
+    @Units("")
     public long error_count[] = new long[4];
-      
+    
     /**
      * Counter of data packets received.
      */
+    @Description("Counter of data packets received.")
+    @Units("")
     public int counter;
-      
+    
     /**
      * Bitmap of ESC failure flags.
      */
+    @Description("Bitmap of ESC failure flags.")
+    @Units("")
     public int failure_flags[] = new int[4];
-      
+    
     /**
      * Temperature of each ESC. INT16_MAX: if data not supplied by ESC.
      */
+    @Description("Temperature of each ESC. INT16_MAX: if data not supplied by ESC.")
+    @Units("cdegC")
     public short temperature[] = new short[4];
-      
+    
     /**
      * Index of the first ESC in this message. minValue = 0, maxValue = 60, increment = 4.
      */
+    @Description("Index of the first ESC in this message. minValue = 0, maxValue = 60, increment = 4.")
+    @Units("")
     public short index;
-      
+    
     /**
      * Total number of ESCs in all messages of this type. Message fields with an index higher than this should be ignored because they contain invalid data.
      */
+    @Description("Total number of ESCs in all messages of this type. Message fields with an index higher than this should be ignored because they contain invalid data.")
+    @Units("")
     public short count;
-      
+    
     /**
      * Connection type protocol for all ESC.
      */
+    @Description("Connection type protocol for all ESC.")
+    @Units("")
     public short connection_type;
-      
+    
     /**
      * Information regarding online/offline status of each ESC.
      */
+    @Description("Information regarding online/offline status of each ESC.")
+    @Units("")
     public short info;
     
 
@@ -76,7 +96,7 @@ public class msg_esc_info extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ESC_INFO;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < error_count.length; i++) {
@@ -113,20 +133,20 @@ public class msg_esc_info extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.error_count.length; i++) {
             this.error_count[i] = payload.getUnsignedInt();
         }
                 
         this.counter = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.failure_flags.length; i++) {
             this.failure_flags[i] = payload.getUnsignedShort();
         }
                 
-         
+        
         for (int i = 0; i < this.temperature.length; i++) {
             this.temperature[i] = payload.getShort();
         }
@@ -147,7 +167,7 @@ public class msg_esc_info extends MAVLinkMessage {
     public msg_esc_info() {
         this.msgid = MAVLINK_MSG_ID_ESC_INFO;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -165,7 +185,7 @@ public class msg_esc_info extends MAVLinkMessage {
         this.info = info;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -194,7 +214,7 @@ public class msg_esc_info extends MAVLinkMessage {
      */
     public msg_esc_info(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ESC_INFO;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -209,7 +229,7 @@ public class msg_esc_info extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ESC_INFO - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" error_count:"+error_count+" counter:"+counter+" failure_flags:"+failure_flags+" temperature:"+temperature+" index:"+index+" count:"+count+" connection_type:"+connection_type+" info:"+info+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

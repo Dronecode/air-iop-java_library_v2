@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The RAW values of the RC channels sent to the MAV to override info received from the RC radio. The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters might violate this specification.  Note carefully the semantic differences between the first 8 channels and the subsequent channels
  */
@@ -19,105 +21,145 @@ public class msg_rc_channels_override extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 38;
     private static final long serialVersionUID = MAVLINK_MSG_ID_RC_CHANNELS_OVERRIDE;
 
-      
+    
     /**
      * RC channel 1 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 1 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan1_raw;
-      
+    
     /**
      * RC channel 2 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 2 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan2_raw;
-      
+    
     /**
      * RC channel 3 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 3 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan3_raw;
-      
+    
     /**
      * RC channel 4 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 4 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan4_raw;
-      
+    
     /**
      * RC channel 5 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 5 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan5_raw;
-      
+    
     /**
      * RC channel 6 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 6 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan6_raw;
-      
+    
     /**
      * RC channel 7 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 7 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan7_raw;
-      
+    
     /**
      * RC channel 8 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 8 value. A value of UINT16_MAX means to ignore this field. A value of 0 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan8_raw;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * RC channel 9 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 9 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan9_raw;
-      
+    
     /**
      * RC channel 10 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 10 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan10_raw;
-      
+    
     /**
      * RC channel 11 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 11 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan11_raw;
-      
+    
     /**
      * RC channel 12 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 12 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan12_raw;
-      
+    
     /**
      * RC channel 13 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 13 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan13_raw;
-      
+    
     /**
      * RC channel 14 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 14 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan14_raw;
-      
+    
     /**
      * RC channel 15 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 15 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan15_raw;
-      
+    
     /**
      * RC channel 16 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 16 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan16_raw;
-      
+    
     /**
      * RC channel 17 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 17 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan17_raw;
-      
+    
     /**
      * RC channel 18 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.
      */
+    @Description("RC channel 18 value. A value of 0 or UINT16_MAX means to ignore this field. A value of UINT16_MAX-1 means to release this channel back to the RC radio.")
+    @Units("us")
     public int chan18_raw;
     
 
@@ -131,7 +173,7 @@ public class msg_rc_channels_override extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_RC_CHANNELS_OVERRIDE;
-        
+
         packet.payload.putUnsignedShort(chan1_raw);
         packet.payload.putUnsignedShort(chan2_raw);
         packet.payload.putUnsignedShort(chan3_raw);
@@ -167,7 +209,7 @@ public class msg_rc_channels_override extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.chan1_raw = payload.getUnsignedShort();
         this.chan2_raw = payload.getUnsignedShort();
         this.chan3_raw = payload.getUnsignedShort();
@@ -200,7 +242,7 @@ public class msg_rc_channels_override extends MAVLinkMessage {
     public msg_rc_channels_override() {
         this.msgid = MAVLINK_MSG_ID_RC_CHANNELS_OVERRIDE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -229,7 +271,7 @@ public class msg_rc_channels_override extends MAVLinkMessage {
         this.chan18_raw = chan18_raw;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -269,7 +311,7 @@ public class msg_rc_channels_override extends MAVLinkMessage {
      */
     public msg_rc_channels_override(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_RC_CHANNELS_OVERRIDE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -284,7 +326,7 @@ public class msg_rc_channels_override extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_RC_CHANNELS_OVERRIDE - sysid:"+sysid+" compid:"+compid+" chan1_raw:"+chan1_raw+" chan2_raw:"+chan2_raw+" chan3_raw:"+chan3_raw+" chan4_raw:"+chan4_raw+" chan5_raw:"+chan5_raw+" chan6_raw:"+chan6_raw+" chan7_raw:"+chan7_raw+" chan8_raw:"+chan8_raw+" target_system:"+target_system+" target_component:"+target_component+" chan9_raw:"+chan9_raw+" chan10_raw:"+chan10_raw+" chan11_raw:"+chan11_raw+" chan12_raw:"+chan12_raw+" chan13_raw:"+chan13_raw+" chan14_raw:"+chan14_raw+" chan15_raw:"+chan15_raw+" chan16_raw:"+chan16_raw+" chan17_raw:"+chan17_raw+" chan18_raw:"+chan18_raw+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Status text message. These messages are printed in yellow in the COMM console of QGroundControl. WARNING: They consume quite some bandwidth, so use only for important status and error messages. If implemented wisely, these messages are buffered on the MCU and sent only at a limited rate (e.g. 10 Hz).
  */
@@ -19,25 +21,33 @@ public class msg_statustext extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 54;
     private static final long serialVersionUID = MAVLINK_MSG_ID_STATUSTEXT;
 
-      
+    
     /**
      * Severity of status. Relies on the definitions within RFC-5424.
      */
+    @Description("Severity of status. Relies on the definitions within RFC-5424.")
+    @Units("")
     public short severity;
-      
+    
     /**
      * Status text message, without null termination character
      */
+    @Description("Status text message, without null termination character")
+    @Units("")
     public byte text[] = new byte[50];
-      
+    
     /**
      * Unique (opaque) identifier for this statustext message.  May be used to reassemble a logical long-statustext message from a sequence of chunks.  A value of zero indicates this is the only chunk in the sequence and the message can be emitted immediately.
      */
+    @Description("Unique (opaque) identifier for this statustext message.  May be used to reassemble a logical long-statustext message from a sequence of chunks.  A value of zero indicates this is the only chunk in the sequence and the message can be emitted immediately.")
+    @Units("")
     public int id;
-      
+    
     /**
      * This chunk's sequence number; indexing is from zero.  Any null character in the text field is taken to mean this was the last chunk.
      */
+    @Description("This chunk's sequence number; indexing is from zero.  Any null character in the text field is taken to mean this was the last chunk.")
+    @Units("")
     public short chunk_seq;
     
 
@@ -51,7 +61,7 @@ public class msg_statustext extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_STATUSTEXT;
-        
+
         packet.payload.putUnsignedByte(severity);
         
         for (int i = 0; i < text.length; i++) {
@@ -75,9 +85,9 @@ public class msg_statustext extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.severity = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.text.length; i++) {
             this.text[i] = payload.getByte();
         }
@@ -96,7 +106,7 @@ public class msg_statustext extends MAVLinkMessage {
     public msg_statustext() {
         this.msgid = MAVLINK_MSG_ID_STATUSTEXT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +119,7 @@ public class msg_statustext extends MAVLinkMessage {
         this.chunk_seq = chunk_seq;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -133,7 +143,7 @@ public class msg_statustext extends MAVLinkMessage {
      */
     public msg_statustext(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_STATUSTEXT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -177,7 +187,7 @@ public class msg_statustext extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_STATUSTEXT - sysid:"+sysid+" compid:"+compid+" severity:"+severity+" text:"+text+" id:"+id+" chunk_seq:"+chunk_seq+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

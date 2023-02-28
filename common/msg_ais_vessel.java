@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The location and information of an AIS vessel
  */
@@ -19,90 +21,124 @@ public class msg_ais_vessel extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 58;
     private static final long serialVersionUID = MAVLINK_MSG_ID_AIS_VESSEL;
 
-      
+    
     /**
      * Mobile Marine Service Identifier, 9 decimal digits
      */
+    @Description("Mobile Marine Service Identifier, 9 decimal digits")
+    @Units("")
     public long MMSI;
-      
+    
     /**
      * Latitude
      */
+    @Description("Latitude")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude
      */
+    @Description("Longitude")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Course over ground
      */
+    @Description("Course over ground")
+    @Units("cdeg")
     public int COG;
-      
+    
     /**
      * True heading
      */
+    @Description("True heading")
+    @Units("cdeg")
     public int heading;
-      
+    
     /**
      * Speed over ground
      */
+    @Description("Speed over ground")
+    @Units("cm/s")
     public int velocity;
-      
+    
     /**
      * Distance from lat/lon location to bow
      */
+    @Description("Distance from lat/lon location to bow")
+    @Units("m")
     public int dimension_bow;
-      
+    
     /**
      * Distance from lat/lon location to stern
      */
+    @Description("Distance from lat/lon location to stern")
+    @Units("m")
     public int dimension_stern;
-      
+    
     /**
      * Time since last communication in seconds
      */
+    @Description("Time since last communication in seconds")
+    @Units("s")
     public int tslc;
-      
+    
     /**
      * Bitmask to indicate various statuses including valid data fields
      */
+    @Description("Bitmask to indicate various statuses including valid data fields")
+    @Units("")
     public int flags;
-      
+    
     /**
      * Turn rate
      */
+    @Description("Turn rate")
+    @Units("cdeg/s")
     public byte turn_rate;
-      
+    
     /**
      * Navigational status
      */
+    @Description("Navigational status")
+    @Units("")
     public short navigational_status;
-      
+    
     /**
      * Type of vessels
      */
+    @Description("Type of vessels")
+    @Units("")
     public short type;
-      
+    
     /**
      * Distance from lat/lon location to port side
      */
+    @Description("Distance from lat/lon location to port side")
+    @Units("m")
     public short dimension_port;
-      
+    
     /**
      * Distance from lat/lon location to starboard side
      */
+    @Description("Distance from lat/lon location to starboard side")
+    @Units("m")
     public short dimension_starboard;
-      
+    
     /**
      * The vessel callsign
      */
+    @Description("The vessel callsign")
+    @Units("")
     public byte callsign[] = new byte[7];
-      
+    
     /**
      * The vessel name
      */
+    @Description("The vessel name")
+    @Units("")
     public byte name[] = new byte[20];
     
 
@@ -116,7 +152,7 @@ public class msg_ais_vessel extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_AIS_VESSEL;
-        
+
         packet.payload.putUnsignedInt(MMSI);
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
@@ -157,7 +193,7 @@ public class msg_ais_vessel extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.MMSI = payload.getUnsignedInt();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
@@ -173,12 +209,12 @@ public class msg_ais_vessel extends MAVLinkMessage {
         this.type = payload.getUnsignedByte();
         this.dimension_port = payload.getUnsignedByte();
         this.dimension_starboard = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.callsign.length; i++) {
             this.callsign[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.name.length; i++) {
             this.name[i] = payload.getByte();
         }
@@ -195,7 +231,7 @@ public class msg_ais_vessel extends MAVLinkMessage {
     public msg_ais_vessel() {
         this.msgid = MAVLINK_MSG_ID_AIS_VESSEL;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -221,7 +257,7 @@ public class msg_ais_vessel extends MAVLinkMessage {
         this.name = name;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -258,7 +294,7 @@ public class msg_ais_vessel extends MAVLinkMessage {
      */
     public msg_ais_vessel(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_AIS_VESSEL;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -331,7 +367,7 @@ public class msg_ais_vessel extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_AIS_VESSEL - sysid:"+sysid+" compid:"+compid+" MMSI:"+MMSI+" lat:"+lat+" lon:"+lon+" COG:"+COG+" heading:"+heading+" velocity:"+velocity+" dimension_bow:"+dimension_bow+" dimension_stern:"+dimension_stern+" tslc:"+tslc+" flags:"+flags+" turn_rate:"+turn_rate+" navigational_status:"+navigational_status+" type:"+type+" dimension_port:"+dimension_port+" dimension_starboard:"+dimension_starboard+" callsign:"+callsign+" name:"+name+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

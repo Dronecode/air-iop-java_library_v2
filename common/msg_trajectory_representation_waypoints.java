@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Describe a trajectory using an array of up-to 5 waypoints in the local frame (MAV_FRAME_LOCAL_NED).
  */
@@ -19,75 +21,103 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 239;
     private static final long serialVersionUID = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_WAYPOINTS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * X-coordinate of waypoint, set to NaN if not being used
      */
+    @Description("X-coordinate of waypoint, set to NaN if not being used")
+    @Units("m")
     public float pos_x[] = new float[5];
-      
+    
     /**
      * Y-coordinate of waypoint, set to NaN if not being used
      */
+    @Description("Y-coordinate of waypoint, set to NaN if not being used")
+    @Units("m")
     public float pos_y[] = new float[5];
-      
+    
     /**
      * Z-coordinate of waypoint, set to NaN if not being used
      */
+    @Description("Z-coordinate of waypoint, set to NaN if not being used")
+    @Units("m")
     public float pos_z[] = new float[5];
-      
+    
     /**
      * X-velocity of waypoint, set to NaN if not being used
      */
+    @Description("X-velocity of waypoint, set to NaN if not being used")
+    @Units("m/s")
     public float vel_x[] = new float[5];
-      
+    
     /**
      * Y-velocity of waypoint, set to NaN if not being used
      */
+    @Description("Y-velocity of waypoint, set to NaN if not being used")
+    @Units("m/s")
     public float vel_y[] = new float[5];
-      
+    
     /**
      * Z-velocity of waypoint, set to NaN if not being used
      */
+    @Description("Z-velocity of waypoint, set to NaN if not being used")
+    @Units("m/s")
     public float vel_z[] = new float[5];
-      
+    
     /**
      * X-acceleration of waypoint, set to NaN if not being used
      */
+    @Description("X-acceleration of waypoint, set to NaN if not being used")
+    @Units("m/s/s")
     public float acc_x[] = new float[5];
-      
+    
     /**
      * Y-acceleration of waypoint, set to NaN if not being used
      */
+    @Description("Y-acceleration of waypoint, set to NaN if not being used")
+    @Units("m/s/s")
     public float acc_y[] = new float[5];
-      
+    
     /**
      * Z-acceleration of waypoint, set to NaN if not being used
      */
+    @Description("Z-acceleration of waypoint, set to NaN if not being used")
+    @Units("m/s/s")
     public float acc_z[] = new float[5];
-      
+    
     /**
      * Yaw angle, set to NaN if not being used
      */
+    @Description("Yaw angle, set to NaN if not being used")
+    @Units("rad")
     public float pos_yaw[] = new float[5];
-      
+    
     /**
      * Yaw rate, set to NaN if not being used
      */
+    @Description("Yaw rate, set to NaN if not being used")
+    @Units("rad/s")
     public float vel_yaw[] = new float[5];
-      
+    
     /**
      * MAV_CMD command id of waypoint, set to UINT16_MAX if not being used.
      */
+    @Description("MAV_CMD command id of waypoint, set to UINT16_MAX if not being used.")
+    @Units("")
     public int command[] = new int[5];
-      
+    
     /**
      * Number of valid points (up-to 5 waypoints are possible)
      */
+    @Description("Number of valid points (up-to 5 waypoints are possible)")
+    @Units("")
     public short valid_points;
     
 
@@ -101,7 +131,7 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_WAYPOINTS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < pos_x.length; i++) {
@@ -179,64 +209,64 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.pos_x.length; i++) {
             this.pos_x[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_y.length; i++) {
             this.pos_y[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_z.length; i++) {
             this.pos_z[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.vel_x.length; i++) {
             this.vel_x[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.vel_y.length; i++) {
             this.vel_y[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.vel_z.length; i++) {
             this.vel_z[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.acc_x.length; i++) {
             this.acc_x[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.acc_y.length; i++) {
             this.acc_y[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.acc_z.length; i++) {
             this.acc_z[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_yaw.length; i++) {
             this.pos_yaw[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.vel_yaw.length; i++) {
             this.vel_yaw[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.command.length; i++) {
             this.command[i] = payload.getUnsignedShort();
         }
@@ -254,7 +284,7 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
     public msg_trajectory_representation_waypoints() {
         this.msgid = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_WAYPOINTS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -277,7 +307,7 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
         this.valid_points = valid_points;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -311,7 +341,7 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
      */
     public msg_trajectory_representation_waypoints(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_WAYPOINTS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -326,7 +356,7 @@ public class msg_trajectory_representation_waypoints extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_WAYPOINTS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" pos_x:"+pos_x+" pos_y:"+pos_y+" pos_z:"+pos_z+" vel_x:"+vel_x+" vel_y:"+vel_y+" vel_z:"+vel_z+" acc_x:"+acc_x+" acc_y:"+acc_y+" acc_z:"+acc_z+" pos_yaw:"+pos_yaw+" vel_yaw:"+vel_yaw+" command:"+command+" valid_points:"+valid_points+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

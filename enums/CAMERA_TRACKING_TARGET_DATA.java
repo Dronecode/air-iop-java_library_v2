@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Camera tracking target data (shows where tracked target is within image)
  */
 public class CAMERA_TRACKING_TARGET_DATA {

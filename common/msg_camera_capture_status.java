@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Information about the status of a capture. Can be requested with a MAV_CMD_REQUEST_MESSAGE command.
  */
@@ -19,40 +21,54 @@ public class msg_camera_capture_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 22;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Image capture interval
      */
+    @Description("Image capture interval")
+    @Units("s")
     public float image_interval;
-      
+    
     /**
      * Elapsed time since recording started (0: Not supported/available). A GCS should compute recording time and use non-zero values of this field to correct any discrepancy.
      */
+    @Description("Elapsed time since recording started (0: Not supported/available). A GCS should compute recording time and use non-zero values of this field to correct any discrepancy.")
+    @Units("ms")
     public long recording_time_ms;
-      
+    
     /**
      * Available storage capacity.
      */
+    @Description("Available storage capacity.")
+    @Units("MiB")
     public float available_capacity;
-      
+    
     /**
      * Current status of image capturing (0: idle, 1: capture in progress, 2: interval set but idle, 3: interval set and capture in progress)
      */
+    @Description("Current status of image capturing (0: idle, 1: capture in progress, 2: interval set but idle, 3: interval set and capture in progress)")
+    @Units("")
     public short image_status;
-      
+    
     /**
      * Current status of video capturing (0: idle, 1: capture in progress)
      */
+    @Description("Current status of video capturing (0: idle, 1: capture in progress)")
+    @Units("")
     public short video_status;
-      
+    
     /**
      * Total number of images captured ('forever', or until reset using MAV_CMD_STORAGE_FORMAT).
      */
+    @Description("Total number of images captured ('forever', or until reset using MAV_CMD_STORAGE_FORMAT).")
+    @Units("")
     public int image_count;
     
 
@@ -66,7 +82,7 @@ public class msg_camera_capture_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putFloat(image_interval);
         packet.payload.putUnsignedInt(recording_time_ms);
@@ -89,7 +105,7 @@ public class msg_camera_capture_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.image_interval = payload.getFloat();
         this.recording_time_ms = payload.getUnsignedInt();
@@ -109,7 +125,7 @@ public class msg_camera_capture_status extends MAVLinkMessage {
     public msg_camera_capture_status() {
         this.msgid = MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_camera_capture_status extends MAVLinkMessage {
         this.image_count = image_count;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_camera_capture_status extends MAVLinkMessage {
      */
     public msg_camera_capture_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_camera_capture_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CAMERA_CAPTURE_STATUS - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" image_interval:"+image_interval+" recording_time_ms:"+recording_time_ms+" available_capacity:"+available_capacity+" image_status:"+image_status+" video_status:"+video_status+" image_count:"+image_count+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

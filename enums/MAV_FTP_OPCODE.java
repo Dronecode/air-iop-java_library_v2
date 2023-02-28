@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * MAV FTP opcodes: https://mavlink.io/en/services/ftp.html
  */
 public class MAV_FTP_OPCODE {

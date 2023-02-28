@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Standard modes with a well understood meaning across flight stacks and vehicle types.
         For example, most flight stack have the concept of a "return" or "RTL" mode that takes a vehicle to safety, even though the precise mechanics of this mode may differ.
         Modes may be set using MAV_CMD_DO_SET_STANDARD_MODE.

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags for CURRENT_EVENT_SEQUENCE.
  */
 public class MAV_EVENT_CURRENT_SEQUENCE_FLAGS {

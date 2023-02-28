@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * 
         Vehicle status report that is sent out while figure eight execution is in progress (see MAV_CMD_DO_FIGURE_EIGHT).
@@ -22,45 +24,61 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 33;
     private static final long serialVersionUID = MAVLINK_MSG_ID_FIGURE_EIGHT_EXECUTION_STATUS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Major axis radius of the figure eight. Positive: orbit the north circle clockwise. Negative: orbit the north circle counter-clockwise.
      */
+    @Description("Major axis radius of the figure eight. Positive: orbit the north circle clockwise. Negative: orbit the north circle counter-clockwise.")
+    @Units("m")
     public float major_radius;
-      
+    
     /**
      * Minor axis radius of the figure eight. Defines the radius of two circles that make up the figure.
      */
+    @Description("Minor axis radius of the figure eight. Defines the radius of two circles that make up the figure.")
+    @Units("m")
     public float minor_radius;
-      
+    
     /**
      * Orientation of the figure eight major axis with respect to true north in [-pi,pi).
      */
+    @Description("Orientation of the figure eight major axis with respect to true north in [-pi,pi).")
+    @Units("rad")
     public float orientation;
-      
+    
     /**
      * X coordinate of center point. Coordinate system depends on frame field.
      */
+    @Description("X coordinate of center point. Coordinate system depends on frame field.")
+    @Units("")
     public int x;
-      
+    
     /**
      * Y coordinate of center point. Coordinate system depends on frame field.
      */
+    @Description("Y coordinate of center point. Coordinate system depends on frame field.")
+    @Units("")
     public int y;
-      
+    
     /**
      * Altitude of center point. Coordinate system depends on frame field.
      */
+    @Description("Altitude of center point. Coordinate system depends on frame field.")
+    @Units("m")
     public float z;
-      
+    
     /**
      * The coordinate system of the fields: x, y, z.
      */
+    @Description("The coordinate system of the fields: x, y, z.")
+    @Units("")
     public short frame;
     
 
@@ -74,7 +92,7 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_FIGURE_EIGHT_EXECUTION_STATUS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(major_radius);
         packet.payload.putFloat(minor_radius);
@@ -98,7 +116,7 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.major_radius = payload.getFloat();
         this.minor_radius = payload.getFloat();
@@ -119,7 +137,7 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
     public msg_figure_eight_execution_status() {
         this.msgid = MAVLINK_MSG_ID_FIGURE_EIGHT_EXECUTION_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -136,7 +154,7 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
         this.frame = frame;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -164,7 +182,7 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
      */
     public msg_figure_eight_execution_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_FIGURE_EIGHT_EXECUTION_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -179,7 +197,7 @@ public class msg_figure_eight_execution_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_FIGURE_EIGHT_EXECUTION_STATUS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" major_radius:"+major_radius+" minor_radius:"+minor_radius+" orientation:"+orientation+" x:"+x+" y:"+y+" z:"+z+" frame:"+frame+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

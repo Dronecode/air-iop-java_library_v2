@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Information about a high level gimbal manager. This message should be requested by a ground station using MAV_CMD_REQUEST_MESSAGE.
  */
@@ -19,50 +21,68 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 33;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Bitmap of gimbal capability flags.
      */
+    @Description("Bitmap of gimbal capability flags.")
+    @Units("")
     public long cap_flags;
-      
+    
     /**
      * Minimum hardware roll angle (positive: rolling to the right, negative: rolling to the left)
      */
+    @Description("Minimum hardware roll angle (positive: rolling to the right, negative: rolling to the left)")
+    @Units("rad")
     public float roll_min;
-      
+    
     /**
      * Maximum hardware roll angle (positive: rolling to the right, negative: rolling to the left)
      */
+    @Description("Maximum hardware roll angle (positive: rolling to the right, negative: rolling to the left)")
+    @Units("rad")
     public float roll_max;
-      
+    
     /**
      * Minimum pitch angle (positive: up, negative: down)
      */
+    @Description("Minimum pitch angle (positive: up, negative: down)")
+    @Units("rad")
     public float pitch_min;
-      
+    
     /**
      * Maximum pitch angle (positive: up, negative: down)
      */
+    @Description("Maximum pitch angle (positive: up, negative: down)")
+    @Units("rad")
     public float pitch_max;
-      
+    
     /**
      * Minimum yaw angle (positive: to the right, negative: to the left)
      */
+    @Description("Minimum yaw angle (positive: to the right, negative: to the left)")
+    @Units("rad")
     public float yaw_min;
-      
+    
     /**
      * Maximum yaw angle (positive: to the right, negative: to the left)
      */
+    @Description("Maximum yaw angle (positive: to the right, negative: to the left)")
+    @Units("rad")
     public float yaw_max;
-      
+    
     /**
      * Gimbal device ID that this gimbal manager is responsible for.
      */
+    @Description("Gimbal device ID that this gimbal manager is responsible for.")
+    @Units("")
     public short gimbal_device_id;
     
 
@@ -76,7 +96,7 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putUnsignedInt(cap_flags);
         packet.payload.putFloat(roll_min);
@@ -101,7 +121,7 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.cap_flags = payload.getUnsignedInt();
         this.roll_min = payload.getFloat();
@@ -123,7 +143,7 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
     public msg_gimbal_manager_information() {
         this.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -141,7 +161,7 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
         this.gimbal_device_id = gimbal_device_id;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -170,7 +190,7 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
      */
     public msg_gimbal_manager_information(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -185,7 +205,7 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" cap_flags:"+cap_flags+" roll_min:"+roll_min+" roll_max:"+roll_max+" pitch_min:"+pitch_min+" pitch_max:"+pitch_max+" yaw_min:"+yaw_min+" yaw_max:"+yaw_max+" gimbal_device_id:"+gimbal_device_id+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

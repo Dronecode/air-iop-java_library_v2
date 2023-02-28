@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags to report ESC failures.
  */
 public class ESC_FAILURE_FLAGS {

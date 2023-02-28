@@ -9,18 +9,20 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * 
         Component metadata message, which may be requested using MAV_CMD_REQUEST_MESSAGE.
-        
+
         This contains the MAVLink FTP URI and CRC for the component's general metadata file.
         The file must be hosted on the component, and may be xz compressed.
         The file CRC can be used for file caching.
-        
+
         The general metadata file can be read to get the locations of other metadata files (COMP_METADATA_TYPE) and translations, which may be hosted either on the vehicle or the internet.
         For more information see: https://mavlink.io/en/services/component_information.html.
-        
+
         Note: Camera components should use CAMERA_INFORMATION instead, and autopilots may use both this message and AUTOPILOT_VERSION.
       
  */
@@ -30,20 +32,26 @@ public class msg_component_metadata extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 108;
     private static final long serialVersionUID = MAVLINK_MSG_ID_COMPONENT_METADATA;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * CRC32 of the general metadata file.
      */
+    @Description("CRC32 of the general metadata file.")
+    @Units("")
     public long file_crc;
-      
+    
     /**
      * MAVLink FTP URI for the general metadata file (COMP_METADATA_TYPE_GENERAL), which may be compressed with xz. The file contains general component metadata, and may contain URI links for additional metadata (see COMP_METADATA_TYPE). The information is static from boot, and may be generated at compile time. The string needs to be zero terminated.
      */
+    @Description("MAVLink FTP URI for the general metadata file (COMP_METADATA_TYPE_GENERAL), which may be compressed with xz. The file contains general component metadata, and may contain URI links for additional metadata (see COMP_METADATA_TYPE). The information is static from boot, and may be generated at compile time. The string needs to be zero terminated.")
+    @Units("")
     public byte uri[] = new byte[100];
     
 
@@ -57,7 +65,7 @@ public class msg_component_metadata extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_COMPONENT_METADATA;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putUnsignedInt(file_crc);
         
@@ -80,10 +88,10 @@ public class msg_component_metadata extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.file_crc = payload.getUnsignedInt();
-         
+        
         for (int i = 0; i < this.uri.length; i++) {
             this.uri[i] = payload.getByte();
         }
@@ -100,7 +108,7 @@ public class msg_component_metadata extends MAVLinkMessage {
     public msg_component_metadata() {
         this.msgid = MAVLINK_MSG_ID_COMPONENT_METADATA;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -112,7 +120,7 @@ public class msg_component_metadata extends MAVLinkMessage {
         this.uri = uri;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -135,7 +143,7 @@ public class msg_component_metadata extends MAVLinkMessage {
      */
     public msg_component_metadata(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_COMPONENT_METADATA;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -179,7 +187,7 @@ public class msg_component_metadata extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_COMPONENT_METADATA - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" file_crc:"+file_crc+" uri:"+uri+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

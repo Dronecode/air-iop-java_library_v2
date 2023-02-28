@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * List of possible units where failures can be injected.
  */
 public class FAILURE_UNIT {

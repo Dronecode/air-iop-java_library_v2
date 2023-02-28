@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Message implementing parts of the V2 payload specs in V1 frames for transitional support.
  */
@@ -19,30 +21,40 @@ public class msg_v2_extension extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 254;
     private static final long serialVersionUID = MAVLINK_MSG_ID_V2_EXTENSION;
 
-      
+    
     /**
      * A code that identifies the software component that understands this message (analogous to USB device classes or mime type strings). If this code is less than 32768, it is considered a 'registered' protocol extension and the corresponding entry should be added to https://github.com/mavlink/mavlink/definition_files/extension_message_ids.xml. Software creators can register blocks of message IDs as needed (useful for GCS specific metadata, etc...). Message_types greater than 32767 are considered local experiments and should not be checked in to any widely distributed codebase.
      */
+    @Description("A code that identifies the software component that understands this message (analogous to USB device classes or mime type strings). If this code is less than 32768, it is considered a 'registered' protocol extension and the corresponding entry should be added to https://github.com/mavlink/mavlink/definition_files/extension_message_ids.xml. Software creators can register blocks of message IDs as needed (useful for GCS specific metadata, etc...). Message_types greater than 32767 are considered local experiments and should not be checked in to any widely distributed codebase.")
+    @Units("")
     public int message_type;
-      
+    
     /**
      * Network ID (0 for broadcast)
      */
+    @Description("Network ID (0 for broadcast)")
+    @Units("")
     public short target_network;
-      
+    
     /**
      * System ID (0 for broadcast)
      */
+    @Description("System ID (0 for broadcast)")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID (0 for broadcast)
      */
+    @Description("Component ID (0 for broadcast)")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Variable length payload. The length must be encoded in the payload as part of the message_type protocol, e.g. by including the length as payload data, or by terminating the payload data with a non-zero marker. This is required in order to reconstruct zero-terminated payloads that are (or otherwise would be) trimmed by MAVLink 2 empty-byte truncation. The entire content of the payload block is opaque unless you understand the encoding message_type. The particular encoding used can be extension specific and might not always be documented as part of the MAVLink specification.
      */
+    @Description("Variable length payload. The length must be encoded in the payload as part of the message_type protocol, e.g. by including the length as payload data, or by terminating the payload data with a non-zero marker. This is required in order to reconstruct zero-terminated payloads that are (or otherwise would be) trimmed by MAVLink 2 empty-byte truncation. The entire content of the payload block is opaque unless you understand the encoding message_type. The particular encoding used can be extension specific and might not always be documented as part of the MAVLink specification.")
+    @Units("")
     public short payload[] = new short[249];
     
 
@@ -56,7 +68,7 @@ public class msg_v2_extension extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_V2_EXTENSION;
-        
+
         packet.payload.putUnsignedShort(message_type);
         packet.payload.putUnsignedByte(target_network);
         packet.payload.putUnsignedByte(target_system);
@@ -81,12 +93,12 @@ public class msg_v2_extension extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.message_type = payload.getUnsignedShort();
         this.target_network = payload.getUnsignedByte();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.payload.length; i++) {
             this.payload[i] = payload.getUnsignedByte();
         }
@@ -103,7 +115,7 @@ public class msg_v2_extension extends MAVLinkMessage {
     public msg_v2_extension() {
         this.msgid = MAVLINK_MSG_ID_V2_EXTENSION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +129,7 @@ public class msg_v2_extension extends MAVLinkMessage {
         this.payload = payload;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -142,7 +154,7 @@ public class msg_v2_extension extends MAVLinkMessage {
      */
     public msg_v2_extension(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_V2_EXTENSION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -157,7 +169,7 @@ public class msg_v2_extension extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_V2_EXTENSION - sysid:"+sysid+" compid:"+compid+" message_type:"+message_type+" target_network:"+target_network+" target_system:"+target_system+" target_component:"+target_component+" payload:"+payload+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

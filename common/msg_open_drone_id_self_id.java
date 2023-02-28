@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Data for filling the OpenDroneID Self ID message. The Self ID Message is an opportunity for the operator to (optionally) declare their identity and purpose of the flight. This message can provide additional information that could reduce the threat profile of a UA (Unmanned Aircraft) flying in a particular area or manner. This message can also be used to provide optional additional clarification in an emergency/remote ID system failure situation.
  */
@@ -19,30 +21,40 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 46;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OPEN_DRONE_ID_SELF_ID;
 
-      
+    
     /**
      * System ID (0 for broadcast).
      */
+    @Description("System ID (0 for broadcast).")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID (0 for broadcast).
      */
+    @Description("Component ID (0 for broadcast).")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. 
      */
+    @Description("Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. ")
+    @Units("")
     public short id_or_mac[] = new short[20];
-      
+    
     /**
      * Indicates the type of the description field.
      */
+    @Description("Indicates the type of the description field.")
+    @Units("")
     public short description_type;
-      
+    
     /**
      * Text description or numeric value expressed as ASCII characters. Shall be filled with nulls in the unused portion of the field.
      */
+    @Description("Text description or numeric value expressed as ASCII characters. Shall be filled with nulls in the unused portion of the field.")
+    @Units("")
     public byte description[] = new byte[23];
     
 
@@ -56,7 +68,7 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_SELF_ID;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
         
@@ -85,16 +97,16 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.id_or_mac.length; i++) {
             this.id_or_mac[i] = payload.getUnsignedByte();
         }
                 
         this.description_type = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.description.length; i++) {
             this.description[i] = payload.getByte();
         }
@@ -111,7 +123,7 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
     public msg_open_drone_id_self_id() {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_SELF_ID;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +137,7 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
         this.description = description;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -150,7 +162,7 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
      */
     public msg_open_drone_id_self_id(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_SELF_ID;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -194,7 +206,7 @@ public class msg_open_drone_id_self_id extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_OPEN_DRONE_ID_SELF_ID - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" target_component:"+target_component+" id_or_mac:"+id_or_mac+" description_type:"+description_type+" description:"+description+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

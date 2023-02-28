@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The RAW values of the RC channels received. The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%. A value of UINT16_MAX implies the channel is unused. Individual receivers/transmitters might violate this specification.
  */
@@ -19,60 +21,82 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 22;
     private static final long serialVersionUID = MAVLINK_MSG_ID_RC_CHANNELS_RAW;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * RC channel 1 value.
      */
+    @Description("RC channel 1 value.")
+    @Units("us")
     public int chan1_raw;
-      
+    
     /**
      * RC channel 2 value.
      */
+    @Description("RC channel 2 value.")
+    @Units("us")
     public int chan2_raw;
-      
+    
     /**
      * RC channel 3 value.
      */
+    @Description("RC channel 3 value.")
+    @Units("us")
     public int chan3_raw;
-      
+    
     /**
      * RC channel 4 value.
      */
+    @Description("RC channel 4 value.")
+    @Units("us")
     public int chan4_raw;
-      
+    
     /**
      * RC channel 5 value.
      */
+    @Description("RC channel 5 value.")
+    @Units("us")
     public int chan5_raw;
-      
+    
     /**
      * RC channel 6 value.
      */
+    @Description("RC channel 6 value.")
+    @Units("us")
     public int chan6_raw;
-      
+    
     /**
      * RC channel 7 value.
      */
+    @Description("RC channel 7 value.")
+    @Units("us")
     public int chan7_raw;
-      
+    
     /**
      * RC channel 8 value.
      */
+    @Description("RC channel 8 value.")
+    @Units("us")
     public int chan8_raw;
-      
+    
     /**
      * Servo output port (set of 8 outputs = 1 port). Flight stacks running on Pixhawk should use: 0 = MAIN, 1 = AUX.
      */
+    @Description("Servo output port (set of 8 outputs = 1 port). Flight stacks running on Pixhawk should use: 0 = MAIN, 1 = AUX.")
+    @Units("")
     public short port;
-      
+    
     /**
      * Receive signal strength indicator in device-dependent units/scale. Values: [0-254], UINT8_MAX: invalid/unknown.
      */
+    @Description("Receive signal strength indicator in device-dependent units/scale. Values: [0-254], UINT8_MAX: invalid/unknown.")
+    @Units("")
     public short rssi;
     
 
@@ -86,7 +110,7 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_RC_CHANNELS_RAW;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putUnsignedShort(chan1_raw);
         packet.payload.putUnsignedShort(chan2_raw);
@@ -113,7 +137,7 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.chan1_raw = payload.getUnsignedShort();
         this.chan2_raw = payload.getUnsignedShort();
@@ -137,7 +161,7 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
     public msg_rc_channels_raw() {
         this.msgid = MAVLINK_MSG_ID_RC_CHANNELS_RAW;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +181,7 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
         this.rssi = rssi;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -188,7 +212,7 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
      */
     public msg_rc_channels_raw(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_RC_CHANNELS_RAW;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -203,7 +227,7 @@ public class msg_rc_channels_raw extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_RC_CHANNELS_RAW - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" chan1_raw:"+chan1_raw+" chan2_raw:"+chan2_raw+" chan3_raw:"+chan3_raw+" chan4_raw:"+chan4_raw+" chan5_raw:"+chan5_raw+" chan6_raw:"+chan6_raw+" chan7_raw:"+chan7_raw+" chan8_raw:"+chan8_raw+" port:"+port+" rssi:"+rssi+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

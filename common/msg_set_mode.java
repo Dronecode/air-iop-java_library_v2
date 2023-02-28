@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Set the system mode, as defined by enum MAV_MODE. There is no target component id as the mode is by definition for the overall aircraft, not only for one component.
  */
@@ -19,20 +21,26 @@ public class msg_set_mode extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 6;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SET_MODE;
 
-      
+    
     /**
      * The new autopilot-specific mode. This field can be ignored by an autopilot.
      */
+    @Description("The new autopilot-specific mode. This field can be ignored by an autopilot.")
+    @Units("")
     public long custom_mode;
-      
+    
     /**
      * The system setting the mode
      */
+    @Description("The system setting the mode")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * The new base mode.
      */
+    @Description("The new base mode.")
+    @Units("")
     public short base_mode;
     
 
@@ -46,7 +54,7 @@ public class msg_set_mode extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SET_MODE;
-        
+
         packet.payload.putUnsignedInt(custom_mode);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(base_mode);
@@ -65,7 +73,7 @@ public class msg_set_mode extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.custom_mode = payload.getUnsignedInt();
         this.target_system = payload.getUnsignedByte();
         this.base_mode = payload.getUnsignedByte();
@@ -81,7 +89,7 @@ public class msg_set_mode extends MAVLinkMessage {
     public msg_set_mode() {
         this.msgid = MAVLINK_MSG_ID_SET_MODE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -93,7 +101,7 @@ public class msg_set_mode extends MAVLinkMessage {
         this.base_mode = base_mode;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +124,7 @@ public class msg_set_mode extends MAVLinkMessage {
      */
     public msg_set_mode(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SET_MODE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +139,7 @@ public class msg_set_mode extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SET_MODE - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" target_system:"+target_system+" base_mode:"+base_mode+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

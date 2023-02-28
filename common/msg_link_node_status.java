@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Status generated in each node in the communication chain and injected into MAVLink stream.
  */
@@ -19,60 +21,82 @@ public class msg_link_node_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 36;
     private static final long serialVersionUID = MAVLINK_MSG_ID_LINK_NODE_STATUS;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long timestamp;
-      
+    
     /**
      * Transmit rate
      */
+    @Description("Transmit rate")
+    @Units("bytes/s")
     public long tx_rate;
-      
+    
     /**
      * Receive rate
      */
+    @Description("Receive rate")
+    @Units("bytes/s")
     public long rx_rate;
-      
+    
     /**
      * Messages sent
      */
+    @Description("Messages sent")
+    @Units("")
     public long messages_sent;
-      
+    
     /**
      * Messages received (estimated from counting seq)
      */
+    @Description("Messages received (estimated from counting seq)")
+    @Units("")
     public long messages_received;
-      
+    
     /**
      * Messages lost (estimated from counting seq)
      */
+    @Description("Messages lost (estimated from counting seq)")
+    @Units("")
     public long messages_lost;
-      
+    
     /**
      * Number of bytes that could not be parsed correctly.
      */
+    @Description("Number of bytes that could not be parsed correctly.")
+    @Units("bytes")
     public int rx_parse_err;
-      
+    
     /**
      * Transmit buffer overflows. This number wraps around as it reaches UINT16_MAX
      */
+    @Description("Transmit buffer overflows. This number wraps around as it reaches UINT16_MAX")
+    @Units("bytes")
     public int tx_overflows;
-      
+    
     /**
      * Receive buffer overflows. This number wraps around as it reaches UINT16_MAX
      */
+    @Description("Receive buffer overflows. This number wraps around as it reaches UINT16_MAX")
+    @Units("bytes")
     public int rx_overflows;
-      
+    
     /**
      * Remaining free transmit buffer space
      */
+    @Description("Remaining free transmit buffer space")
+    @Units("%")
     public short tx_buf;
-      
+    
     /**
      * Remaining free receive buffer space
      */
+    @Description("Remaining free receive buffer space")
+    @Units("%")
     public short rx_buf;
     
 
@@ -86,7 +110,7 @@ public class msg_link_node_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_LINK_NODE_STATUS;
-        
+
         packet.payload.putUnsignedLong(timestamp);
         packet.payload.putUnsignedInt(tx_rate);
         packet.payload.putUnsignedInt(rx_rate);
@@ -113,7 +137,7 @@ public class msg_link_node_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.timestamp = payload.getUnsignedLong();
         this.tx_rate = payload.getUnsignedInt();
         this.rx_rate = payload.getUnsignedInt();
@@ -137,7 +161,7 @@ public class msg_link_node_status extends MAVLinkMessage {
     public msg_link_node_status() {
         this.msgid = MAVLINK_MSG_ID_LINK_NODE_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +181,7 @@ public class msg_link_node_status extends MAVLinkMessage {
         this.rx_buf = rx_buf;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -188,7 +212,7 @@ public class msg_link_node_status extends MAVLinkMessage {
      */
     public msg_link_node_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_LINK_NODE_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -203,7 +227,7 @@ public class msg_link_node_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_LINK_NODE_STATUS - sysid:"+sysid+" compid:"+compid+" timestamp:"+timestamp+" tx_rate:"+tx_rate+" rx_rate:"+rx_rate+" messages_sent:"+messages_sent+" messages_received:"+messages_received+" messages_lost:"+messages_lost+" rx_parse_err:"+rx_parse_err+" tx_overflows:"+tx_overflows+" rx_overflows:"+rx_overflows+" tx_buf:"+tx_buf+" rx_buf:"+rx_buf+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

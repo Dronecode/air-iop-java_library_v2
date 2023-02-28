@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * High level message to control a gimbal's pitch and yaw angles. This message is to be sent to the gimbal manager (e.g. from a ground station). Angles and rates can be set to NaN according to use case.
  */
@@ -19,45 +21,61 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 23;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GIMBAL_MANAGER_SET_PITCHYAW;
 
-      
+    
     /**
      * High level gimbal manager flags to use.
      */
+    @Description("High level gimbal manager flags to use.")
+    @Units("")
     public long flags;
-      
+    
     /**
      * Pitch angle (positive: up, negative: down, NaN to be ignored).
      */
+    @Description("Pitch angle (positive: up, negative: down, NaN to be ignored).")
+    @Units("rad")
     public float pitch;
-      
+    
     /**
      * Yaw angle (positive: to the right, negative: to the left, NaN to be ignored).
      */
+    @Description("Yaw angle (positive: to the right, negative: to the left, NaN to be ignored).")
+    @Units("rad")
     public float yaw;
-      
+    
     /**
      * Pitch angular rate (positive: up, negative: down, NaN to be ignored).
      */
+    @Description("Pitch angular rate (positive: up, negative: down, NaN to be ignored).")
+    @Units("rad/s")
     public float pitch_rate;
-      
+    
     /**
      * Yaw angular rate (positive: to the right, negative: to the left, NaN to be ignored).
      */
+    @Description("Yaw angular rate (positive: to the right, negative: to the left, NaN to be ignored).")
+    @Units("rad/s")
     public float yaw_rate;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Component ID of gimbal device to address (or 1-6 for non-MAVLink gimbal), 0 for all gimbal device components. Send command multiple times for more than one gimbal (but not all gimbals).
      */
+    @Description("Component ID of gimbal device to address (or 1-6 for non-MAVLink gimbal), 0 for all gimbal device components. Send command multiple times for more than one gimbal (but not all gimbals).")
+    @Units("")
     public short gimbal_device_id;
     
 
@@ -71,7 +89,7 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_SET_PITCHYAW;
-        
+
         packet.payload.putUnsignedInt(flags);
         packet.payload.putFloat(pitch);
         packet.payload.putFloat(yaw);
@@ -95,7 +113,7 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.flags = payload.getUnsignedInt();
         this.pitch = payload.getFloat();
         this.yaw = payload.getFloat();
@@ -116,7 +134,7 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
     public msg_gimbal_manager_set_pitchyaw() {
         this.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_SET_PITCHYAW;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +151,7 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
         this.gimbal_device_id = gimbal_device_id;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -161,7 +179,7 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
      */
     public msg_gimbal_manager_set_pitchyaw(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GIMBAL_MANAGER_SET_PITCHYAW;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -176,7 +194,7 @@ public class msg_gimbal_manager_set_pitchyaw extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GIMBAL_MANAGER_SET_PITCHYAW - sysid:"+sysid+" compid:"+compid+" flags:"+flags+" pitch:"+pitch+" yaw:"+yaw+" pitch_rate:"+pitch_rate+" yaw_rate:"+yaw_rate+" target_system:"+target_system+" target_component:"+target_component+" gimbal_device_id:"+gimbal_device_id+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

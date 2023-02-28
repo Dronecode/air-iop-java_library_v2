@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Information about flight since last arming.
         This can be requested using MAV_CMD_REQUEST_MESSAGE.
@@ -21,25 +23,33 @@ public class msg_flight_information extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 28;
     private static final long serialVersionUID = MAVLINK_MSG_ID_FLIGHT_INFORMATION;
 
-      
+    
     /**
      * Timestamp at arming (time since UNIX epoch) in UTC, 0 for unknown
      */
+    @Description("Timestamp at arming (time since UNIX epoch) in UTC, 0 for unknown")
+    @Units("us")
     public long arming_time_utc;
-      
+    
     /**
      * Timestamp at takeoff (time since UNIX epoch) in UTC, 0 for unknown
      */
+    @Description("Timestamp at takeoff (time since UNIX epoch) in UTC, 0 for unknown")
+    @Units("us")
     public long takeoff_time_utc;
-      
+    
     /**
      * Universally unique identifier (UUID) of flight, should correspond to name of log files
      */
+    @Description("Universally unique identifier (UUID) of flight, should correspond to name of log files")
+    @Units("")
     public long flight_uuid;
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
     
 
@@ -53,7 +63,7 @@ public class msg_flight_information extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_FLIGHT_INFORMATION;
-        
+
         packet.payload.putUnsignedLong(arming_time_utc);
         packet.payload.putUnsignedLong(takeoff_time_utc);
         packet.payload.putUnsignedLong(flight_uuid);
@@ -73,7 +83,7 @@ public class msg_flight_information extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.arming_time_utc = payload.getUnsignedLong();
         this.takeoff_time_utc = payload.getUnsignedLong();
         this.flight_uuid = payload.getUnsignedLong();
@@ -90,7 +100,7 @@ public class msg_flight_information extends MAVLinkMessage {
     public msg_flight_information() {
         this.msgid = MAVLINK_MSG_ID_FLIGHT_INFORMATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -103,7 +113,7 @@ public class msg_flight_information extends MAVLinkMessage {
         this.time_boot_ms = time_boot_ms;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -127,7 +137,7 @@ public class msg_flight_information extends MAVLinkMessage {
      */
     public msg_flight_information(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_FLIGHT_INFORMATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -142,7 +152,7 @@ public class msg_flight_information extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_FLIGHT_INFORMATION - sysid:"+sysid+" compid:"+compid+" arming_time_utc:"+arming_time_utc+" takeoff_time_utc:"+takeoff_time_utc+" flight_uuid:"+flight_uuid+" time_boot_ms:"+time_boot_ms+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

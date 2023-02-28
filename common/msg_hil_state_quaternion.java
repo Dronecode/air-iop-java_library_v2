@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Sent from simulation to autopilot, avoids in contrast to HIL_STATE singularities. This packet is useful for high throughput applications such as hardware in the loop simulations.
  */
@@ -19,85 +21,117 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 64;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIL_STATE_QUATERNION;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
      */
+    @Description("Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)")
+    @Units("")
     public float attitude_quaternion[] = new float[4];
-      
+    
     /**
      * Body frame roll / phi angular speed
      */
+    @Description("Body frame roll / phi angular speed")
+    @Units("rad/s")
     public float rollspeed;
-      
+    
     /**
      * Body frame pitch / theta angular speed
      */
+    @Description("Body frame pitch / theta angular speed")
+    @Units("rad/s")
     public float pitchspeed;
-      
+    
     /**
      * Body frame yaw / psi angular speed
      */
+    @Description("Body frame yaw / psi angular speed")
+    @Units("rad/s")
     public float yawspeed;
-      
+    
     /**
      * Latitude
      */
+    @Description("Latitude")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude
      */
+    @Description("Longitude")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude
      */
+    @Description("Altitude")
+    @Units("mm")
     public int alt;
-      
+    
     /**
      * Ground X Speed (Latitude)
      */
+    @Description("Ground X Speed (Latitude)")
+    @Units("cm/s")
     public short vx;
-      
+    
     /**
      * Ground Y Speed (Longitude)
      */
+    @Description("Ground Y Speed (Longitude)")
+    @Units("cm/s")
     public short vy;
-      
+    
     /**
      * Ground Z Speed (Altitude)
      */
+    @Description("Ground Z Speed (Altitude)")
+    @Units("cm/s")
     public short vz;
-      
+    
     /**
      * Indicated airspeed
      */
+    @Description("Indicated airspeed")
+    @Units("cm/s")
     public int ind_airspeed;
-      
+    
     /**
      * True airspeed
      */
+    @Description("True airspeed")
+    @Units("cm/s")
     public int true_airspeed;
-      
+    
     /**
      * X acceleration
      */
+    @Description("X acceleration")
+    @Units("mG")
     public short xacc;
-      
+    
     /**
      * Y acceleration
      */
+    @Description("Y acceleration")
+    @Units("mG")
     public short yacc;
-      
+    
     /**
      * Z acceleration
      */
+    @Description("Z acceleration")
+    @Units("mG")
     public short zacc;
     
 
@@ -111,7 +145,7 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIL_STATE_QUATERNION;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < attitude_quaternion.length; i++) {
@@ -147,9 +181,9 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.attitude_quaternion.length; i++) {
             this.attitude_quaternion[i] = payload.getFloat();
         }
@@ -180,7 +214,7 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
     public msg_hil_state_quaternion() {
         this.msgid = MAVLINK_MSG_ID_HIL_STATE_QUATERNION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -205,7 +239,7 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
         this.zacc = zacc;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -241,7 +275,7 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
      */
     public msg_hil_state_quaternion(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIL_STATE_QUATERNION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -256,7 +290,7 @@ public class msg_hil_state_quaternion extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIL_STATE_QUATERNION - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" attitude_quaternion:"+attitude_quaternion+" rollspeed:"+rollspeed+" pitchspeed:"+pitchspeed+" yawspeed:"+yawspeed+" lat:"+lat+" lon:"+lon+" alt:"+alt+" vx:"+vx+" vy:"+vy+" vz:"+vz+" ind_airspeed:"+ind_airspeed+" true_airspeed:"+true_airspeed+" xacc:"+xacc+" yacc:"+yacc+" zacc:"+zacc+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

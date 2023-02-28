@@ -9,51 +9,53 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Airspeed information from a sensor.
  */
 public class msg_airspeed extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_AIRSPEED = 295;
-    public static final int MAVLINK_MSG_LENGTH = 20;
+    public static final int MAVLINK_MSG_LENGTH = 12;
     private static final long serialVersionUID = MAVLINK_MSG_ID_AIRSPEED;
 
-      
+    
     /**
-     * Calibrated airspeed (CAS) if available, otherwise indicated airspeed (IAS).
+     * Calibrated airspeed (CAS).
      */
+    @Description("Calibrated airspeed (CAS).")
+    @Units("m/s")
     public float airspeed;
-      
+    
     /**
-     * Differential pressure. NaN for value unknown/not supplied.
+     * Raw differential pressure. NaN for value unknown/not supplied.
      */
-    public float press_diff;
-      
-    /**
-     * Static pressure. NaN for value unknown/not supplied.
-     */
-    public float press_static;
-      
-    /**
-     * Error/accuracy. NaN for value unknown/not supplied.
-     */
-    public float error;
-      
+    @Description("Raw differential pressure. NaN for value unknown/not supplied.")
+    @Units("hPa")
+    public float raw_press;
+    
     /**
      * Temperature. INT16_MAX for value unknown/not supplied.
      */
+    @Description("Temperature. INT16_MAX for value unknown/not supplied.")
+    @Units("cdegC")
     public short temperature;
-      
+    
     /**
      * Sensor ID.
      */
+    @Description("Sensor ID.")
+    @Units("")
     public short id;
-      
+    
     /**
-     * Airspeed sensor type. NaN for value unknown/not supplied. Used to estimate accuracy (i.e. as an alternative to using the error field).
+     * Airspeed sensor flags.
      */
-    public short type;
+    @Description("Airspeed sensor flags.")
+    @Units("")
+    public short flags;
     
 
     /**
@@ -66,14 +68,12 @@ public class msg_airspeed extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_AIRSPEED;
-        
+
         packet.payload.putFloat(airspeed);
-        packet.payload.putFloat(press_diff);
-        packet.payload.putFloat(press_static);
-        packet.payload.putFloat(error);
+        packet.payload.putFloat(raw_press);
         packet.payload.putShort(temperature);
         packet.payload.putUnsignedByte(id);
-        packet.payload.putUnsignedByte(type);
+        packet.payload.putUnsignedByte(flags);
         
         if (isMavlink2) {
             
@@ -89,14 +89,12 @@ public class msg_airspeed extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.airspeed = payload.getFloat();
-        this.press_diff = payload.getFloat();
-        this.press_static = payload.getFloat();
-        this.error = payload.getFloat();
+        this.raw_press = payload.getFloat();
         this.temperature = payload.getShort();
         this.id = payload.getUnsignedByte();
-        this.type = payload.getUnsignedByte();
+        this.flags = payload.getUnsignedByte();
         
         if (isMavlink2) {
             
@@ -109,39 +107,35 @@ public class msg_airspeed extends MAVLinkMessage {
     public msg_airspeed() {
         this.msgid = MAVLINK_MSG_ID_AIRSPEED;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_airspeed( float airspeed, float press_diff, float press_static, float error, short temperature, short id, short type) {
+    public msg_airspeed( float airspeed, float raw_press, short temperature, short id, short flags) {
         this.msgid = MAVLINK_MSG_ID_AIRSPEED;
 
         this.airspeed = airspeed;
-        this.press_diff = press_diff;
-        this.press_static = press_static;
-        this.error = error;
+        this.raw_press = raw_press;
         this.temperature = temperature;
         this.id = id;
-        this.type = type;
+        this.flags = flags;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_airspeed( float airspeed, float press_diff, float press_static, float error, short temperature, short id, short type, int sysid, int compid, boolean isMavlink2) {
+    public msg_airspeed( float airspeed, float raw_press, short temperature, short id, short flags, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_AIRSPEED;
         this.sysid = sysid;
         this.compid = compid;
         this.isMavlink2 = isMavlink2;
 
         this.airspeed = airspeed;
-        this.press_diff = press_diff;
-        this.press_static = press_static;
-        this.error = error;
+        this.raw_press = raw_press;
         this.temperature = temperature;
         this.id = id;
-        this.type = type;
+        this.flags = flags;
         
     }
 
@@ -152,22 +146,22 @@ public class msg_airspeed extends MAVLinkMessage {
      */
     public msg_airspeed(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_AIRSPEED;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
         unpack(mavLinkPacket.payload);
     }
 
-                  
+              
     /**
      * Returns a string with the MSG name and data
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_AIRSPEED - sysid:"+sysid+" compid:"+compid+" airspeed:"+airspeed+" press_diff:"+press_diff+" press_static:"+press_static+" error:"+error+" temperature:"+temperature+" id:"+id+" type:"+type+"";
+        return "MAVLINK_MSG_ID_AIRSPEED - sysid:"+sysid+" compid:"+compid+" airspeed:"+airspeed+" raw_press:"+raw_press+" temperature:"+temperature+" id:"+id+" flags:"+flags+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

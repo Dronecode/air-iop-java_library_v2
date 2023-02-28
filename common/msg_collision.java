@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Information about a potential collision
  */
@@ -19,40 +21,54 @@ public class msg_collision extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 19;
     private static final long serialVersionUID = MAVLINK_MSG_ID_COLLISION;
 
-      
+    
     /**
      * Unique identifier, domain based on src field
      */
+    @Description("Unique identifier, domain based on src field")
+    @Units("")
     public long id;
-      
+    
     /**
      * Estimated time until collision occurs
      */
+    @Description("Estimated time until collision occurs")
+    @Units("s")
     public float time_to_minimum_delta;
-      
+    
     /**
      * Closest vertical distance between vehicle and object
      */
+    @Description("Closest vertical distance between vehicle and object")
+    @Units("m")
     public float altitude_minimum_delta;
-      
+    
     /**
      * Closest horizontal distance between vehicle and object
      */
+    @Description("Closest horizontal distance between vehicle and object")
+    @Units("m")
     public float horizontal_minimum_delta;
-      
+    
     /**
      * Collision data source
      */
+    @Description("Collision data source")
+    @Units("")
     public short src;
-      
+    
     /**
      * Action that is being taken to avoid this collision
      */
+    @Description("Action that is being taken to avoid this collision")
+    @Units("")
     public short action;
-      
+    
     /**
      * How concerned the aircraft is about this collision
      */
+    @Description("How concerned the aircraft is about this collision")
+    @Units("")
     public short threat_level;
     
 
@@ -66,7 +82,7 @@ public class msg_collision extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_COLLISION;
-        
+
         packet.payload.putUnsignedInt(id);
         packet.payload.putFloat(time_to_minimum_delta);
         packet.payload.putFloat(altitude_minimum_delta);
@@ -89,7 +105,7 @@ public class msg_collision extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.id = payload.getUnsignedInt();
         this.time_to_minimum_delta = payload.getFloat();
         this.altitude_minimum_delta = payload.getFloat();
@@ -109,7 +125,7 @@ public class msg_collision extends MAVLinkMessage {
     public msg_collision() {
         this.msgid = MAVLINK_MSG_ID_COLLISION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_collision extends MAVLinkMessage {
         this.threat_level = threat_level;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_collision extends MAVLinkMessage {
      */
     public msg_collision(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_COLLISION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_collision extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_COLLISION - sysid:"+sysid+" compid:"+compid+" id:"+id+" time_to_minimum_delta:"+time_to_minimum_delta+" altitude_minimum_delta:"+altitude_minimum_delta+" horizontal_minimum_delta:"+horizontal_minimum_delta+" src:"+src+" action:"+action+" threat_level:"+threat_level+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

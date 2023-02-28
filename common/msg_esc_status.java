@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * ESC information for higher rate streaming. Recommended streaming rate is ~10 Hz. Information that changes more slowly is sent in ESC_INFO. It should typically only be streamed on high-bandwidth links (i.e. to a companion computer).
  */
@@ -19,30 +21,40 @@ public class msg_esc_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 57;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ESC_STATUS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Reported motor RPM from each ESC (negative for reverse rotation).
      */
+    @Description("Reported motor RPM from each ESC (negative for reverse rotation).")
+    @Units("rpm")
     public int rpm[] = new int[4];
-      
+    
     /**
      * Voltage measured from each ESC.
      */
+    @Description("Voltage measured from each ESC.")
+    @Units("V")
     public float voltage[] = new float[4];
-      
+    
     /**
      * Current measured from each ESC.
      */
+    @Description("Current measured from each ESC.")
+    @Units("A")
     public float current[] = new float[4];
-      
+    
     /**
      * Index of the first ESC in this message. minValue = 0, maxValue = 60, increment = 4.
      */
+    @Description("Index of the first ESC in this message. minValue = 0, maxValue = 60, increment = 4.")
+    @Units("")
     public short index;
     
 
@@ -56,7 +68,7 @@ public class msg_esc_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ESC_STATUS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < rpm.length; i++) {
@@ -89,19 +101,19 @@ public class msg_esc_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.rpm.length; i++) {
             this.rpm[i] = payload.getInt();
         }
                 
-         
+        
         for (int i = 0; i < this.voltage.length; i++) {
             this.voltage[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.current.length; i++) {
             this.current[i] = payload.getFloat();
         }
@@ -119,7 +131,7 @@ public class msg_esc_status extends MAVLinkMessage {
     public msg_esc_status() {
         this.msgid = MAVLINK_MSG_ID_ESC_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +145,7 @@ public class msg_esc_status extends MAVLinkMessage {
         this.index = index;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -158,7 +170,7 @@ public class msg_esc_status extends MAVLinkMessage {
      */
     public msg_esc_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ESC_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -173,7 +185,7 @@ public class msg_esc_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ESC_STATUS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" rpm:"+rpm+" voltage:"+voltage+" current:"+current+" index:"+index+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

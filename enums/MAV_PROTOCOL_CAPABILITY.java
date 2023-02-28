@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Bitmask of (optional) autopilot capabilities (64 bit). If a bit is set, the autopilot supports this capability.
  */
 public class MAV_PROTOCOL_CAPABILITY {
@@ -19,7 +19,7 @@ public class MAV_PROTOCOL_CAPABILITY {
          | */
    public static final int MAV_PROTOCOL_CAPABILITY_COMMAND_INT = 8; /* Autopilot supports COMMAND_INT scaled integer message type. | */
    public static final int MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_BYTEWISE = 16; /* Parameter protocol uses byte-wise encoding of parameter values into param_value (float) fields: https://mavlink.io/en/services/parameter.html#parameter-encoding.
-          Note that either this flag or MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_BYTEWISE should be set if the parameter protocol is supported.
+          Note that either this flag or MAV_PROTOCOL_CAPABILITY_PARAM_ENCODE_C_CAST should be set if the parameter protocol is supported.
          | */
    public static final int MAV_PROTOCOL_CAPABILITY_FTP = 32; /* Autopilot supports the File Transfer Protocol v1: https://mavlink.io/en/services/ftp.html. | */
    public static final int MAV_PROTOCOL_CAPABILITY_SET_ATTITUDE_TARGET = 64; /* Autopilot supports commanding attitude offboard. | */

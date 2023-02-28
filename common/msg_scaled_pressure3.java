@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Barometer readings for 3rd barometer
  */
@@ -19,30 +21,40 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 16;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SCALED_PRESSURE3;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Absolute pressure
      */
+    @Description("Absolute pressure")
+    @Units("hPa")
     public float press_abs;
-      
+    
     /**
      * Differential pressure
      */
+    @Description("Differential pressure")
+    @Units("hPa")
     public float press_diff;
-      
+    
     /**
      * Absolute pressure temperature
      */
+    @Description("Absolute pressure temperature")
+    @Units("cdegC")
     public short temperature;
-      
+    
     /**
      * Differential pressure temperature (0, if not available). Report values of 0 (or 1) as 1 cdegC.
      */
+    @Description("Differential pressure temperature (0, if not available). Report values of 0 (or 1) as 1 cdegC.")
+    @Units("cdegC")
     public short temperature_press_diff;
     
 
@@ -56,7 +68,7 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SCALED_PRESSURE3;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putFloat(press_abs);
         packet.payload.putFloat(press_diff);
@@ -77,7 +89,7 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.press_abs = payload.getFloat();
         this.press_diff = payload.getFloat();
@@ -95,7 +107,7 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
     public msg_scaled_pressure3() {
         this.msgid = MAVLINK_MSG_ID_SCALED_PRESSURE3;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +121,7 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
         this.temperature_press_diff = temperature_press_diff;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -134,7 +146,7 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
      */
     public msg_scaled_pressure3(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SCALED_PRESSURE3;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -149,7 +161,7 @@ public class msg_scaled_pressure3 extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SCALED_PRESSURE3 - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" press_abs:"+press_abs+" press_diff:"+press_diff+" temperature:"+temperature+" temperature_press_diff:"+temperature_press_diff+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

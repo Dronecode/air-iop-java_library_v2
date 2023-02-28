@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed, Z-up). It
                is designed as scaled integer message since the resolution of float is not sufficient.
@@ -20,50 +22,68 @@ public class msg_global_position_int extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 28;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GLOBAL_POSITION_INT;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Latitude, expressed
      */
+    @Description("Latitude, expressed")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude, expressed
      */
+    @Description("Longitude, expressed")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.
      */
+    @Description("Altitude (MSL). Note that virtually all GPS modules provide both WGS84 and MSL.")
+    @Units("mm")
     public int alt;
-      
+    
     /**
      * Altitude above ground
      */
+    @Description("Altitude above ground")
+    @Units("mm")
     public int relative_alt;
-      
+    
     /**
      * Ground X Speed (Latitude, positive north)
      */
+    @Description("Ground X Speed (Latitude, positive north)")
+    @Units("cm/s")
     public short vx;
-      
+    
     /**
      * Ground Y Speed (Longitude, positive east)
      */
+    @Description("Ground Y Speed (Longitude, positive east)")
+    @Units("cm/s")
     public short vy;
-      
+    
     /**
      * Ground Z Speed (Altitude, positive down)
      */
+    @Description("Ground Z Speed (Altitude, positive down)")
+    @Units("cm/s")
     public short vz;
-      
+    
     /**
      * Vehicle heading (yaw angle), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
      */
+    @Description("Vehicle heading (yaw angle), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX")
+    @Units("cdeg")
     public int hdg;
     
 
@@ -77,7 +97,7 @@ public class msg_global_position_int extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GLOBAL_POSITION_INT;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
@@ -102,7 +122,7 @@ public class msg_global_position_int extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
@@ -124,7 +144,7 @@ public class msg_global_position_int extends MAVLinkMessage {
     public msg_global_position_int() {
         this.msgid = MAVLINK_MSG_ID_GLOBAL_POSITION_INT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -142,7 +162,7 @@ public class msg_global_position_int extends MAVLinkMessage {
         this.hdg = hdg;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -171,7 +191,7 @@ public class msg_global_position_int extends MAVLinkMessage {
      */
     public msg_global_position_int(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GLOBAL_POSITION_INT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -186,7 +206,7 @@ public class msg_global_position_int extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GLOBAL_POSITION_INT - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" lat:"+lat+" lon:"+lon+" alt:"+alt+" relative_alt:"+relative_alt+" vx:"+vx+" vy:"+vy+" vz:"+vz+" hdg:"+hdg+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

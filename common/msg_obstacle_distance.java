@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Obstacle distances in front of the sensor, starting from the left in increment degrees to the right
  */
@@ -19,50 +21,68 @@ public class msg_obstacle_distance extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 167;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OBSTACLE_DISTANCE;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Distance of obstacles around the vehicle with index 0 corresponding to north + angle_offset, unless otherwise specified in the frame. A value of 0 is valid and means that the obstacle is practically touching the sensor. A value of max_distance +1 means no obstacle is present. A value of UINT16_MAX for unknown/not used. In a array element, one unit corresponds to 1cm.
      */
+    @Description("Distance of obstacles around the vehicle with index 0 corresponding to north + angle_offset, unless otherwise specified in the frame. A value of 0 is valid and means that the obstacle is practically touching the sensor. A value of max_distance +1 means no obstacle is present. A value of UINT16_MAX for unknown/not used. In a array element, one unit corresponds to 1cm.")
+    @Units("cm")
     public int distances[] = new int[72];
-      
+    
     /**
      * Minimum distance the sensor can measure.
      */
+    @Description("Minimum distance the sensor can measure.")
+    @Units("cm")
     public int min_distance;
-      
+    
     /**
      * Maximum distance the sensor can measure.
      */
+    @Description("Maximum distance the sensor can measure.")
+    @Units("cm")
     public int max_distance;
-      
+    
     /**
      * Class id of the distance sensor type.
      */
+    @Description("Class id of the distance sensor type.")
+    @Units("")
     public short sensor_type;
-      
+    
     /**
      * Angular width in degrees of each array element. Increment direction is clockwise. This field is ignored if increment_f is non-zero.
      */
+    @Description("Angular width in degrees of each array element. Increment direction is clockwise. This field is ignored if increment_f is non-zero.")
+    @Units("deg")
     public short increment;
-      
+    
     /**
      * Angular width in degrees of each array element as a float. If non-zero then this value is used instead of the uint8_t increment field. Positive is clockwise direction, negative is counter-clockwise.
      */
+    @Description("Angular width in degrees of each array element as a float. If non-zero then this value is used instead of the uint8_t increment field. Positive is clockwise direction, negative is counter-clockwise.")
+    @Units("deg")
     public float increment_f;
-      
+    
     /**
      * Relative angle offset of the 0-index element in the distances array. Value of 0 corresponds to forward. Positive is clockwise direction, negative is counter-clockwise.
      */
+    @Description("Relative angle offset of the 0-index element in the distances array. Value of 0 corresponds to forward. Positive is clockwise direction, negative is counter-clockwise.")
+    @Units("deg")
     public float angle_offset;
-      
+    
     /**
      * Coordinate frame of reference for the yaw rotation and offset of the sensor data. Defaults to MAV_FRAME_GLOBAL, which is north aligned. For body-mounted sensors use MAV_FRAME_BODY_FRD, which is vehicle front aligned.
      */
+    @Description("Coordinate frame of reference for the yaw rotation and offset of the sensor data. Defaults to MAV_FRAME_GLOBAL, which is north aligned. For body-mounted sensors use MAV_FRAME_BODY_FRD, which is vehicle front aligned.")
+    @Units("")
     public short frame;
     
 
@@ -76,7 +96,7 @@ public class msg_obstacle_distance extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_OBSTACLE_DISTANCE;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < distances.length; i++) {
@@ -105,9 +125,9 @@ public class msg_obstacle_distance extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.distances.length; i++) {
             this.distances[i] = payload.getUnsignedShort();
         }
@@ -131,7 +151,7 @@ public class msg_obstacle_distance extends MAVLinkMessage {
     public msg_obstacle_distance() {
         this.msgid = MAVLINK_MSG_ID_OBSTACLE_DISTANCE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -149,7 +169,7 @@ public class msg_obstacle_distance extends MAVLinkMessage {
         this.frame = frame;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -178,7 +198,7 @@ public class msg_obstacle_distance extends MAVLinkMessage {
      */
     public msg_obstacle_distance(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_OBSTACLE_DISTANCE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -193,7 +213,7 @@ public class msg_obstacle_distance extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_OBSTACLE_DISTANCE - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" distances:"+distances+" min_distance:"+min_distance+" max_distance:"+max_distance+" sensor_type:"+sensor_type+" increment:"+increment+" increment_f:"+increment_f+" angle_offset:"+angle_offset+" frame:"+frame+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

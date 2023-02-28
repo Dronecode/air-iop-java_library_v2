@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Current motion information from a designated system
  */
@@ -19,60 +21,82 @@ public class msg_follow_target extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 93;
     private static final long serialVersionUID = MAVLINK_MSG_ID_FOLLOW_TARGET;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long timestamp;
-      
+    
     /**
      * button states or switches of a tracker device
      */
+    @Description("button states or switches of a tracker device")
+    @Units("")
     public long custom_state;
-      
+    
     /**
      * Latitude (WGS84)
      */
+    @Description("Latitude (WGS84)")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude (WGS84)
      */
+    @Description("Longitude (WGS84)")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude (MSL)
      */
+    @Description("Altitude (MSL)")
+    @Units("m")
     public float alt;
-      
+    
     /**
      * target velocity (0,0,0) for unknown
      */
+    @Description("target velocity (0,0,0) for unknown")
+    @Units("m/s")
     public float vel[] = new float[3];
-      
+    
     /**
      * linear target acceleration (0,0,0) for unknown
      */
+    @Description("linear target acceleration (0,0,0) for unknown")
+    @Units("m/s/s")
     public float acc[] = new float[3];
-      
+    
     /**
      * (0 0 0 0 for unknown)
      */
+    @Description("(0 0 0 0 for unknown)")
+    @Units("")
     public float attitude_q[] = new float[4];
-      
+    
     /**
      * (0 0 0 for unknown)
      */
+    @Description("(0 0 0 for unknown)")
+    @Units("")
     public float rates[] = new float[3];
-      
+    
     /**
      * eph epv
      */
+    @Description("eph epv")
+    @Units("")
     public float position_cov[] = new float[3];
-      
+    
     /**
      * bit positions for tracker reporting capabilities (POS = 0, VEL = 1, ACCEL = 2, ATT + RATES = 3)
      */
+    @Description("bit positions for tracker reporting capabilities (POS = 0, VEL = 1, ACCEL = 2, ATT + RATES = 3)")
+    @Units("")
     public short est_capabilities;
     
 
@@ -86,7 +110,7 @@ public class msg_follow_target extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_FOLLOW_TARGET;
-        
+
         packet.payload.putUnsignedLong(timestamp);
         packet.payload.putUnsignedLong(custom_state);
         packet.payload.putInt(lat);
@@ -133,33 +157,33 @@ public class msg_follow_target extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.timestamp = payload.getUnsignedLong();
         this.custom_state = payload.getUnsignedLong();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
         this.alt = payload.getFloat();
-         
+        
         for (int i = 0; i < this.vel.length; i++) {
             this.vel[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.acc.length; i++) {
             this.acc[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.attitude_q.length; i++) {
             this.attitude_q[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.rates.length; i++) {
             this.rates[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.position_cov.length; i++) {
             this.position_cov[i] = payload.getFloat();
         }
@@ -177,7 +201,7 @@ public class msg_follow_target extends MAVLinkMessage {
     public msg_follow_target() {
         this.msgid = MAVLINK_MSG_ID_FOLLOW_TARGET;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -197,7 +221,7 @@ public class msg_follow_target extends MAVLinkMessage {
         this.est_capabilities = est_capabilities;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -228,7 +252,7 @@ public class msg_follow_target extends MAVLinkMessage {
      */
     public msg_follow_target(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_FOLLOW_TARGET;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -243,7 +267,7 @@ public class msg_follow_target extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_FOLLOW_TARGET - sysid:"+sysid+" compid:"+compid+" timestamp:"+timestamp+" custom_state:"+custom_state+" lat:"+lat+" lon:"+lon+" alt:"+alt+" vel:"+vel+" acc:"+acc+" attitude_q:"+attitude_q+" rates:"+rates+" position_cov:"+position_cov+" est_capabilities:"+est_capabilities+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

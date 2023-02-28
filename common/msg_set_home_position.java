@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * 
         Sets the home position.
@@ -27,65 +29,89 @@ public class msg_set_home_position extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 61;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SET_HOME_POSITION;
 
-      
+    
     /**
      * Latitude (WGS84)
      */
+    @Description("Latitude (WGS84)")
+    @Units("degE7")
     public int latitude;
-      
+    
     /**
      * Longitude (WGS84)
      */
+    @Description("Longitude (WGS84)")
+    @Units("degE7")
     public int longitude;
-      
+    
     /**
      * Altitude (MSL). Positive for up.
      */
+    @Description("Altitude (MSL). Positive for up.")
+    @Units("mm")
     public int altitude;
-      
+    
     /**
-     * Local X position of this position in the local coordinate frame
+     * Local X position of this position in the local coordinate frame (NED)
      */
+    @Description("Local X position of this position in the local coordinate frame (NED)")
+    @Units("m")
     public float x;
-      
+    
     /**
-     * Local Y position of this position in the local coordinate frame
+     * Local Y position of this position in the local coordinate frame (NED)
      */
+    @Description("Local Y position of this position in the local coordinate frame (NED)")
+    @Units("m")
     public float y;
-      
+    
     /**
-     * Local Z position of this position in the local coordinate frame
+     * Local Z position of this position in the local coordinate frame (NED: positive 'down')
      */
+    @Description("Local Z position of this position in the local coordinate frame (NED: positive 'down')")
+    @Units("m")
     public float z;
-      
+    
     /**
      * World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground
      */
+    @Description("World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground")
+    @Units("")
     public float q[] = new float[4];
-      
+    
     /**
      * Local X position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.
      */
+    @Description("Local X position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.")
+    @Units("m")
     public float approach_x;
-      
+    
     /**
      * Local Y position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.
      */
+    @Description("Local Y position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.")
+    @Units("m")
     public float approach_y;
-      
+    
     /**
      * Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.
      */
+    @Description("Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.")
+    @Units("m")
     public float approach_z;
-      
+    
     /**
      * System ID.
      */
+    @Description("System ID.")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
     
 
@@ -99,7 +125,7 @@ public class msg_set_home_position extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SET_HOME_POSITION;
-        
+
         packet.payload.putInt(latitude);
         packet.payload.putInt(longitude);
         packet.payload.putInt(altitude);
@@ -131,14 +157,14 @@ public class msg_set_home_position extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.latitude = payload.getInt();
         this.longitude = payload.getInt();
         this.altitude = payload.getInt();
         this.x = payload.getFloat();
         this.y = payload.getFloat();
         this.z = payload.getFloat();
-         
+        
         for (int i = 0; i < this.q.length; i++) {
             this.q[i] = payload.getFloat();
         }
@@ -160,7 +186,7 @@ public class msg_set_home_position extends MAVLinkMessage {
     public msg_set_home_position() {
         this.msgid = MAVLINK_MSG_ID_SET_HOME_POSITION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -181,7 +207,7 @@ public class msg_set_home_position extends MAVLinkMessage {
         this.time_usec = time_usec;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -213,7 +239,7 @@ public class msg_set_home_position extends MAVLinkMessage {
      */
     public msg_set_home_position(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SET_HOME_POSITION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -228,7 +254,7 @@ public class msg_set_home_position extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SET_HOME_POSITION - sysid:"+sysid+" compid:"+compid+" latitude:"+latitude+" longitude:"+longitude+" altitude:"+altitude+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" approach_x:"+approach_x+" approach_y:"+approach_y+" approach_z:"+approach_z+" target_system:"+target_system+" time_usec:"+time_usec+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

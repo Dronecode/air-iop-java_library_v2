@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Yaw behaviour during orbit flight.
  */
 public class ORBIT_YAW_BEHAVIOUR {

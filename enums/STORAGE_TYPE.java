@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags to indicate the type of storage.
  */
 public class STORAGE_TYPE {

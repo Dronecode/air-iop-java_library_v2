@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * 
  */
 public class MAVLINK_DATA_STREAM_TYPE {

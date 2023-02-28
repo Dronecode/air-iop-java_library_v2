@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Sent from autopilot to simulation. Hardware in the loop control outputs
  */
@@ -19,60 +21,82 @@ public class msg_hil_controls extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 42;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIL_CONTROLS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Control output -1 .. 1
      */
+    @Description("Control output -1 .. 1")
+    @Units("")
     public float roll_ailerons;
-      
+    
     /**
      * Control output -1 .. 1
      */
+    @Description("Control output -1 .. 1")
+    @Units("")
     public float pitch_elevator;
-      
+    
     /**
      * Control output -1 .. 1
      */
+    @Description("Control output -1 .. 1")
+    @Units("")
     public float yaw_rudder;
-      
+    
     /**
      * Throttle 0 .. 1
      */
+    @Description("Throttle 0 .. 1")
+    @Units("")
     public float throttle;
-      
+    
     /**
      * Aux 1, -1 .. 1
      */
+    @Description("Aux 1, -1 .. 1")
+    @Units("")
     public float aux1;
-      
+    
     /**
      * Aux 2, -1 .. 1
      */
+    @Description("Aux 2, -1 .. 1")
+    @Units("")
     public float aux2;
-      
+    
     /**
      * Aux 3, -1 .. 1
      */
+    @Description("Aux 3, -1 .. 1")
+    @Units("")
     public float aux3;
-      
+    
     /**
      * Aux 4, -1 .. 1
      */
+    @Description("Aux 4, -1 .. 1")
+    @Units("")
     public float aux4;
-      
+    
     /**
      * System mode.
      */
+    @Description("System mode.")
+    @Units("")
     public short mode;
-      
+    
     /**
      * Navigation mode (MAV_NAV_MODE)
      */
+    @Description("Navigation mode (MAV_NAV_MODE)")
+    @Units("")
     public short nav_mode;
     
 
@@ -86,7 +110,7 @@ public class msg_hil_controls extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIL_CONTROLS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(roll_ailerons);
         packet.payload.putFloat(pitch_elevator);
@@ -113,7 +137,7 @@ public class msg_hil_controls extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.roll_ailerons = payload.getFloat();
         this.pitch_elevator = payload.getFloat();
@@ -137,7 +161,7 @@ public class msg_hil_controls extends MAVLinkMessage {
     public msg_hil_controls() {
         this.msgid = MAVLINK_MSG_ID_HIL_CONTROLS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +181,7 @@ public class msg_hil_controls extends MAVLinkMessage {
         this.nav_mode = nav_mode;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -188,7 +212,7 @@ public class msg_hil_controls extends MAVLinkMessage {
      */
     public msg_hil_controls(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIL_CONTROLS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -203,7 +227,7 @@ public class msg_hil_controls extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIL_CONTROLS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" roll_ailerons:"+roll_ailerons+" pitch_elevator:"+pitch_elevator+" yaw_rudder:"+yaw_rudder+" throttle:"+throttle+" aux1:"+aux1+" aux2:"+aux2+" aux3:"+aux3+" aux4:"+aux4+" mode:"+mode+" nav_mode:"+nav_mode+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

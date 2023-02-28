@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags in ESTIMATOR_STATUS message
  */
 public class ESTIMATOR_STATUS_FLAGS {

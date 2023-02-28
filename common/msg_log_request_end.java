@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Stop log transfer and resume normal logging
  */
@@ -19,15 +21,19 @@ public class msg_log_request_end extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 2;
     private static final long serialVersionUID = MAVLINK_MSG_ID_LOG_REQUEST_END;
 
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
     
 
@@ -41,7 +47,7 @@ public class msg_log_request_end extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_LOG_REQUEST_END;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
         
@@ -59,7 +65,7 @@ public class msg_log_request_end extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
         
@@ -74,7 +80,7 @@ public class msg_log_request_end extends MAVLinkMessage {
     public msg_log_request_end() {
         this.msgid = MAVLINK_MSG_ID_LOG_REQUEST_END;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +91,7 @@ public class msg_log_request_end extends MAVLinkMessage {
         this.target_component = target_component;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -107,7 +113,7 @@ public class msg_log_request_end extends MAVLinkMessage {
      */
     public msg_log_request_end(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_LOG_REQUEST_END;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -122,7 +128,7 @@ public class msg_log_request_end extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_LOG_REQUEST_END - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" target_component:"+target_component+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

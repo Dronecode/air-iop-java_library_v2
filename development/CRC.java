@@ -64,7 +64,6 @@ public class CRC {
         MAVLINK_MESSAGE_CRCS.put(49, 39);
         MAVLINK_MESSAGE_CRCS.put(50, 78);
         MAVLINK_MESSAGE_CRCS.put(51, 196);
-        MAVLINK_MESSAGE_CRCS.put(52, 132);
         MAVLINK_MESSAGE_CRCS.put(53, 3);
         MAVLINK_MESSAGE_CRCS.put(54, 15);
         MAVLINK_MESSAGE_CRCS.put(55, 3);
@@ -196,7 +195,7 @@ public class CRC {
         MAVLINK_MESSAGE_CRCS.put(288, 20);
         MAVLINK_MESSAGE_CRCS.put(290, 251);
         MAVLINK_MESSAGE_CRCS.put(291, 10);
-        MAVLINK_MESSAGE_CRCS.put(295, 41);
+        MAVLINK_MESSAGE_CRCS.put(295, 234);
         MAVLINK_MESSAGE_CRCS.put(298, 237);
         MAVLINK_MESSAGE_CRCS.put(299, 19);
         MAVLINK_MESSAGE_CRCS.put(300, 217);
@@ -220,6 +219,7 @@ public class CRC {
         MAVLINK_MESSAGE_CRCS.put(350, 232);
         MAVLINK_MESSAGE_CRCS.put(360, 11);
         MAVLINK_MESSAGE_CRCS.put(361, 93);
+        MAVLINK_MESSAGE_CRCS.put(369, 151);
         MAVLINK_MESSAGE_CRCS.put(370, 75);
         MAVLINK_MESSAGE_CRCS.put(373, 117);
         MAVLINK_MESSAGE_CRCS.put(375, 251);
@@ -230,7 +230,7 @@ public class CRC {
         MAVLINK_MESSAGE_CRCS.put(388, 8);
         MAVLINK_MESSAGE_CRCS.put(390, 156);
         MAVLINK_MESSAGE_CRCS.put(395, 0);
-        MAVLINK_MESSAGE_CRCS.put(396, 122);
+        MAVLINK_MESSAGE_CRCS.put(396, 129);
         MAVLINK_MESSAGE_CRCS.put(397, 182);
         MAVLINK_MESSAGE_CRCS.put(400, 110);
         MAVLINK_MESSAGE_CRCS.put(401, 183);
@@ -251,6 +251,8 @@ public class CRC {
         MAVLINK_MESSAGE_CRCS.put(12904, 77);
         MAVLINK_MESSAGE_CRCS.put(12905, 49);
         MAVLINK_MESSAGE_CRCS.put(12915, 94);
+        MAVLINK_MESSAGE_CRCS.put(12918, 139);
+        MAVLINK_MESSAGE_CRCS.put(12919, 7);
         MAVLINK_MESSAGE_CRCS.put(12920, 20);
         
     }

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Stream status flags (Bitmap)
  */
 public class VIDEO_STREAM_STATUS_FLAGS {

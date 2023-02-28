@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Simulated optical flow from a flow sensor (e.g. PX4FLOW or optical mouse sensor)
  */
@@ -19,65 +21,89 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 44;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIL_OPTICAL_FLOW;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Integration time. Divide integrated_x and integrated_y by the integration time to obtain average flow. The integration time also indicates the.
      */
+    @Description("Integration time. Divide integrated_x and integrated_y by the integration time to obtain average flow. The integration time also indicates the.")
+    @Units("us")
     public long integration_time_us;
-      
+    
     /**
      * Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)
      */
+    @Description("Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)")
+    @Units("rad")
     public float integrated_x;
-      
+    
     /**
      * Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)
      */
+    @Description("Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)")
+    @Units("rad")
     public float integrated_y;
-      
+    
     /**
      * RH rotation around X axis
      */
+    @Description("RH rotation around X axis")
+    @Units("rad")
     public float integrated_xgyro;
-      
+    
     /**
      * RH rotation around Y axis
      */
+    @Description("RH rotation around Y axis")
+    @Units("rad")
     public float integrated_ygyro;
-      
+    
     /**
      * RH rotation around Z axis
      */
+    @Description("RH rotation around Z axis")
+    @Units("rad")
     public float integrated_zgyro;
-      
+    
     /**
      * Time since the distance was sampled.
      */
+    @Description("Time since the distance was sampled.")
+    @Units("us")
     public long time_delta_distance_us;
-      
+    
     /**
      * Distance to the center of the flow field. Positive value (including zero): distance known. Negative value: Unknown distance.
      */
+    @Description("Distance to the center of the flow field. Positive value (including zero): distance known. Negative value: Unknown distance.")
+    @Units("m")
     public float distance;
-      
+    
     /**
      * Temperature
      */
+    @Description("Temperature")
+    @Units("cdegC")
     public short temperature;
-      
+    
     /**
      * Sensor ID
      */
+    @Description("Sensor ID")
+    @Units("")
     public short sensor_id;
-      
+    
     /**
      * Optical flow quality / confidence. 0: no valid flow, 255: maximum quality
      */
+    @Description("Optical flow quality / confidence. 0: no valid flow, 255: maximum quality")
+    @Units("")
     public short quality;
     
 
@@ -91,7 +117,7 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIL_OPTICAL_FLOW;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putUnsignedInt(integration_time_us);
         packet.payload.putFloat(integrated_x);
@@ -119,7 +145,7 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.integration_time_us = payload.getUnsignedInt();
         this.integrated_x = payload.getFloat();
@@ -144,7 +170,7 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
     public msg_hil_optical_flow() {
         this.msgid = MAVLINK_MSG_ID_HIL_OPTICAL_FLOW;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -165,7 +191,7 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
         this.quality = quality;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -197,7 +223,7 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
      */
     public msg_hil_optical_flow(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIL_OPTICAL_FLOW;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -212,7 +238,7 @@ public class msg_hil_optical_flow extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIL_OPTICAL_FLOW - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" integration_time_us:"+integration_time_us+" integrated_x:"+integrated_x+" integrated_y:"+integrated_y+" integrated_xgyro:"+integrated_xgyro+" integrated_ygyro:"+integrated_ygyro+" integrated_zgyro:"+integrated_zgyro+" time_delta_distance_us:"+time_delta_distance_us+" distance:"+distance+" temperature:"+temperature+" sensor_id:"+sensor_id+" quality:"+quality+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

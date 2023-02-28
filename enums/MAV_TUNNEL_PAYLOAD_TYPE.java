@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * 
  */
 public class MAV_TUNNEL_PAYLOAD_TYPE {

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Large debug/prototyping array. The message uses the maximum available payload for data. The array_id and name fields are used to discriminate between messages in code and in user interfaces (respectively). Do not use in production code.
  */
@@ -19,25 +21,33 @@ public class msg_debug_float_array extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 252;
     private static final long serialVersionUID = MAVLINK_MSG_ID_DEBUG_FLOAT_ARRAY;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Unique ID used to discriminate between arrays
      */
+    @Description("Unique ID used to discriminate between arrays")
+    @Units("")
     public int array_id;
-      
+    
     /**
      * Name, for human-friendly display in a Ground Control Station
      */
+    @Description("Name, for human-friendly display in a Ground Control Station")
+    @Units("")
     public byte name[] = new byte[10];
-      
+    
     /**
      * data
      */
+    @Description("data")
+    @Units("")
     public float data[] = new float[58];
     
 
@@ -51,7 +61,7 @@ public class msg_debug_float_array extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_DEBUG_FLOAT_ARRAY;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putUnsignedShort(array_id);
         
@@ -79,17 +89,17 @@ public class msg_debug_float_array extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.array_id = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.name.length; i++) {
             this.name[i] = payload.getByte();
         }
                 
         
         if (isMavlink2) {
-              
+             
         for (int i = 0; i < this.data.length; i++) {
             this.data[i] = payload.getFloat();
         }
@@ -104,7 +114,7 @@ public class msg_debug_float_array extends MAVLinkMessage {
     public msg_debug_float_array() {
         this.msgid = MAVLINK_MSG_ID_DEBUG_FLOAT_ARRAY;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +127,7 @@ public class msg_debug_float_array extends MAVLinkMessage {
         this.data = data;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -141,7 +151,7 @@ public class msg_debug_float_array extends MAVLinkMessage {
      */
     public msg_debug_float_array(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_DEBUG_FLOAT_ARRAY;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -185,7 +195,7 @@ public class msg_debug_float_array extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_DEBUG_FLOAT_ARRAY - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" array_id:"+array_id+" name:"+name+" data:"+data+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

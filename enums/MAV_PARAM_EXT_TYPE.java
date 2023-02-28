@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Specifies the datatype of a MAVLink extended parameter.
  */
 public class MAV_PARAM_EXT_TYPE {

@@ -9,46 +9,67 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
- * Basic component information data.
+ * Basic component information data. Should be requested using MAV_CMD_REQUEST_MESSAGE on startup, or when required.
  */
 public class msg_component_information_basic extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC = 396;
-    public static final int MAVLINK_MSG_LENGTH = 124;
+    public static final int MAVLINK_MSG_LENGTH = 156;
     private static final long serialVersionUID = MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC;
 
-      
+    
     /**
      * Component capability flags
      */
+    @Description("Component capability flags")
+    @Units("")
     public long capabilities;
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
-     * Name of the component vendor
+     * Name of the component vendor. Needs to be zero terminated. The field is optional and can be empty/all zeros.
      */
-    public short vendor_name[] = new short[32];
-      
+    @Description("Name of the component vendor. Needs to be zero terminated. The field is optional and can be empty/all zeros.")
+    @Units("")
+    public byte vendor_name[] = new byte[32];
+    
     /**
-     * Name of the component model
+     * Name of the component model. Needs to be zero terminated. The field is optional and can be empty/all zeros.
      */
-    public short model_name[] = new short[32];
-      
+    @Description("Name of the component model. Needs to be zero terminated. The field is optional and can be empty/all zeros.")
+    @Units("")
+    public byte model_name[] = new byte[32];
+    
     /**
-     * Software version. The version format can be custom, recommended is SEMVER 'major.minor.patch'.
+     * Software version. The recommended format is SEMVER: 'major.minor.patch'  (any format may be used). The field must be zero terminated if it has a value. The field is optional and can be empty/all zeros.
      */
+    @Description("Software version. The recommended format is SEMVER: 'major.minor.patch'  (any format may be used). The field must be zero terminated if it has a value. The field is optional and can be empty/all zeros.")
+    @Units("")
     public byte software_version[] = new byte[24];
-      
+    
     /**
-     * Hardware version. The version format can be custom, recommended is SEMVER 'major.minor.patch'.
+     * Hardware version. The recommended format is SEMVER: 'major.minor.patch'  (any format may be used). The field must be zero terminated if it has a value. The field is optional and can be empty/all zeros.
      */
+    @Description("Hardware version. The recommended format is SEMVER: 'major.minor.patch'  (any format may be used). The field must be zero terminated if it has a value. The field is optional and can be empty/all zeros.")
+    @Units("")
     public byte hardware_version[] = new byte[24];
+    
+    /**
+     * Hardware serial number. The field must be zero terminated if it has a value. The field is optional and can be empty/all zeros.
+     */
+    @Description("Hardware serial number. The field must be zero terminated if it has a value. The field is optional and can be empty/all zeros.")
+    @Units("")
+    public byte serial_number[] = new byte[32];
     
 
     /**
@@ -61,17 +82,17 @@ public class msg_component_information_basic extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC;
-        
+
         packet.payload.putUnsignedLong(capabilities);
         packet.payload.putUnsignedInt(time_boot_ms);
         
         for (int i = 0; i < vendor_name.length; i++) {
-            packet.payload.putUnsignedByte(vendor_name[i]);
+            packet.payload.putByte(vendor_name[i]);
         }
                     
         
         for (int i = 0; i < model_name.length; i++) {
-            packet.payload.putUnsignedByte(model_name[i]);
+            packet.payload.putByte(model_name[i]);
         }
                     
         
@@ -82,6 +103,11 @@ public class msg_component_information_basic extends MAVLinkMessage {
         
         for (int i = 0; i < hardware_version.length; i++) {
             packet.payload.putByte(hardware_version[i]);
+        }
+                    
+        
+        for (int i = 0; i < serial_number.length; i++) {
+            packet.payload.putByte(serial_number[i]);
         }
                     
         
@@ -99,27 +125,32 @@ public class msg_component_information_basic extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.capabilities = payload.getUnsignedLong();
         this.time_boot_ms = payload.getUnsignedInt();
-         
+        
         for (int i = 0; i < this.vendor_name.length; i++) {
-            this.vendor_name[i] = payload.getUnsignedByte();
+            this.vendor_name[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.model_name.length; i++) {
-            this.model_name[i] = payload.getUnsignedByte();
+            this.model_name[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.software_version.length; i++) {
             this.software_version[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.hardware_version.length; i++) {
             this.hardware_version[i] = payload.getByte();
+        }
+                
+        
+        for (int i = 0; i < this.serial_number.length; i++) {
+            this.serial_number[i] = payload.getByte();
         }
                 
         
@@ -134,11 +165,11 @@ public class msg_component_information_basic extends MAVLinkMessage {
     public msg_component_information_basic() {
         this.msgid = MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_component_information_basic( long capabilities, long time_boot_ms, short[] vendor_name, short[] model_name, byte[] software_version, byte[] hardware_version) {
+    public msg_component_information_basic( long capabilities, long time_boot_ms, byte[] vendor_name, byte[] model_name, byte[] software_version, byte[] hardware_version, byte[] serial_number) {
         this.msgid = MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC;
 
         this.capabilities = capabilities;
@@ -147,13 +178,14 @@ public class msg_component_information_basic extends MAVLinkMessage {
         this.model_name = model_name;
         this.software_version = software_version;
         this.hardware_version = hardware_version;
+        this.serial_number = serial_number;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_component_information_basic( long capabilities, long time_boot_ms, short[] vendor_name, short[] model_name, byte[] software_version, byte[] hardware_version, int sysid, int compid, boolean isMavlink2) {
+    public msg_component_information_basic( long capabilities, long time_boot_ms, byte[] vendor_name, byte[] model_name, byte[] software_version, byte[] hardware_version, byte[] serial_number, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC;
         this.sysid = sysid;
         this.compid = compid;
@@ -165,6 +197,7 @@ public class msg_component_information_basic extends MAVLinkMessage {
         this.model_name = model_name;
         this.software_version = software_version;
         this.hardware_version = hardware_version;
+        this.serial_number = serial_number;
         
     }
 
@@ -175,14 +208,72 @@ public class msg_component_information_basic extends MAVLinkMessage {
      */
     public msg_component_information_basic(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
         unpack(mavLinkPacket.payload);
     }
 
-             
+         
+    /**
+    * Sets the buffer of this message with a string, adds the necessary padding
+    */
+    public void setVendor_Name(String str) {
+        int len = Math.min(str.length(), 32);
+        for (int i=0; i<len; i++) {
+            vendor_name[i] = (byte) str.charAt(i);
+        }
+
+        for (int i=len; i<32; i++) {            // padding for the rest of the buffer
+            vendor_name[i] = 0;
+        }
+    }
+
+    /**
+    * Gets the message, formatted as a string
+    */
+    public String getVendor_Name() {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < 32; i++) {
+            if (vendor_name[i] != 0)
+                buf.append((char) vendor_name[i]);
+            else
+                break;
+        }
+        return buf.toString();
+
+    }
+                          
+    /**
+    * Sets the buffer of this message with a string, adds the necessary padding
+    */
+    public void setModel_Name(String str) {
+        int len = Math.min(str.length(), 32);
+        for (int i=0; i<len; i++) {
+            model_name[i] = (byte) str.charAt(i);
+        }
+
+        for (int i=len; i<32; i++) {            // padding for the rest of the buffer
+            model_name[i] = 0;
+        }
+    }
+
+    /**
+    * Gets the message, formatted as a string
+    */
+    public String getModel_Name() {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < 32; i++) {
+            if (model_name[i] != 0)
+                buf.append((char) model_name[i]);
+            else
+                break;
+        }
+        return buf.toString();
+
+    }
+                          
     /**
     * Sets the buffer of this message with a string, adds the necessary padding
     */
@@ -240,15 +331,44 @@ public class msg_component_information_basic extends MAVLinkMessage {
         return buf.toString();
 
     }
+                          
+    /**
+    * Sets the buffer of this message with a string, adds the necessary padding
+    */
+    public void setSerial_Number(String str) {
+        int len = Math.min(str.length(), 32);
+        for (int i=0; i<len; i++) {
+            serial_number[i] = (byte) str.charAt(i);
+        }
+
+        for (int i=len; i<32; i++) {            // padding for the rest of the buffer
+            serial_number[i] = 0;
+        }
+    }
+
+    /**
+    * Gets the message, formatted as a string
+    */
+    public String getSerial_Number() {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < 32; i++) {
+            if (serial_number[i] != 0)
+                buf.append((char) serial_number[i]);
+            else
+                break;
+        }
+        return buf.toString();
+
+    }
                          
     /**
      * Returns a string with the MSG name and data
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC - sysid:"+sysid+" compid:"+compid+" capabilities:"+capabilities+" time_boot_ms:"+time_boot_ms+" vendor_name:"+vendor_name+" model_name:"+model_name+" software_version:"+software_version+" hardware_version:"+hardware_version+"";
+        return "MAVLINK_MSG_ID_COMPONENT_INFORMATION_BASIC - sysid:"+sysid+" compid:"+compid+" capabilities:"+capabilities+" time_boot_ms:"+time_boot_ms+" vendor_name:"+vendor_name+" model_name:"+model_name+" software_version:"+software_version+" hardware_version:"+hardware_version+" serial_number:"+serial_number+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

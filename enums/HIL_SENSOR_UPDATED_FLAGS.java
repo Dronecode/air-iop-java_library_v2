@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags in the HIL_SENSOR message indicate which fields have updated since the last message
  */
 public class HIL_SENSOR_UPDATED_FLAGS {

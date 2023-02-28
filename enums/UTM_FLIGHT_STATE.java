@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Airborne status of UAS.
  */
 public class UTM_FLIGHT_STATE {

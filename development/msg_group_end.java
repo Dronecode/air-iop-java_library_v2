@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Emitted during mission execution when control reaches MAV_CMD_GROUP_END.
  */
@@ -19,21 +21,26 @@ public class msg_group_end extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 16;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GROUP_END;
 
-      
+    
     /**
-     * Timestamp (UNIX Epoch time or time since system boot).
-        The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
+     * Timestamp (UNIX Epoch time or time since system boot).         The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot).         The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Mission-unique group id (from MAV_CMD_GROUP_END).
      */
+    @Description("Mission-unique group id (from MAV_CMD_GROUP_END).")
+    @Units("")
     public long group_id;
-      
+    
     /**
      * CRC32 checksum of current plan for MAV_MISSION_TYPE_ALL. As defined in MISSION_CHECKSUM message.
      */
+    @Description("CRC32 checksum of current plan for MAV_MISSION_TYPE_ALL. As defined in MISSION_CHECKSUM message.")
+    @Units("")
     public long mission_checksum;
     
 
@@ -47,7 +54,7 @@ public class msg_group_end extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GROUP_END;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putUnsignedInt(group_id);
         packet.payload.putUnsignedInt(mission_checksum);
@@ -66,7 +73,7 @@ public class msg_group_end extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.group_id = payload.getUnsignedInt();
         this.mission_checksum = payload.getUnsignedInt();
@@ -82,7 +89,7 @@ public class msg_group_end extends MAVLinkMessage {
     public msg_group_end() {
         this.msgid = MAVLINK_MSG_ID_GROUP_END;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -94,7 +101,7 @@ public class msg_group_end extends MAVLinkMessage {
         this.mission_checksum = mission_checksum;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -117,7 +124,7 @@ public class msg_group_end extends MAVLinkMessage {
      */
     public msg_group_end(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GROUP_END;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -132,7 +139,7 @@ public class msg_group_end extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GROUP_END - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" group_id:"+group_id+" mission_checksum:"+mission_checksum+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

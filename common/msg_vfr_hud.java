@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Metrics typically displayed on a HUD for fixed wing aircraft.
  */
@@ -19,35 +21,47 @@ public class msg_vfr_hud extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 20;
     private static final long serialVersionUID = MAVLINK_MSG_ID_VFR_HUD;
 
-      
+    
     /**
      * Vehicle speed in form appropriate for vehicle type. For standard aircraft this is typically calibrated airspeed (CAS) or indicated airspeed (IAS) - either of which can be used by a pilot to estimate stall speed.
      */
+    @Description("Vehicle speed in form appropriate for vehicle type. For standard aircraft this is typically calibrated airspeed (CAS) or indicated airspeed (IAS) - either of which can be used by a pilot to estimate stall speed.")
+    @Units("m/s")
     public float airspeed;
-      
+    
     /**
      * Current ground speed.
      */
+    @Description("Current ground speed.")
+    @Units("m/s")
     public float groundspeed;
-      
+    
     /**
      * Current altitude (MSL).
      */
+    @Description("Current altitude (MSL).")
+    @Units("m")
     public float alt;
-      
+    
     /**
      * Current climb rate.
      */
+    @Description("Current climb rate.")
+    @Units("m/s")
     public float climb;
-      
+    
     /**
      * Current heading in compass units (0-360, 0=north).
      */
+    @Description("Current heading in compass units (0-360, 0=north).")
+    @Units("deg")
     public short heading;
-      
+    
     /**
      * Current throttle setting (0 to 100).
      */
+    @Description("Current throttle setting (0 to 100).")
+    @Units("%")
     public int throttle;
     
 
@@ -61,7 +75,7 @@ public class msg_vfr_hud extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_VFR_HUD;
-        
+
         packet.payload.putFloat(airspeed);
         packet.payload.putFloat(groundspeed);
         packet.payload.putFloat(alt);
@@ -83,7 +97,7 @@ public class msg_vfr_hud extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.airspeed = payload.getFloat();
         this.groundspeed = payload.getFloat();
         this.alt = payload.getFloat();
@@ -102,7 +116,7 @@ public class msg_vfr_hud extends MAVLinkMessage {
     public msg_vfr_hud() {
         this.msgid = MAVLINK_MSG_ID_VFR_HUD;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +131,7 @@ public class msg_vfr_hud extends MAVLinkMessage {
         this.throttle = throttle;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -143,7 +157,7 @@ public class msg_vfr_hud extends MAVLinkMessage {
      */
     public msg_vfr_hud(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_VFR_HUD;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -158,7 +172,7 @@ public class msg_vfr_hud extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_VFR_HUD - sysid:"+sysid+" compid:"+compid+" airspeed:"+airspeed+" groundspeed:"+groundspeed+" alt:"+alt+" climb:"+climb+" heading:"+heading+" throttle:"+throttle+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

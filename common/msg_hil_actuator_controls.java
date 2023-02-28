@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Sent from autopilot to simulation. Hardware in the loop control outputs (replacement for HIL_CONTROLS)
  */
@@ -19,25 +21,33 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 81;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Flags as bitfield, 1: indicate simulation using lockstep.
      */
+    @Description("Flags as bitfield, 1: indicate simulation using lockstep.")
+    @Units("")
     public long flags;
-      
+    
     /**
      * Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.
      */
+    @Description("Control outputs -1 .. 1. Channel assignment depends on the simulated hardware.")
+    @Units("")
     public float controls[] = new float[16];
-      
+    
     /**
      * System mode. Includes arming state.
      */
+    @Description("System mode. Includes arming state.")
+    @Units("")
     public short mode;
     
 
@@ -51,7 +61,7 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putUnsignedLong(flags);
         
@@ -75,10 +85,10 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.flags = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.controls.length; i++) {
             this.controls[i] = payload.getFloat();
         }
@@ -96,7 +106,7 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
     public msg_hil_actuator_controls() {
         this.msgid = MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +119,7 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
         this.mode = mode;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -133,7 +143,7 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
      */
     public msg_hil_actuator_controls(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -148,7 +158,7 @@ public class msg_hil_actuator_controls extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIL_ACTUATOR_CONTROLS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" flags:"+flags+" controls:"+controls+" mode:"+mode+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

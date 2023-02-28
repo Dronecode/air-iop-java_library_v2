@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * RTK GPS data. Gives information on the relative baseline calculation the GPS is reporting
  */
@@ -19,70 +21,96 @@ public class msg_gps2_rtk extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 35;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GPS2_RTK;
 
-      
+    
     /**
      * Time since boot of last baseline message received.
      */
+    @Description("Time since boot of last baseline message received.")
+    @Units("ms")
     public long time_last_baseline_ms;
-      
+    
     /**
      * GPS Time of Week of last baseline
      */
+    @Description("GPS Time of Week of last baseline")
+    @Units("ms")
     public long tow;
-      
+    
     /**
      * Current baseline in ECEF x or NED north component.
      */
+    @Description("Current baseline in ECEF x or NED north component.")
+    @Units("mm")
     public int baseline_a_mm;
-      
+    
     /**
      * Current baseline in ECEF y or NED east component.
      */
+    @Description("Current baseline in ECEF y or NED east component.")
+    @Units("mm")
     public int baseline_b_mm;
-      
+    
     /**
      * Current baseline in ECEF z or NED down component.
      */
+    @Description("Current baseline in ECEF z or NED down component.")
+    @Units("mm")
     public int baseline_c_mm;
-      
+    
     /**
      * Current estimate of baseline accuracy.
      */
+    @Description("Current estimate of baseline accuracy.")
+    @Units("")
     public long accuracy;
-      
+    
     /**
      * Current number of integer ambiguity hypotheses.
      */
+    @Description("Current number of integer ambiguity hypotheses.")
+    @Units("")
     public int iar_num_hypotheses;
-      
+    
     /**
      * GPS Week Number of last baseline
      */
+    @Description("GPS Week Number of last baseline")
+    @Units("")
     public int wn;
-      
+    
     /**
      * Identification of connected RTK receiver.
      */
+    @Description("Identification of connected RTK receiver.")
+    @Units("")
     public short rtk_receiver_id;
-      
+    
     /**
      * GPS-specific health report for RTK data.
      */
+    @Description("GPS-specific health report for RTK data.")
+    @Units("")
     public short rtk_health;
-      
+    
     /**
      * Rate of baseline messages being received by GPS
      */
+    @Description("Rate of baseline messages being received by GPS")
+    @Units("Hz")
     public short rtk_rate;
-      
+    
     /**
      * Current number of sats used for RTK calculation.
      */
+    @Description("Current number of sats used for RTK calculation.")
+    @Units("")
     public short nsats;
-      
+    
     /**
      * Coordinate system of baseline
      */
+    @Description("Coordinate system of baseline")
+    @Units("")
     public short baseline_coords_type;
     
 
@@ -96,7 +124,7 @@ public class msg_gps2_rtk extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GPS2_RTK;
-        
+
         packet.payload.putUnsignedInt(time_last_baseline_ms);
         packet.payload.putUnsignedInt(tow);
         packet.payload.putInt(baseline_a_mm);
@@ -125,7 +153,7 @@ public class msg_gps2_rtk extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_last_baseline_ms = payload.getUnsignedInt();
         this.tow = payload.getUnsignedInt();
         this.baseline_a_mm = payload.getInt();
@@ -151,7 +179,7 @@ public class msg_gps2_rtk extends MAVLinkMessage {
     public msg_gps2_rtk() {
         this.msgid = MAVLINK_MSG_ID_GPS2_RTK;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -173,7 +201,7 @@ public class msg_gps2_rtk extends MAVLinkMessage {
         this.baseline_coords_type = baseline_coords_type;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -206,7 +234,7 @@ public class msg_gps2_rtk extends MAVLinkMessage {
      */
     public msg_gps2_rtk(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GPS2_RTK;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -221,7 +249,7 @@ public class msg_gps2_rtk extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GPS2_RTK - sysid:"+sysid+" compid:"+compid+" time_last_baseline_ms:"+time_last_baseline_ms+" tow:"+tow+" baseline_a_mm:"+baseline_a_mm+" baseline_b_mm:"+baseline_b_mm+" baseline_c_mm:"+baseline_c_mm+" accuracy:"+accuracy+" iar_num_hypotheses:"+iar_num_hypotheses+" wn:"+wn+" rtk_receiver_id:"+rtk_receiver_id+" rtk_health:"+rtk_health+" rtk_rate:"+rtk_rate+" nsats:"+nsats+" baseline_coords_type:"+baseline_coords_type+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The RAW IMU readings for 3rd 9DOF sensor setup. This message should contain the scaled values to the described units
  */
@@ -19,60 +21,82 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 24;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SCALED_IMU3;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * X acceleration
      */
+    @Description("X acceleration")
+    @Units("mG")
     public short xacc;
-      
+    
     /**
      * Y acceleration
      */
+    @Description("Y acceleration")
+    @Units("mG")
     public short yacc;
-      
+    
     /**
      * Z acceleration
      */
+    @Description("Z acceleration")
+    @Units("mG")
     public short zacc;
-      
+    
     /**
      * Angular speed around X axis
      */
+    @Description("Angular speed around X axis")
+    @Units("mrad/s")
     public short xgyro;
-      
+    
     /**
      * Angular speed around Y axis
      */
+    @Description("Angular speed around Y axis")
+    @Units("mrad/s")
     public short ygyro;
-      
+    
     /**
      * Angular speed around Z axis
      */
+    @Description("Angular speed around Z axis")
+    @Units("mrad/s")
     public short zgyro;
-      
+    
     /**
      * X Magnetic field
      */
+    @Description("X Magnetic field")
+    @Units("mgauss")
     public short xmag;
-      
+    
     /**
      * Y Magnetic field
      */
+    @Description("Y Magnetic field")
+    @Units("mgauss")
     public short ymag;
-      
+    
     /**
      * Z Magnetic field
      */
+    @Description("Z Magnetic field")
+    @Units("mgauss")
     public short zmag;
-      
+    
     /**
      * Temperature, 0: IMU does not provide temperature values. If the IMU is at 0C it must send 1 (0.01C).
      */
+    @Description("Temperature, 0: IMU does not provide temperature values. If the IMU is at 0C it must send 1 (0.01C).")
+    @Units("cdegC")
     public short temperature;
     
 
@@ -86,7 +110,7 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SCALED_IMU3;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putShort(xacc);
         packet.payload.putShort(yacc);
@@ -113,7 +137,7 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.xacc = payload.getShort();
         this.yacc = payload.getShort();
@@ -137,7 +161,7 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
     public msg_scaled_imu3() {
         this.msgid = MAVLINK_MSG_ID_SCALED_IMU3;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +181,7 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
         this.temperature = temperature;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -188,7 +212,7 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
      */
     public msg_scaled_imu3(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SCALED_IMU3;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -203,7 +227,7 @@ public class msg_scaled_imu3 extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SCALED_IMU3 - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" xacc:"+xacc+" yacc:"+yacc+" zacc:"+zacc+" xgyro:"+xgyro+" ygyro:"+ygyro+" zgyro:"+zgyro+" xmag:"+xmag+" ymag:"+ymag+" zmag:"+zmag+" temperature:"+temperature+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

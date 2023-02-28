@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags for the global position report.
  */
 public class UTM_DATA_AVAIL_FLAGS {

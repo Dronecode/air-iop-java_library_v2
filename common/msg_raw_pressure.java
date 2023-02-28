@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The RAW pressure readings for the typical setup of one absolute pressure and one differential pressure sensor. The sensor values should be the raw, UNSCALED ADC values.
  */
@@ -19,30 +21,40 @@ public class msg_raw_pressure extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 16;
     private static final long serialVersionUID = MAVLINK_MSG_ID_RAW_PRESSURE;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Absolute pressure (raw)
      */
+    @Description("Absolute pressure (raw)")
+    @Units("")
     public short press_abs;
-      
+    
     /**
      * Differential pressure 1 (raw, 0 if nonexistent)
      */
+    @Description("Differential pressure 1 (raw, 0 if nonexistent)")
+    @Units("")
     public short press_diff1;
-      
+    
     /**
      * Differential pressure 2 (raw, 0 if nonexistent)
      */
+    @Description("Differential pressure 2 (raw, 0 if nonexistent)")
+    @Units("")
     public short press_diff2;
-      
+    
     /**
      * Raw Temperature measurement (raw)
      */
+    @Description("Raw Temperature measurement (raw)")
+    @Units("")
     public short temperature;
     
 
@@ -56,7 +68,7 @@ public class msg_raw_pressure extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_RAW_PRESSURE;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putShort(press_abs);
         packet.payload.putShort(press_diff1);
@@ -77,7 +89,7 @@ public class msg_raw_pressure extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.press_abs = payload.getShort();
         this.press_diff1 = payload.getShort();
@@ -95,7 +107,7 @@ public class msg_raw_pressure extends MAVLinkMessage {
     public msg_raw_pressure() {
         this.msgid = MAVLINK_MSG_ID_RAW_PRESSURE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +121,7 @@ public class msg_raw_pressure extends MAVLinkMessage {
         this.temperature = temperature;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -134,7 +146,7 @@ public class msg_raw_pressure extends MAVLinkMessage {
      */
     public msg_raw_pressure(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_RAW_PRESSURE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -149,7 +161,7 @@ public class msg_raw_pressure extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_RAW_PRESSURE - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" press_abs:"+press_abs+" press_diff1:"+press_diff1+" press_diff2:"+press_diff2+" temperature:"+temperature+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

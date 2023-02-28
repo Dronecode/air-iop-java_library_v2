@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Tune formats (used for vehicle buzzer/tone generation).
  */
 public class TUNE_FORMAT {

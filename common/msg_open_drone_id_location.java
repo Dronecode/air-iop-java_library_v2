@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Data for filling the OpenDroneID Location message. The float data types are 32-bit IEEE 754. The Location message provides the location, altitude, direction and speed of the aircraft.
  */
@@ -19,100 +21,138 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 59;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OPEN_DRONE_ID_LOCATION;
 
-      
+    
     /**
      * Current latitude of the unmanned aircraft. If unknown: 0 (both Lat/Lon).
      */
+    @Description("Current latitude of the unmanned aircraft. If unknown: 0 (both Lat/Lon).")
+    @Units("degE7")
     public int latitude;
-      
+    
     /**
      * Current longitude of the unmanned aircraft. If unknown: 0 (both Lat/Lon).
      */
+    @Description("Current longitude of the unmanned aircraft. If unknown: 0 (both Lat/Lon).")
+    @Units("degE7")
     public int longitude;
-      
+    
     /**
      * The altitude calculated from the barometric pressue. Reference is against 29.92inHg or 1013.2mb. If unknown: -1000 m.
      */
+    @Description("The altitude calculated from the barometric pressue. Reference is against 29.92inHg or 1013.2mb. If unknown: -1000 m.")
+    @Units("m")
     public float altitude_barometric;
-      
+    
     /**
      * The geodetic altitude as defined by WGS84. If unknown: -1000 m.
      */
+    @Description("The geodetic altitude as defined by WGS84. If unknown: -1000 m.")
+    @Units("m")
     public float altitude_geodetic;
-      
+    
     /**
      * The current height of the unmanned aircraft above the take-off location or the ground as indicated by height_reference. If unknown: -1000 m.
      */
+    @Description("The current height of the unmanned aircraft above the take-off location or the ground as indicated by height_reference. If unknown: -1000 m.")
+    @Units("m")
     public float height;
-      
+    
     /**
      * Seconds after the full hour with reference to UTC time. Typically the GPS outputs a time-of-week value in milliseconds. First convert that to UTC and then convert for this field using ((float) (time_week_ms % (60*60*1000))) / 1000. If unknown: 0xFFFF.
      */
+    @Description("Seconds after the full hour with reference to UTC time. Typically the GPS outputs a time-of-week value in milliseconds. First convert that to UTC and then convert for this field using ((float) (time_week_ms % (60*60*1000))) / 1000. If unknown: 0xFFFF.")
+    @Units("s")
     public float timestamp;
-      
+    
     /**
      * Direction over ground (not heading, but direction of movement) measured clockwise from true North: 0 - 35999 centi-degrees. If unknown: 36100 centi-degrees.
      */
+    @Description("Direction over ground (not heading, but direction of movement) measured clockwise from true North: 0 - 35999 centi-degrees. If unknown: 36100 centi-degrees.")
+    @Units("cdeg")
     public int direction;
-      
+    
     /**
      * Ground speed. Positive only. If unknown: 25500 cm/s. If speed is larger than 25425 cm/s, use 25425 cm/s.
      */
+    @Description("Ground speed. Positive only. If unknown: 25500 cm/s. If speed is larger than 25425 cm/s, use 25425 cm/s.")
+    @Units("cm/s")
     public int speed_horizontal;
-      
+    
     /**
      * The vertical speed. Up is positive. If unknown: 6300 cm/s. If speed is larger than 6200 cm/s, use 6200 cm/s. If lower than -6200 cm/s, use -6200 cm/s.
      */
+    @Description("The vertical speed. Up is positive. If unknown: 6300 cm/s. If speed is larger than 6200 cm/s, use 6200 cm/s. If lower than -6200 cm/s, use -6200 cm/s.")
+    @Units("cm/s")
     public short speed_vertical;
-      
+    
     /**
      * System ID (0 for broadcast).
      */
+    @Description("System ID (0 for broadcast).")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID (0 for broadcast).
      */
+    @Description("Component ID (0 for broadcast).")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. 
      */
+    @Description("Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. ")
+    @Units("")
     public short id_or_mac[] = new short[20];
-      
+    
     /**
      * Indicates whether the unmanned aircraft is on the ground or in the air.
      */
+    @Description("Indicates whether the unmanned aircraft is on the ground or in the air.")
+    @Units("")
     public short status;
-      
+    
     /**
      * Indicates the reference point for the height field.
      */
+    @Description("Indicates the reference point for the height field.")
+    @Units("")
     public short height_reference;
-      
+    
     /**
      * The accuracy of the horizontal position.
      */
+    @Description("The accuracy of the horizontal position.")
+    @Units("")
     public short horizontal_accuracy;
-      
+    
     /**
      * The accuracy of the vertical position.
      */
+    @Description("The accuracy of the vertical position.")
+    @Units("")
     public short vertical_accuracy;
-      
+    
     /**
      * The accuracy of the barometric altitude.
      */
+    @Description("The accuracy of the barometric altitude.")
+    @Units("")
     public short barometer_accuracy;
-      
+    
     /**
      * The accuracy of the horizontal and vertical speed.
      */
+    @Description("The accuracy of the horizontal and vertical speed.")
+    @Units("")
     public short speed_accuracy;
-      
+    
     /**
      * The accuracy of the timestamps.
      */
+    @Description("The accuracy of the timestamps.")
+    @Units("")
     public short timestamp_accuracy;
     
 
@@ -126,7 +166,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_LOCATION;
-        
+
         packet.payload.putInt(latitude);
         packet.payload.putInt(longitude);
         packet.payload.putFloat(altitude_barometric);
@@ -165,7 +205,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.latitude = payload.getInt();
         this.longitude = payload.getInt();
         this.altitude_barometric = payload.getFloat();
@@ -177,7 +217,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
         this.speed_vertical = payload.getShort();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.id_or_mac.length; i++) {
             this.id_or_mac[i] = payload.getUnsignedByte();
         }
@@ -201,7 +241,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
     public msg_open_drone_id_location() {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_LOCATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -229,7 +269,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
         this.timestamp_accuracy = timestamp_accuracy;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -268,7 +308,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
      */
     public msg_open_drone_id_location(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_LOCATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -283,7 +323,7 @@ public class msg_open_drone_id_location extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_OPEN_DRONE_ID_LOCATION - sysid:"+sysid+" compid:"+compid+" latitude:"+latitude+" longitude:"+longitude+" altitude_barometric:"+altitude_barometric+" altitude_geodetic:"+altitude_geodetic+" height:"+height+" timestamp:"+timestamp+" direction:"+direction+" speed_horizontal:"+speed_horizontal+" speed_vertical:"+speed_vertical+" target_system:"+target_system+" target_component:"+target_component+" id_or_mac:"+id_or_mac+" status:"+status+" height_reference:"+height_reference+" horizontal_accuracy:"+horizontal_accuracy+" vertical_accuracy:"+vertical_accuracy+" barometer_accuracy:"+barometer_accuracy+" speed_accuracy:"+speed_accuracy+" timestamp_accuracy:"+timestamp_accuracy+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

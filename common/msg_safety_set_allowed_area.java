@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Set a safety zone (volume), which is defined by two corners of a cube. This message can be used to tell the MAV which setpoints/waypoints to accept and which to reject. Safety areas are often enforced by national or competition regulations.
  */
@@ -19,50 +21,68 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 27;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA;
 
-      
+    
     /**
      * x position 1 / Latitude 1
      */
+    @Description("x position 1 / Latitude 1")
+    @Units("m")
     public float p1x;
-      
+    
     /**
      * y position 1 / Longitude 1
      */
+    @Description("y position 1 / Longitude 1")
+    @Units("m")
     public float p1y;
-      
+    
     /**
      * z position 1 / Altitude 1
      */
+    @Description("z position 1 / Altitude 1")
+    @Units("m")
     public float p1z;
-      
+    
     /**
      * x position 2 / Latitude 2
      */
+    @Description("x position 2 / Latitude 2")
+    @Units("m")
     public float p2x;
-      
+    
     /**
      * y position 2 / Longitude 2
      */
+    @Description("y position 2 / Longitude 2")
+    @Units("m")
     public float p2y;
-      
+    
     /**
      * z position 2 / Altitude 2
      */
+    @Description("z position 2 / Altitude 2")
+    @Units("m")
     public float p2z;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Coordinate frame. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.
      */
+    @Description("Coordinate frame. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.")
+    @Units("")
     public short frame;
     
 
@@ -76,7 +96,7 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA;
-        
+
         packet.payload.putFloat(p1x);
         packet.payload.putFloat(p1y);
         packet.payload.putFloat(p1z);
@@ -101,7 +121,7 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.p1x = payload.getFloat();
         this.p1y = payload.getFloat();
         this.p1z = payload.getFloat();
@@ -123,7 +143,7 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
     public msg_safety_set_allowed_area() {
         this.msgid = MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -141,7 +161,7 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
         this.frame = frame;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -170,7 +190,7 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
      */
     public msg_safety_set_allowed_area(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -185,7 +205,7 @@ public class msg_safety_set_allowed_area extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA - sysid:"+sysid+" compid:"+compid+" p1x:"+p1x+" p1y:"+p1y+" p1z:"+p1z+" p2x:"+p2x+" p2y:"+p2y+" p2z:"+p2z+" target_system:"+target_system+" target_component:"+target_component+" frame:"+frame+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * RTK GPS baseline coordinate system, used for RTK corrections
  */
 public class RTK_BASELINE_COORDINATE_SYSTEM {

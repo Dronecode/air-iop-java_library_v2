@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Report current used cellular network status
  */
@@ -19,40 +21,54 @@ public class msg_cellular_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 10;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CELLULAR_STATUS;
 
-      
+    
     /**
      * Mobile country code. If unknown, set to UINT16_MAX
      */
+    @Description("Mobile country code. If unknown, set to UINT16_MAX")
+    @Units("")
     public int mcc;
-      
+    
     /**
      * Mobile network code. If unknown, set to UINT16_MAX
      */
+    @Description("Mobile network code. If unknown, set to UINT16_MAX")
+    @Units("")
     public int mnc;
-      
+    
     /**
      * Location area code. If unknown, set to 0
      */
+    @Description("Location area code. If unknown, set to 0")
+    @Units("")
     public int lac;
-      
+    
     /**
      * Cellular modem status
      */
+    @Description("Cellular modem status")
+    @Units("")
     public short status;
-      
+    
     /**
-     * Failure reason when status in in CELLUAR_STATUS_FAILED
+     * Failure reason when status in in CELLULAR_STATUS_FLAG_FAILED
      */
+    @Description("Failure reason when status in in CELLULAR_STATUS_FLAG_FAILED")
+    @Units("")
     public short failure_reason;
-      
+    
     /**
      * Cellular network radio type: gsm, cdma, lte...
      */
+    @Description("Cellular network radio type: gsm, cdma, lte...")
+    @Units("")
     public short type;
-      
+    
     /**
      * Signal quality in percent. If unknown, set to UINT8_MAX
      */
+    @Description("Signal quality in percent. If unknown, set to UINT8_MAX")
+    @Units("")
     public short quality;
     
 
@@ -66,7 +82,7 @@ public class msg_cellular_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CELLULAR_STATUS;
-        
+
         packet.payload.putUnsignedShort(mcc);
         packet.payload.putUnsignedShort(mnc);
         packet.payload.putUnsignedShort(lac);
@@ -89,7 +105,7 @@ public class msg_cellular_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.mcc = payload.getUnsignedShort();
         this.mnc = payload.getUnsignedShort();
         this.lac = payload.getUnsignedShort();
@@ -109,7 +125,7 @@ public class msg_cellular_status extends MAVLinkMessage {
     public msg_cellular_status() {
         this.msgid = MAVLINK_MSG_ID_CELLULAR_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_cellular_status extends MAVLinkMessage {
         this.quality = quality;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_cellular_status extends MAVLinkMessage {
      */
     public msg_cellular_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CELLULAR_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_cellular_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CELLULAR_STATUS - sysid:"+sysid+" compid:"+compid+" mcc:"+mcc+" mnc:"+mnc+" lac:"+lac+" status:"+status+" failure_reason:"+failure_reason+" type:"+type+" quality:"+quality+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

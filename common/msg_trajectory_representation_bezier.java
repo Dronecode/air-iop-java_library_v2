@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Describe a trajectory using an array of up-to 5 bezier control points in the local frame (MAV_FRAME_LOCAL_NED).
  */
@@ -19,40 +21,54 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 109;
     private static final long serialVersionUID = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_BEZIER;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * X-coordinate of bezier control points. Set to NaN if not being used
      */
+    @Description("X-coordinate of bezier control points. Set to NaN if not being used")
+    @Units("m")
     public float pos_x[] = new float[5];
-      
+    
     /**
      * Y-coordinate of bezier control points. Set to NaN if not being used
      */
+    @Description("Y-coordinate of bezier control points. Set to NaN if not being used")
+    @Units("m")
     public float pos_y[] = new float[5];
-      
+    
     /**
      * Z-coordinate of bezier control points. Set to NaN if not being used
      */
+    @Description("Z-coordinate of bezier control points. Set to NaN if not being used")
+    @Units("m")
     public float pos_z[] = new float[5];
-      
+    
     /**
      * Bezier time horizon. Set to NaN if velocity/acceleration should not be incorporated
      */
+    @Description("Bezier time horizon. Set to NaN if velocity/acceleration should not be incorporated")
+    @Units("s")
     public float delta[] = new float[5];
-      
+    
     /**
      * Yaw. Set to NaN for unchanged
      */
+    @Description("Yaw. Set to NaN for unchanged")
+    @Units("rad")
     public float pos_yaw[] = new float[5];
-      
+    
     /**
      * Number of valid control points (up-to 5 points are possible)
      */
+    @Description("Number of valid control points (up-to 5 points are possible)")
+    @Units("")
     public short valid_points;
     
 
@@ -66,7 +82,7 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_BEZIER;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < pos_x.length; i++) {
@@ -109,29 +125,29 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.pos_x.length; i++) {
             this.pos_x[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_y.length; i++) {
             this.pos_y[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_z.length; i++) {
             this.pos_z[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.delta.length; i++) {
             this.delta[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_yaw.length; i++) {
             this.pos_yaw[i] = payload.getFloat();
         }
@@ -149,7 +165,7 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
     public msg_trajectory_representation_bezier() {
         this.msgid = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_BEZIER;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -165,7 +181,7 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
         this.valid_points = valid_points;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -192,7 +208,7 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
      */
     public msg_trajectory_representation_bezier(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_BEZIER;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -207,7 +223,7 @@ public class msg_trajectory_representation_bezier extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_TRAJECTORY_REPRESENTATION_BEZIER - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" pos_x:"+pos_x+" pos_y:"+pos_y+" pos_z:"+pos_z+" delta:"+delta+" pos_yaw:"+pos_yaw+" valid_points:"+valid_points+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

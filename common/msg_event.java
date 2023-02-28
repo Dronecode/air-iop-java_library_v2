@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Event message. Each new event from a particular component gets a new sequence number. The same message might be sent multiple times if (re-)requested. Most events are broadcast, some can be specific to a target component (as receivers keep track of the sequence for missed events, all events need to be broadcast. Thus we use destination_component instead of target_component).
  */
@@ -19,40 +21,54 @@ public class msg_event extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 53;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EVENT;
 
-      
+    
     /**
      * Event ID (as defined in the component metadata)
      */
+    @Description("Event ID (as defined in the component metadata)")
+    @Units("")
     public long id;
-      
+    
     /**
      * Timestamp (time since system boot when the event happened).
      */
+    @Description("Timestamp (time since system boot when the event happened).")
+    @Units("ms")
     public long event_time_boot_ms;
-      
+    
     /**
      * Sequence number.
      */
+    @Description("Sequence number.")
+    @Units("")
     public int sequence;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short destination_component;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short destination_system;
-      
+    
     /**
      * Log levels: 4 bits MSB: internal (for logging purposes), 4 bits LSB: external. Levels: Emergency = 0, Alert = 1, Critical = 2, Error = 3, Warning = 4, Notice = 5, Info = 6, Debug = 7, Protocol = 8, Disabled = 9
      */
+    @Description("Log levels: 4 bits MSB: internal (for logging purposes), 4 bits LSB: external. Levels: Emergency = 0, Alert = 1, Critical = 2, Error = 3, Warning = 4, Notice = 5, Info = 6, Debug = 7, Protocol = 8, Disabled = 9")
+    @Units("")
     public short log_levels;
-      
+    
     /**
      * Arguments (depend on event ID).
      */
+    @Description("Arguments (depend on event ID).")
+    @Units("")
     public short arguments[] = new short[40];
     
 
@@ -66,7 +82,7 @@ public class msg_event extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_EVENT;
-        
+
         packet.payload.putUnsignedInt(id);
         packet.payload.putUnsignedInt(event_time_boot_ms);
         packet.payload.putUnsignedShort(sequence);
@@ -93,14 +109,14 @@ public class msg_event extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.id = payload.getUnsignedInt();
         this.event_time_boot_ms = payload.getUnsignedInt();
         this.sequence = payload.getUnsignedShort();
         this.destination_component = payload.getUnsignedByte();
         this.destination_system = payload.getUnsignedByte();
         this.log_levels = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.arguments.length; i++) {
             this.arguments[i] = payload.getUnsignedByte();
         }
@@ -117,7 +133,7 @@ public class msg_event extends MAVLinkMessage {
     public msg_event() {
         this.msgid = MAVLINK_MSG_ID_EVENT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +149,7 @@ public class msg_event extends MAVLinkMessage {
         this.arguments = arguments;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -160,7 +176,7 @@ public class msg_event extends MAVLinkMessage {
      */
     public msg_event(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_EVENT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -175,7 +191,7 @@ public class msg_event extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_EVENT - sysid:"+sysid+" compid:"+compid+" id:"+id+" event_time_boot_ms:"+event_time_boot_ms+" sequence:"+sequence+" destination_component:"+destination_component+" destination_system:"+destination_system+" log_levels:"+log_levels+" arguments:"+arguments+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

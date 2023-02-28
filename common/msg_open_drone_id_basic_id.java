@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Data for filling the OpenDroneID Basic ID message. This and the below messages are primarily meant for feeding data to/from an OpenDroneID implementation. E.g. https://github.com/opendroneid/opendroneid-core-c. These messages are compatible with the ASTM F3411 Remote ID standard and the ASD-STAN prEN 4709-002 Direct Remote ID standard. Additional information and usage of these messages is documented at https://mavlink.io/en/services/opendroneid.html.
  */
@@ -19,35 +21,47 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 44;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID;
 
-      
+    
     /**
      * System ID (0 for broadcast).
      */
+    @Description("System ID (0 for broadcast).")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID (0 for broadcast).
      */
+    @Description("Component ID (0 for broadcast).")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. 
      */
+    @Description("Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. ")
+    @Units("")
     public short id_or_mac[] = new short[20];
-      
+    
     /**
      * Indicates the format for the uas_id field of this message.
      */
+    @Description("Indicates the format for the uas_id field of this message.")
+    @Units("")
     public short id_type;
-      
+    
     /**
      * Indicates the type of UA (Unmanned Aircraft).
      */
+    @Description("Indicates the type of UA (Unmanned Aircraft).")
+    @Units("")
     public short ua_type;
-      
+    
     /**
      * UAS (Unmanned Aircraft System) ID following the format specified by id_type. Shall be filled with nulls in the unused portion of the field.
      */
+    @Description("UAS (Unmanned Aircraft System) ID following the format specified by id_type. Shall be filled with nulls in the unused portion of the field.")
+    @Units("")
     public short uas_id[] = new short[20];
     
 
@@ -61,7 +75,7 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
         
@@ -91,17 +105,17 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.id_or_mac.length; i++) {
             this.id_or_mac[i] = payload.getUnsignedByte();
         }
                 
         this.id_type = payload.getUnsignedByte();
         this.ua_type = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.uas_id.length; i++) {
             this.uas_id[i] = payload.getUnsignedByte();
         }
@@ -118,7 +132,7 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
     public msg_open_drone_id_basic_id() {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +147,7 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
         this.uas_id = uas_id;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -159,7 +173,7 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
      */
     public msg_open_drone_id_basic_id(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -174,7 +188,7 @@ public class msg_open_drone_id_basic_id extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_OPEN_DRONE_ID_BASIC_ID - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" target_component:"+target_component+" id_or_mac:"+id_or_mac+" id_type:"+id_type+" ua_type:"+ua_type+" uas_id:"+uas_id+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

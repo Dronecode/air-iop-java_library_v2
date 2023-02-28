@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The general system state. If the system is following the MAVLink standard, the system state is mainly defined by three orthogonal states/modes: The system mode, which is either LOCKED (motors shut down and locked), MANUAL (system under RC control), GUIDED (system with autonomous position control, position setpoint controlled manually) or AUTO (system guided by path/waypoint planner). The NAV_MODE defined the current flight state: LIFTOFF (often an open-loop maneuver), LANDING, WAYPOINTS or VECTOR. This represents the internal navigation state machine. The system status shows whether the system is currently active or not and if an emergency occurred. During the CRITICAL and EMERGENCY states the MAV is still considered to be active, but should start emergency procedures autonomously. After a failure occurred it should first move from active to critical to allow manual intervention and then move to emergency after a certain timeout.
  */
@@ -19,85 +21,117 @@ public class msg_sys_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 43;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SYS_STATUS;
 
-      
+    
     /**
      * Bitmap showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present.
      */
+    @Description("Bitmap showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present.")
+    @Units("")
     public long onboard_control_sensors_present;
-      
+    
     /**
      * Bitmap showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of 1: enabled.
      */
+    @Description("Bitmap showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of 1: enabled.")
+    @Units("")
     public long onboard_control_sensors_enabled;
-      
+    
     /**
      * Bitmap showing which onboard controllers and sensors have an error (or are operational). Value of 0: error. Value of 1: healthy.
      */
+    @Description("Bitmap showing which onboard controllers and sensors have an error (or are operational). Value of 0: error. Value of 1: healthy.")
+    @Units("")
     public long onboard_control_sensors_health;
-      
+    
     /**
      * Maximum usage in percent of the mainloop time. Values: [0-1000] - should always be below 1000
      */
+    @Description("Maximum usage in percent of the mainloop time. Values: [0-1000] - should always be below 1000")
+    @Units("d%")
     public int load;
-      
+    
     /**
      * Battery voltage, UINT16_MAX: Voltage not sent by autopilot
      */
+    @Description("Battery voltage, UINT16_MAX: Voltage not sent by autopilot")
+    @Units("mV")
     public int voltage_battery;
-      
+    
     /**
      * Battery current, -1: Current not sent by autopilot
      */
+    @Description("Battery current, -1: Current not sent by autopilot")
+    @Units("cA")
     public short current_battery;
-      
+    
     /**
      * Communication drop rate, (UART, I2C, SPI, CAN), dropped packets on all links (packets that were corrupted on reception on the MAV)
      */
+    @Description("Communication drop rate, (UART, I2C, SPI, CAN), dropped packets on all links (packets that were corrupted on reception on the MAV)")
+    @Units("c%")
     public int drop_rate_comm;
-      
+    
     /**
      * Communication errors (UART, I2C, SPI, CAN), dropped packets on all links (packets that were corrupted on reception on the MAV)
      */
+    @Description("Communication errors (UART, I2C, SPI, CAN), dropped packets on all links (packets that were corrupted on reception on the MAV)")
+    @Units("")
     public int errors_comm;
-      
+    
     /**
      * Autopilot-specific errors
      */
+    @Description("Autopilot-specific errors")
+    @Units("")
     public int errors_count1;
-      
+    
     /**
      * Autopilot-specific errors
      */
+    @Description("Autopilot-specific errors")
+    @Units("")
     public int errors_count2;
-      
+    
     /**
      * Autopilot-specific errors
      */
+    @Description("Autopilot-specific errors")
+    @Units("")
     public int errors_count3;
-      
+    
     /**
      * Autopilot-specific errors
      */
+    @Description("Autopilot-specific errors")
+    @Units("")
     public int errors_count4;
-      
+    
     /**
      * Battery energy remaining, -1: Battery remaining energy not sent by autopilot
      */
+    @Description("Battery energy remaining, -1: Battery remaining energy not sent by autopilot")
+    @Units("%")
     public byte battery_remaining;
-      
+    
     /**
      * Bitmap showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present.
      */
+    @Description("Bitmap showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present.")
+    @Units("")
     public long onboard_control_sensors_present_extended;
-      
+    
     /**
      * Bitmap showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of 1: enabled.
      */
+    @Description("Bitmap showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of 1: enabled.")
+    @Units("")
     public long onboard_control_sensors_enabled_extended;
-      
+    
     /**
      * Bitmap showing which onboard controllers and sensors have an error (or are operational). Value of 0: error. Value of 1: healthy.
      */
+    @Description("Bitmap showing which onboard controllers and sensors have an error (or are operational). Value of 0: error. Value of 1: healthy.")
+    @Units("")
     public long onboard_control_sensors_health_extended;
     
 
@@ -111,7 +145,7 @@ public class msg_sys_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SYS_STATUS;
-        
+
         packet.payload.putUnsignedInt(onboard_control_sensors_present);
         packet.payload.putUnsignedInt(onboard_control_sensors_enabled);
         packet.payload.putUnsignedInt(onboard_control_sensors_health);
@@ -143,7 +177,7 @@ public class msg_sys_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.onboard_control_sensors_present = payload.getUnsignedInt();
         this.onboard_control_sensors_enabled = payload.getUnsignedInt();
         this.onboard_control_sensors_health = payload.getUnsignedInt();
@@ -172,7 +206,7 @@ public class msg_sys_status extends MAVLinkMessage {
     public msg_sys_status() {
         this.msgid = MAVLINK_MSG_ID_SYS_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -197,7 +231,7 @@ public class msg_sys_status extends MAVLinkMessage {
         this.onboard_control_sensors_health_extended = onboard_control_sensors_health_extended;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -233,7 +267,7 @@ public class msg_sys_status extends MAVLinkMessage {
      */
     public msg_sys_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SYS_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -248,7 +282,7 @@ public class msg_sys_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SYS_STATUS - sysid:"+sysid+" compid:"+compid+" onboard_control_sensors_present:"+onboard_control_sensors_present+" onboard_control_sensors_enabled:"+onboard_control_sensors_enabled+" onboard_control_sensors_health:"+onboard_control_sensors_health+" load:"+load+" voltage_battery:"+voltage_battery+" current_battery:"+current_battery+" drop_rate_comm:"+drop_rate_comm+" errors_comm:"+errors_comm+" errors_count1:"+errors_count1+" errors_count2:"+errors_count2+" errors_count3:"+errors_count3+" errors_count4:"+errors_count4+" battery_remaining:"+battery_remaining+" onboard_control_sensors_present_extended:"+onboard_control_sensors_present_extended+" onboard_control_sensors_enabled_extended:"+onboard_control_sensors_enabled_extended+" onboard_control_sensors_health_extended:"+onboard_control_sensors_health_extended+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

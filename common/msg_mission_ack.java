@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Acknowledgment message during waypoint handling. The type field states if this message is a positive ack (type=0) or if an error happened (type=non-zero).
  */
@@ -19,25 +21,33 @@ public class msg_mission_ack extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 4;
     private static final long serialVersionUID = MAVLINK_MSG_ID_MISSION_ACK;
 
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Mission result.
      */
+    @Description("Mission result.")
+    @Units("")
     public short type;
-      
+    
     /**
      * Mission type.
      */
+    @Description("Mission type.")
+    @Units("")
     public short mission_type;
     
 
@@ -51,7 +61,7 @@ public class msg_mission_ack extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_MISSION_ACK;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
         packet.payload.putUnsignedByte(type);
@@ -71,7 +81,7 @@ public class msg_mission_ack extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
         this.type = payload.getUnsignedByte();
@@ -88,7 +98,7 @@ public class msg_mission_ack extends MAVLinkMessage {
     public msg_mission_ack() {
         this.msgid = MAVLINK_MSG_ID_MISSION_ACK;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -101,7 +111,7 @@ public class msg_mission_ack extends MAVLinkMessage {
         this.mission_type = mission_type;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -125,7 +135,7 @@ public class msg_mission_ack extends MAVLinkMessage {
      */
     public msg_mission_ack(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_MISSION_ACK;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -140,7 +150,7 @@ public class msg_mission_ack extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_MISSION_ACK - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" target_component:"+target_component+" type:"+type+" mission_type:"+mission_type+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

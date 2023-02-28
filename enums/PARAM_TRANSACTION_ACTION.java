@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Possible parameter transaction actions.
  */
 public class PARAM_TRANSACTION_ACTION {

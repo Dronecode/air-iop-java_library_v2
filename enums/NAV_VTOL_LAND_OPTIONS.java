@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * 
  */
 public class NAV_VTOL_LAND_OPTIONS {

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Actions being taken to mitigate/prevent fence breach
  */
 public class FENCE_MITIGATE {

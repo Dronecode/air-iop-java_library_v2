@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * A forwarded CAN frame as requested by MAV_CMD_CAN_FORWARD.
  */
@@ -19,35 +21,47 @@ public class msg_can_frame extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 16;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CAN_FRAME;
 
-      
+    
     /**
      * Frame ID
      */
+    @Description("Frame ID")
+    @Units("")
     public long id;
-      
+    
     /**
      * System ID.
      */
+    @Description("System ID.")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID.
      */
+    @Description("Component ID.")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Bus number
      */
+    @Description("Bus number")
+    @Units("")
     public short bus;
-      
+    
     /**
      * Frame length
      */
+    @Description("Frame length")
+    @Units("")
     public short len;
-      
+    
     /**
      * Frame data
      */
+    @Description("Frame data")
+    @Units("")
     public short data[] = new short[8];
     
 
@@ -61,7 +75,7 @@ public class msg_can_frame extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CAN_FRAME;
-        
+
         packet.payload.putUnsignedInt(id);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -87,13 +101,13 @@ public class msg_can_frame extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.id = payload.getUnsignedInt();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
         this.bus = payload.getUnsignedByte();
         this.len = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.data.length; i++) {
             this.data[i] = payload.getUnsignedByte();
         }
@@ -110,7 +124,7 @@ public class msg_can_frame extends MAVLinkMessage {
     public msg_can_frame() {
         this.msgid = MAVLINK_MSG_ID_CAN_FRAME;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +139,7 @@ public class msg_can_frame extends MAVLinkMessage {
         this.data = data;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -151,7 +165,7 @@ public class msg_can_frame extends MAVLinkMessage {
      */
     public msg_can_frame(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CAN_FRAME;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -166,7 +180,7 @@ public class msg_can_frame extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CAN_FRAME - sysid:"+sysid+" compid:"+compid+" id:"+id+" target_system:"+target_system+" target_component:"+target_component+" bus:"+bus+" len:"+len+" data:"+data+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

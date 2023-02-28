@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Send a key-value pair as integer. The use of this message is discouraged for normal packets, but a quite efficient way for testing new messages and getting experimental debug output.
  */
@@ -19,20 +21,26 @@ public class msg_named_value_int extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 18;
     private static final long serialVersionUID = MAVLINK_MSG_ID_NAMED_VALUE_INT;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Signed integer value
      */
+    @Description("Signed integer value")
+    @Units("")
     public int value;
-      
+    
     /**
      * Name of the debug variable
      */
+    @Description("Name of the debug variable")
+    @Units("")
     public byte name[] = new byte[10];
     
 
@@ -46,7 +54,7 @@ public class msg_named_value_int extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_NAMED_VALUE_INT;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putInt(value);
         
@@ -69,10 +77,10 @@ public class msg_named_value_int extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.value = payload.getInt();
-         
+        
         for (int i = 0; i < this.name.length; i++) {
             this.name[i] = payload.getByte();
         }
@@ -89,7 +97,7 @@ public class msg_named_value_int extends MAVLinkMessage {
     public msg_named_value_int() {
         this.msgid = MAVLINK_MSG_ID_NAMED_VALUE_INT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -101,7 +109,7 @@ public class msg_named_value_int extends MAVLinkMessage {
         this.name = name;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -124,7 +132,7 @@ public class msg_named_value_int extends MAVLinkMessage {
      */
     public msg_named_value_int(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_NAMED_VALUE_INT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -168,7 +176,7 @@ public class msg_named_value_int extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_NAMED_VALUE_INT - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" value:"+value+" name:"+name+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

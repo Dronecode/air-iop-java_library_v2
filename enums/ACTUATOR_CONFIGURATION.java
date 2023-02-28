@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Actuator configuration, used to change a setting on an actuator. Component information metadata can be used to know which outputs support which commands.
  */
 public class ACTUATOR_CONFIGURATION {

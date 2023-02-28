@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * 
  */
 public class MAV_ODID_CATEGORY_EU {

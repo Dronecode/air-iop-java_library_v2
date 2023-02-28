@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * These encode the sensors whose status is sent as part of the SYS_STATUS message.
  */
 public class MAV_SYS_STATUS_SENSOR {

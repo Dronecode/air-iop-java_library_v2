@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Possible responses from a CELLULAR_CONFIG message.
  */
 public class CELLULAR_CONFIG_RESPONSE {

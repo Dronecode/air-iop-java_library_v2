@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Sent from simulation to autopilot. This packet is useful for high throughput applications such as hardware in the loop simulations.
  */
@@ -19,85 +21,117 @@ public class msg_hil_state extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 56;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIL_STATE;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Roll angle
      */
+    @Description("Roll angle")
+    @Units("rad")
     public float roll;
-      
+    
     /**
      * Pitch angle
      */
+    @Description("Pitch angle")
+    @Units("rad")
     public float pitch;
-      
+    
     /**
      * Yaw angle
      */
+    @Description("Yaw angle")
+    @Units("rad")
     public float yaw;
-      
+    
     /**
      * Body frame roll / phi angular speed
      */
+    @Description("Body frame roll / phi angular speed")
+    @Units("rad/s")
     public float rollspeed;
-      
+    
     /**
      * Body frame pitch / theta angular speed
      */
+    @Description("Body frame pitch / theta angular speed")
+    @Units("rad/s")
     public float pitchspeed;
-      
+    
     /**
      * Body frame yaw / psi angular speed
      */
+    @Description("Body frame yaw / psi angular speed")
+    @Units("rad/s")
     public float yawspeed;
-      
+    
     /**
      * Latitude
      */
+    @Description("Latitude")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude
      */
+    @Description("Longitude")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude
      */
+    @Description("Altitude")
+    @Units("mm")
     public int alt;
-      
+    
     /**
      * Ground X Speed (Latitude)
      */
+    @Description("Ground X Speed (Latitude)")
+    @Units("cm/s")
     public short vx;
-      
+    
     /**
      * Ground Y Speed (Longitude)
      */
+    @Description("Ground Y Speed (Longitude)")
+    @Units("cm/s")
     public short vy;
-      
+    
     /**
      * Ground Z Speed (Altitude)
      */
+    @Description("Ground Z Speed (Altitude)")
+    @Units("cm/s")
     public short vz;
-      
+    
     /**
      * X acceleration
      */
+    @Description("X acceleration")
+    @Units("mG")
     public short xacc;
-      
+    
     /**
      * Y acceleration
      */
+    @Description("Y acceleration")
+    @Units("mG")
     public short yacc;
-      
+    
     /**
      * Z acceleration
      */
+    @Description("Z acceleration")
+    @Units("mG")
     public short zacc;
     
 
@@ -111,7 +145,7 @@ public class msg_hil_state extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIL_STATE;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(roll);
         packet.payload.putFloat(pitch);
@@ -143,7 +177,7 @@ public class msg_hil_state extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.roll = payload.getFloat();
         this.pitch = payload.getFloat();
@@ -172,7 +206,7 @@ public class msg_hil_state extends MAVLinkMessage {
     public msg_hil_state() {
         this.msgid = MAVLINK_MSG_ID_HIL_STATE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -197,7 +231,7 @@ public class msg_hil_state extends MAVLinkMessage {
         this.zacc = zacc;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -233,7 +267,7 @@ public class msg_hil_state extends MAVLinkMessage {
      */
     public msg_hil_state(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIL_STATE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -248,7 +282,7 @@ public class msg_hil_state extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIL_STATE - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" roll:"+roll+" pitch:"+pitch+" yaw:"+yaw+" rollspeed:"+rollspeed+" pitchspeed:"+pitchspeed+" yawspeed:"+yawspeed+" lat:"+lat+" lon:"+lon+" alt:"+alt+" vx:"+vx+" vy:"+vy+" vz:"+vz+" xacc:"+xacc+" yacc:"+yacc+" zacc:"+zacc+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

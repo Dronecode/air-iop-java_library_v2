@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Result of mission operation (in a MISSION_ACK message).
  */
 public class MAV_MISSION_RESULT {

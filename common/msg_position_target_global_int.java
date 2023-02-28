@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Reports the current commanded vehicle position, velocity, and acceleration as specified by the autopilot. This should match the commands sent in SET_POSITION_TARGET_GLOBAL_INT if the vehicle is being controlled this way.
  */
@@ -19,75 +21,103 @@ public class msg_position_target_global_int extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 51;
     private static final long serialVersionUID = MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT;
 
-      
+    
     /**
      * Timestamp (time since system boot). The rationale for the timestamp in the setpoint is to allow the system to compensate for the transport delay of the setpoint. This allows the system to compensate processing latency.
      */
+    @Description("Timestamp (time since system boot). The rationale for the timestamp in the setpoint is to allow the system to compensate for the transport delay of the setpoint. This allows the system to compensate processing latency.")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * X Position in WGS84 frame
      */
+    @Description("X Position in WGS84 frame")
+    @Units("degE7")
     public int lat_int;
-      
+    
     /**
      * Y Position in WGS84 frame
      */
+    @Description("Y Position in WGS84 frame")
+    @Units("degE7")
     public int lon_int;
-      
+    
     /**
      * Altitude (MSL, AGL or relative to home altitude, depending on frame)
      */
+    @Description("Altitude (MSL, AGL or relative to home altitude, depending on frame)")
+    @Units("m")
     public float alt;
-      
+    
     /**
      * X velocity in NED frame
      */
+    @Description("X velocity in NED frame")
+    @Units("m/s")
     public float vx;
-      
+    
     /**
      * Y velocity in NED frame
      */
+    @Description("Y velocity in NED frame")
+    @Units("m/s")
     public float vy;
-      
+    
     /**
      * Z velocity in NED frame
      */
+    @Description("Z velocity in NED frame")
+    @Units("m/s")
     public float vz;
-      
+    
     /**
      * X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
      */
+    @Description("X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N")
+    @Units("m/s/s")
     public float afx;
-      
+    
     /**
      * Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
      */
+    @Description("Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N")
+    @Units("m/s/s")
     public float afy;
-      
+    
     /**
      * Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
      */
+    @Description("Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N")
+    @Units("m/s/s")
     public float afz;
-      
+    
     /**
      * yaw setpoint
      */
+    @Description("yaw setpoint")
+    @Units("rad")
     public float yaw;
-      
+    
     /**
      * yaw rate setpoint
      */
+    @Description("yaw rate setpoint")
+    @Units("rad/s")
     public float yaw_rate;
-      
+    
     /**
      * Bitmap to indicate which dimensions should be ignored by the vehicle.
      */
+    @Description("Bitmap to indicate which dimensions should be ignored by the vehicle.")
+    @Units("")
     public int type_mask;
-      
+    
     /**
      * Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
      */
+    @Description("Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11")
+    @Units("")
     public short coordinate_frame;
     
 
@@ -101,7 +131,7 @@ public class msg_position_target_global_int extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putInt(lat_int);
         packet.payload.putInt(lon_int);
@@ -131,7 +161,7 @@ public class msg_position_target_global_int extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.lat_int = payload.getInt();
         this.lon_int = payload.getInt();
@@ -158,7 +188,7 @@ public class msg_position_target_global_int extends MAVLinkMessage {
     public msg_position_target_global_int() {
         this.msgid = MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -181,7 +211,7 @@ public class msg_position_target_global_int extends MAVLinkMessage {
         this.coordinate_frame = coordinate_frame;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -215,7 +245,7 @@ public class msg_position_target_global_int extends MAVLinkMessage {
      */
     public msg_position_target_global_int(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -230,7 +260,7 @@ public class msg_position_target_global_int extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_POSITION_TARGET_GLOBAL_INT - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" lat_int:"+lat_int+" lon_int:"+lon_int+" alt:"+alt+" vx:"+vx+" vy:"+vy+" vz:"+vz+" afx:"+afx+" afy:"+afy+" afz:"+afz+" yaw:"+yaw+" yaw_rate:"+yaw_rate+" type_mask:"+type_mask+" coordinate_frame:"+coordinate_frame+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

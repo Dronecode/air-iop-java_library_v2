@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Message appropriate for high latency connections like Iridium
  */
@@ -19,125 +21,173 @@ public class msg_high_latency extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 40;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIGH_LATENCY;
 
-      
+    
     /**
      * A bitfield for use for autopilot-specific flags.
      */
+    @Description("A bitfield for use for autopilot-specific flags.")
+    @Units("")
     public long custom_mode;
-      
+    
     /**
      * Latitude
      */
+    @Description("Latitude")
+    @Units("degE7")
     public int latitude;
-      
+    
     /**
      * Longitude
      */
+    @Description("Longitude")
+    @Units("degE7")
     public int longitude;
-      
+    
     /**
      * roll
      */
+    @Description("roll")
+    @Units("cdeg")
     public short roll;
-      
+    
     /**
      * pitch
      */
+    @Description("pitch")
+    @Units("cdeg")
     public short pitch;
-      
+    
     /**
      * heading
      */
+    @Description("heading")
+    @Units("cdeg")
     public int heading;
-      
+    
     /**
      * heading setpoint
      */
+    @Description("heading setpoint")
+    @Units("cdeg")
     public short heading_sp;
-      
+    
     /**
      * Altitude above mean sea level
      */
+    @Description("Altitude above mean sea level")
+    @Units("m")
     public short altitude_amsl;
-      
+    
     /**
      * Altitude setpoint relative to the home position
      */
+    @Description("Altitude setpoint relative to the home position")
+    @Units("m")
     public short altitude_sp;
-      
+    
     /**
      * distance to target
      */
+    @Description("distance to target")
+    @Units("m")
     public int wp_distance;
-      
+    
     /**
      * Bitmap of enabled system modes.
      */
+    @Description("Bitmap of enabled system modes.")
+    @Units("")
     public short base_mode;
-      
+    
     /**
      * The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
      */
+    @Description("The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.")
+    @Units("")
     public short landed_state;
-      
+    
     /**
      * throttle (percentage)
      */
+    @Description("throttle (percentage)")
+    @Units("%")
     public byte throttle;
-      
+    
     /**
      * airspeed
      */
+    @Description("airspeed")
+    @Units("m/s")
     public short airspeed;
-      
+    
     /**
      * airspeed setpoint
      */
+    @Description("airspeed setpoint")
+    @Units("m/s")
     public short airspeed_sp;
-      
+    
     /**
      * groundspeed
      */
+    @Description("groundspeed")
+    @Units("m/s")
     public short groundspeed;
-      
+    
     /**
      * climb rate
      */
+    @Description("climb rate")
+    @Units("m/s")
     public byte climb_rate;
-      
+    
     /**
      * Number of satellites visible. If unknown, set to UINT8_MAX
      */
+    @Description("Number of satellites visible. If unknown, set to UINT8_MAX")
+    @Units("")
     public short gps_nsat;
-      
+    
     /**
      * GPS Fix type.
      */
+    @Description("GPS Fix type.")
+    @Units("")
     public short gps_fix_type;
-      
+    
     /**
      * Remaining battery (percentage)
      */
+    @Description("Remaining battery (percentage)")
+    @Units("%")
     public short battery_remaining;
-      
+    
     /**
      * Autopilot temperature (degrees C)
      */
+    @Description("Autopilot temperature (degrees C)")
+    @Units("degC")
     public byte temperature;
-      
+    
     /**
      * Air temperature (degrees C) from airspeed sensor
      */
+    @Description("Air temperature (degrees C) from airspeed sensor")
+    @Units("degC")
     public byte temperature_air;
-      
+    
     /**
      * failsafe (each bit represents a failsafe where 0=ok, 1=failsafe active (bit0:RC, bit1:batt, bit2:GPS, bit3:GCS, bit4:fence)
      */
+    @Description("failsafe (each bit represents a failsafe where 0=ok, 1=failsafe active (bit0:RC, bit1:batt, bit2:GPS, bit3:GCS, bit4:fence)")
+    @Units("")
     public short failsafe;
-      
+    
     /**
      * current waypoint number
      */
+    @Description("current waypoint number")
+    @Units("")
     public short wp_num;
     
 
@@ -151,7 +201,7 @@ public class msg_high_latency extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIGH_LATENCY;
-        
+
         packet.payload.putUnsignedInt(custom_mode);
         packet.payload.putInt(latitude);
         packet.payload.putInt(longitude);
@@ -191,7 +241,7 @@ public class msg_high_latency extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.custom_mode = payload.getUnsignedInt();
         this.latitude = payload.getInt();
         this.longitude = payload.getInt();
@@ -228,7 +278,7 @@ public class msg_high_latency extends MAVLinkMessage {
     public msg_high_latency() {
         this.msgid = MAVLINK_MSG_ID_HIGH_LATENCY;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -261,7 +311,7 @@ public class msg_high_latency extends MAVLinkMessage {
         this.wp_num = wp_num;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -305,7 +355,7 @@ public class msg_high_latency extends MAVLinkMessage {
      */
     public msg_high_latency(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIGH_LATENCY;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -320,7 +370,7 @@ public class msg_high_latency extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIGH_LATENCY - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" latitude:"+latitude+" longitude:"+longitude+" roll:"+roll+" pitch:"+pitch+" heading:"+heading+" heading_sp:"+heading_sp+" altitude_amsl:"+altitude_amsl+" altitude_sp:"+altitude_sp+" wp_distance:"+wp_distance+" base_mode:"+base_mode+" landed_state:"+landed_state+" throttle:"+throttle+" airspeed:"+airspeed+" airspeed_sp:"+airspeed_sp+" groundspeed:"+groundspeed+" climb_rate:"+climb_rate+" gps_nsat:"+gps_nsat+" gps_fix_type:"+gps_fix_type+" battery_remaining:"+battery_remaining+" temperature:"+temperature+" temperature_air:"+temperature_air+" failsafe:"+failsafe+" wp_num:"+wp_num+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

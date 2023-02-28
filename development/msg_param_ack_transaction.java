@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Response from a PARAM_SET message when it is used in a transaction.
  */
@@ -19,35 +21,47 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 24;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PARAM_ACK_TRANSACTION;
 
-      
+    
     /**
      * Parameter value (new value if PARAM_ACCEPTED, current value otherwise)
      */
+    @Description("Parameter value (new value if PARAM_ACCEPTED, current value otherwise)")
+    @Units("")
     public float param_value;
-      
+    
     /**
      * Id of system that sent PARAM_SET message.
      */
+    @Description("Id of system that sent PARAM_SET message.")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Id of system that sent PARAM_SET message.
      */
+    @Description("Id of system that sent PARAM_SET message.")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
      */
+    @Description("Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string")
+    @Units("")
     public byte param_id[] = new byte[16];
-      
+    
     /**
      * Parameter type.
      */
+    @Description("Parameter type.")
+    @Units("")
     public short param_type;
-      
+    
     /**
      * Result code.
      */
+    @Description("Result code.")
+    @Units("")
     public short param_result;
     
 
@@ -61,7 +75,7 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PARAM_ACK_TRANSACTION;
-        
+
         packet.payload.putFloat(param_value);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -87,11 +101,11 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.param_value = payload.getFloat();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.param_id.length; i++) {
             this.param_id[i] = payload.getByte();
         }
@@ -110,7 +124,7 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
     public msg_param_ack_transaction() {
         this.msgid = MAVLINK_MSG_ID_PARAM_ACK_TRANSACTION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +139,7 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
         this.param_result = param_result;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -151,7 +165,7 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
      */
     public msg_param_ack_transaction(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PARAM_ACK_TRANSACTION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -195,7 +209,7 @@ public class msg_param_ack_transaction extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PARAM_ACK_TRANSACTION - sysid:"+sysid+" compid:"+compid+" param_value:"+param_value+" target_system:"+target_system+" target_component:"+target_component+" param_id:"+param_id+" param_type:"+param_type+" param_result:"+param_result+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

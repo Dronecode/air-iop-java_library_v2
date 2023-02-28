@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Estimator status message including flags, innovation test ratios and estimated accuracies. The flags message is an integer bitmask containing information on which EKF outputs are valid. See the ESTIMATOR_STATUS_FLAGS enum definition for further information. The innovation test ratios show the magnitude of the sensor innovation divided by the innovation check threshold. Under normal operation the innovation test ratios should be below 0.5 with occasional values up to 1.0. Values greater than 1.0 should be rare under normal operation and indicate that a measurement has been rejected by the filter. The user should be notified if an innovation test ratio greater than 1.0 is recorded. Notifications for values in the range between 0.5 and 1.0 should be optional and controllable by the user.
  */
@@ -19,55 +21,75 @@ public class msg_estimator_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 42;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ESTIMATOR_STATUS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Velocity innovation test ratio
      */
+    @Description("Velocity innovation test ratio")
+    @Units("")
     public float vel_ratio;
-      
+    
     /**
      * Horizontal position innovation test ratio
      */
+    @Description("Horizontal position innovation test ratio")
+    @Units("")
     public float pos_horiz_ratio;
-      
+    
     /**
      * Vertical position innovation test ratio
      */
+    @Description("Vertical position innovation test ratio")
+    @Units("")
     public float pos_vert_ratio;
-      
+    
     /**
      * Magnetometer innovation test ratio
      */
+    @Description("Magnetometer innovation test ratio")
+    @Units("")
     public float mag_ratio;
-      
+    
     /**
      * Height above terrain innovation test ratio
      */
+    @Description("Height above terrain innovation test ratio")
+    @Units("")
     public float hagl_ratio;
-      
+    
     /**
      * True airspeed innovation test ratio
      */
+    @Description("True airspeed innovation test ratio")
+    @Units("")
     public float tas_ratio;
-      
+    
     /**
      * Horizontal position 1-STD accuracy relative to the EKF local origin
      */
+    @Description("Horizontal position 1-STD accuracy relative to the EKF local origin")
+    @Units("m")
     public float pos_horiz_accuracy;
-      
+    
     /**
      * Vertical position 1-STD accuracy relative to the EKF local origin
      */
+    @Description("Vertical position 1-STD accuracy relative to the EKF local origin")
+    @Units("m")
     public float pos_vert_accuracy;
-      
+    
     /**
      * Bitmap indicating which EKF outputs are valid.
      */
+    @Description("Bitmap indicating which EKF outputs are valid.")
+    @Units("")
     public int flags;
     
 
@@ -81,7 +103,7 @@ public class msg_estimator_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ESTIMATOR_STATUS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(vel_ratio);
         packet.payload.putFloat(pos_horiz_ratio);
@@ -107,7 +129,7 @@ public class msg_estimator_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.vel_ratio = payload.getFloat();
         this.pos_horiz_ratio = payload.getFloat();
@@ -130,7 +152,7 @@ public class msg_estimator_status extends MAVLinkMessage {
     public msg_estimator_status() {
         this.msgid = MAVLINK_MSG_ID_ESTIMATOR_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -149,7 +171,7 @@ public class msg_estimator_status extends MAVLinkMessage {
         this.flags = flags;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -179,7 +201,7 @@ public class msg_estimator_status extends MAVLinkMessage {
      */
     public msg_estimator_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ESTIMATOR_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -194,7 +216,7 @@ public class msg_estimator_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ESTIMATOR_STATUS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" vel_ratio:"+vel_ratio+" pos_horiz_ratio:"+pos_horiz_ratio+" pos_vert_ratio:"+pos_vert_ratio+" mag_ratio:"+mag_ratio+" hagl_ratio:"+hagl_ratio+" tas_ratio:"+tas_ratio+" pos_horiz_accuracy:"+pos_horiz_accuracy+" pos_vert_accuracy:"+pos_vert_accuracy+" flags:"+flags+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

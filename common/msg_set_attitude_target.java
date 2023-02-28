@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Sets a desired vehicle attitude. Used by an external controller to command the vehicle (manual controller or other system).
  */
@@ -19,55 +21,75 @@ public class msg_set_attitude_target extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 51;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SET_ATTITUDE_TARGET;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
      */
+    @Description("Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)")
+    @Units("")
     public float q[] = new float[4];
-      
+    
     /**
      * Body roll rate
      */
+    @Description("Body roll rate")
+    @Units("rad/s")
     public float body_roll_rate;
-      
+    
     /**
      * Body pitch rate
      */
+    @Description("Body pitch rate")
+    @Units("rad/s")
     public float body_pitch_rate;
-      
+    
     /**
      * Body yaw rate
      */
+    @Description("Body yaw rate")
+    @Units("rad/s")
     public float body_yaw_rate;
-      
+    
     /**
      * Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)
      */
+    @Description("Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)")
+    @Units("")
     public float thrust;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Bitmap to indicate which dimensions should be ignored by the vehicle.
      */
+    @Description("Bitmap to indicate which dimensions should be ignored by the vehicle.")
+    @Units("")
     public short type_mask;
-      
+    
     /**
      * 3D thrust setpoint in the body NED frame, normalized to -1 .. 1
      */
+    @Description("3D thrust setpoint in the body NED frame, normalized to -1 .. 1")
+    @Units("")
     public float thrust_body[] = new float[3];
     
 
@@ -81,7 +103,7 @@ public class msg_set_attitude_target extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SET_ATTITUDE_TARGET;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         
         for (int i = 0; i < q.length; i++) {
@@ -115,9 +137,9 @@ public class msg_set_attitude_target extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
-         
+        
         for (int i = 0; i < this.q.length; i++) {
             this.q[i] = payload.getFloat();
         }
@@ -131,7 +153,7 @@ public class msg_set_attitude_target extends MAVLinkMessage {
         this.type_mask = payload.getUnsignedByte();
         
         if (isMavlink2) {
-              
+             
         for (int i = 0; i < this.thrust_body.length; i++) {
             this.thrust_body[i] = payload.getFloat();
         }
@@ -146,7 +168,7 @@ public class msg_set_attitude_target extends MAVLinkMessage {
     public msg_set_attitude_target() {
         this.msgid = MAVLINK_MSG_ID_SET_ATTITUDE_TARGET;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -165,7 +187,7 @@ public class msg_set_attitude_target extends MAVLinkMessage {
         this.thrust_body = thrust_body;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -195,7 +217,7 @@ public class msg_set_attitude_target extends MAVLinkMessage {
      */
     public msg_set_attitude_target(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SET_ATTITUDE_TARGET;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -210,7 +232,7 @@ public class msg_set_attitude_target extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SET_ATTITUDE_TARGET - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" q:"+q+" body_roll_rate:"+body_roll_rate+" body_pitch_rate:"+body_pitch_rate+" body_yaw_rate:"+body_yaw_rate+" thrust:"+thrust+" target_system:"+target_system+" target_component:"+target_component+" type_mask:"+type_mask+" thrust_body:"+thrust_body+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * General status information of an UAVCAN node. Please refer to the definition of the UAVCAN message "uavcan.protocol.NodeStatus" for the background information. The UAVCAN specification is available at http://uavcan.org.
  */
@@ -19,35 +21,47 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 17;
     private static final long serialVersionUID = MAVLINK_MSG_ID_UAVCAN_NODE_STATUS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Time since the start-up of the node.
      */
+    @Description("Time since the start-up of the node.")
+    @Units("s")
     public long uptime_sec;
-      
+    
     /**
      * Vendor-specific status information.
      */
+    @Description("Vendor-specific status information.")
+    @Units("")
     public int vendor_specific_status_code;
-      
+    
     /**
      * Generalized node health status.
      */
+    @Description("Generalized node health status.")
+    @Units("")
     public short health;
-      
+    
     /**
      * Generalized operating mode.
      */
+    @Description("Generalized operating mode.")
+    @Units("")
     public short mode;
-      
+    
     /**
      * Not used currently.
      */
+    @Description("Not used currently.")
+    @Units("")
     public short sub_mode;
     
 
@@ -61,7 +75,7 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_UAVCAN_NODE_STATUS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putUnsignedInt(uptime_sec);
         packet.payload.putUnsignedShort(vendor_specific_status_code);
@@ -83,7 +97,7 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.uptime_sec = payload.getUnsignedInt();
         this.vendor_specific_status_code = payload.getUnsignedShort();
@@ -102,7 +116,7 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
     public msg_uavcan_node_status() {
         this.msgid = MAVLINK_MSG_ID_UAVCAN_NODE_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +131,7 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
         this.sub_mode = sub_mode;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -143,7 +157,7 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
      */
     public msg_uavcan_node_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_UAVCAN_NODE_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -158,7 +172,7 @@ public class msg_uavcan_node_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_UAVCAN_NODE_STATUS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" uptime_sec:"+uptime_sec+" vendor_specific_status_code:"+vendor_specific_status_code+" health:"+health+" mode:"+mode+" sub_mode:"+sub_mode+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

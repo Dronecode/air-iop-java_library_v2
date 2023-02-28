@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Wind estimate from vehicle. Note that despite the name, this message does not actually contain any covariances but instead variability and accuracy fields in terms of standard deviation (1-STD).
  */
@@ -19,50 +21,68 @@ public class msg_wind_cov extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 40;
     private static final long serialVersionUID = MAVLINK_MSG_ID_WIND_COV;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Wind in North (NED) direction (NAN if unknown)
      */
+    @Description("Wind in North (NED) direction (NAN if unknown)")
+    @Units("m/s")
     public float wind_x;
-      
+    
     /**
      * Wind in East (NED) direction (NAN if unknown)
      */
+    @Description("Wind in East (NED) direction (NAN if unknown)")
+    @Units("m/s")
     public float wind_y;
-      
+    
     /**
      * Wind in down (NED) direction (NAN if unknown)
      */
+    @Description("Wind in down (NED) direction (NAN if unknown)")
+    @Units("m/s")
     public float wind_z;
-      
+    
     /**
      * Variability of wind in XY, 1-STD estimated from a 1 Hz lowpassed wind estimate (NAN if unknown)
      */
+    @Description("Variability of wind in XY, 1-STD estimated from a 1 Hz lowpassed wind estimate (NAN if unknown)")
+    @Units("m/s")
     public float var_horiz;
-      
+    
     /**
      * Variability of wind in Z, 1-STD estimated from a 1 Hz lowpassed wind estimate (NAN if unknown)
      */
+    @Description("Variability of wind in Z, 1-STD estimated from a 1 Hz lowpassed wind estimate (NAN if unknown)")
+    @Units("m/s")
     public float var_vert;
-      
+    
     /**
      * Altitude (MSL) that this measurement was taken at (NAN if unknown)
      */
+    @Description("Altitude (MSL) that this measurement was taken at (NAN if unknown)")
+    @Units("m")
     public float wind_alt;
-      
+    
     /**
      * Horizontal speed 1-STD accuracy (0 if unknown)
      */
+    @Description("Horizontal speed 1-STD accuracy (0 if unknown)")
+    @Units("m/s")
     public float horiz_accuracy;
-      
+    
     /**
      * Vertical speed 1-STD accuracy (0 if unknown)
      */
+    @Description("Vertical speed 1-STD accuracy (0 if unknown)")
+    @Units("m/s")
     public float vert_accuracy;
     
 
@@ -76,7 +96,7 @@ public class msg_wind_cov extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_WIND_COV;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(wind_x);
         packet.payload.putFloat(wind_y);
@@ -101,7 +121,7 @@ public class msg_wind_cov extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.wind_x = payload.getFloat();
         this.wind_y = payload.getFloat();
@@ -123,7 +143,7 @@ public class msg_wind_cov extends MAVLinkMessage {
     public msg_wind_cov() {
         this.msgid = MAVLINK_MSG_ID_WIND_COV;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -141,7 +161,7 @@ public class msg_wind_cov extends MAVLinkMessage {
         this.vert_accuracy = vert_accuracy;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -170,7 +190,7 @@ public class msg_wind_cov extends MAVLinkMessage {
      */
     public msg_wind_cov(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_WIND_COV;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -185,7 +205,7 @@ public class msg_wind_cov extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_WIND_COV - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" wind_x:"+wind_x+" wind_y:"+wind_y+" wind_z:"+wind_z+" var_horiz:"+var_horiz+" var_vert:"+var_vert+" wind_alt:"+wind_alt+" horiz_accuracy:"+horiz_accuracy+" vert_accuracy:"+vert_accuracy+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

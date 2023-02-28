@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Actions following geofence breach.
  */
 public class FENCE_ACTION {

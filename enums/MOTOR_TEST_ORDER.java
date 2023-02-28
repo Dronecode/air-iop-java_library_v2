@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Sequence that motors are tested when using MAV_CMD_DO_MOTOR_TEST.
  */
 public class MOTOR_TEST_ORDER {

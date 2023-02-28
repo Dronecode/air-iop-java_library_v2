@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * ACK / NACK / ERROR values as a result of MAV_CMDs and for mission item transmission.
  */
 public class MAV_CMD_ACK {

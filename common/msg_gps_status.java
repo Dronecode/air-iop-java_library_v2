@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The positioning status, as reported by GPS. This message is intended to display status information about each satellite visible to the receiver. See message GLOBAL_POSITION_INT for the global position estimate. This message can contain information for up to 20 satellites.
  */
@@ -19,35 +21,47 @@ public class msg_gps_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 101;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GPS_STATUS;
 
-      
+    
     /**
      * Number of satellites visible
      */
+    @Description("Number of satellites visible")
+    @Units("")
     public short satellites_visible;
-      
+    
     /**
      * Global satellite ID
      */
+    @Description("Global satellite ID")
+    @Units("")
     public short satellite_prn[] = new short[20];
-      
+    
     /**
      * 0: Satellite not used, 1: used for localization
      */
+    @Description("0: Satellite not used, 1: used for localization")
+    @Units("")
     public short satellite_used[] = new short[20];
-      
+    
     /**
      * Elevation (0: right on top of receiver, 90: on the horizon) of satellite
      */
+    @Description("Elevation (0: right on top of receiver, 90: on the horizon) of satellite")
+    @Units("deg")
     public short satellite_elevation[] = new short[20];
-      
+    
     /**
      * Direction of satellite, 0: 0 deg, 255: 360 deg.
      */
+    @Description("Direction of satellite, 0: 0 deg, 255: 360 deg.")
+    @Units("deg")
     public short satellite_azimuth[] = new short[20];
-      
+    
     /**
      * Signal to noise ratio of satellite
      */
+    @Description("Signal to noise ratio of satellite")
+    @Units("dB")
     public short satellite_snr[] = new short[20];
     
 
@@ -61,7 +75,7 @@ public class msg_gps_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GPS_STATUS;
-        
+
         packet.payload.putUnsignedByte(satellites_visible);
         
         for (int i = 0; i < satellite_prn.length; i++) {
@@ -103,29 +117,29 @@ public class msg_gps_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.satellites_visible = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.satellite_prn.length; i++) {
             this.satellite_prn[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.satellite_used.length; i++) {
             this.satellite_used[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.satellite_elevation.length; i++) {
             this.satellite_elevation[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.satellite_azimuth.length; i++) {
             this.satellite_azimuth[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.satellite_snr.length; i++) {
             this.satellite_snr[i] = payload.getUnsignedByte();
         }
@@ -142,7 +156,7 @@ public class msg_gps_status extends MAVLinkMessage {
     public msg_gps_status() {
         this.msgid = MAVLINK_MSG_ID_GPS_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +171,7 @@ public class msg_gps_status extends MAVLinkMessage {
         this.satellite_snr = satellite_snr;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -183,7 +197,7 @@ public class msg_gps_status extends MAVLinkMessage {
      */
     public msg_gps_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GPS_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -198,7 +212,7 @@ public class msg_gps_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GPS_STATUS - sysid:"+sysid+" compid:"+compid+" satellites_visible:"+satellites_visible+" satellite_prn:"+satellite_prn+" satellite_used:"+satellite_used+" satellite_elevation:"+satellite_elevation+" satellite_azimuth:"+satellite_azimuth+" satellite_snr:"+satellite_snr+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

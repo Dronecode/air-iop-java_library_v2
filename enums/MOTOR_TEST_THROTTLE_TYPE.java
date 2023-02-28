@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Defines how throttle value is represented in MAV_CMD_DO_MOTOR_TEST.
  */
 public class MOTOR_TEST_THROTTLE_TYPE {

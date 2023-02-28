@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Optical flow from a flow sensor (e.g. optical mouse sensor)
  */
@@ -19,55 +21,75 @@ public class msg_optical_flow extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 34;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OPTICAL_FLOW;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Flow in x-sensor direction, angular-speed compensated
      */
+    @Description("Flow in x-sensor direction, angular-speed compensated")
+    @Units("m/s")
     public float flow_comp_m_x;
-      
+    
     /**
      * Flow in y-sensor direction, angular-speed compensated
      */
+    @Description("Flow in y-sensor direction, angular-speed compensated")
+    @Units("m/s")
     public float flow_comp_m_y;
-      
+    
     /**
      * Ground distance. Positive value: distance known. Negative value: Unknown distance
      */
+    @Description("Ground distance. Positive value: distance known. Negative value: Unknown distance")
+    @Units("m")
     public float ground_distance;
-      
+    
     /**
      * Flow in x-sensor direction
      */
+    @Description("Flow in x-sensor direction")
+    @Units("dpix")
     public short flow_x;
-      
+    
     /**
      * Flow in y-sensor direction
      */
+    @Description("Flow in y-sensor direction")
+    @Units("dpix")
     public short flow_y;
-      
+    
     /**
      * Sensor ID
      */
+    @Description("Sensor ID")
+    @Units("")
     public short sensor_id;
-      
+    
     /**
      * Optical flow quality / confidence. 0: bad, 255: maximum quality
      */
+    @Description("Optical flow quality / confidence. 0: bad, 255: maximum quality")
+    @Units("")
     public short quality;
-      
+    
     /**
      * Flow rate about X axis
      */
+    @Description("Flow rate about X axis")
+    @Units("rad/s")
     public float flow_rate_x;
-      
+    
     /**
      * Flow rate about Y axis
      */
+    @Description("Flow rate about Y axis")
+    @Units("rad/s")
     public float flow_rate_y;
     
 
@@ -81,7 +103,7 @@ public class msg_optical_flow extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_OPTICAL_FLOW;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(flow_comp_m_x);
         packet.payload.putFloat(flow_comp_m_y);
@@ -107,7 +129,7 @@ public class msg_optical_flow extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.flow_comp_m_x = payload.getFloat();
         this.flow_comp_m_y = payload.getFloat();
@@ -130,7 +152,7 @@ public class msg_optical_flow extends MAVLinkMessage {
     public msg_optical_flow() {
         this.msgid = MAVLINK_MSG_ID_OPTICAL_FLOW;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -149,7 +171,7 @@ public class msg_optical_flow extends MAVLinkMessage {
         this.flow_rate_y = flow_rate_y;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -179,7 +201,7 @@ public class msg_optical_flow extends MAVLinkMessage {
      */
     public msg_optical_flow(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_OPTICAL_FLOW;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -194,7 +216,7 @@ public class msg_optical_flow extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_OPTICAL_FLOW - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" flow_comp_m_x:"+flow_comp_m_x+" flow_comp_m_y:"+flow_comp_m_y+" ground_distance:"+ground_distance+" flow_x:"+flow_x+" flow_y:"+flow_y+" sensor_id:"+sensor_id+" quality:"+quality+" flow_rate_x:"+flow_rate_x+" flow_rate_y:"+flow_rate_y+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

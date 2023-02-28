@@ -9,7 +9,9 @@ package com.MAVLink.ras_a;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Provides status over an exploration task. The message should, by default, be streamed at 1Hz.
  */
@@ -19,40 +21,54 @@ public class msg_exploration_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 24;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EXPLORATION_STATUS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Remaining time for the vehicle to execute the exploration task, after which another predefined behavior is triggered. UINT64_MAX when unknown or not applicable.
      */
+    @Description("Remaining time for the vehicle to execute the exploration task, after which another predefined behavior is triggered. UINT64_MAX when unknown or not applicable.")
+    @Units("us")
     public long time_to_timeout;
-      
+    
     /**
      * Progress measurement of the exploration task. Specific meaning may vary by implementation, but in general, increasing values mean more has been explored. UINT16_MAX when unknown or not applicable.
      */
+    @Description("Progress measurement of the exploration task. Specific meaning may vary by implementation, but in general, increasing values mean more has been explored. UINT16_MAX when unknown or not applicable.")
+    @Units("")
     public int progress;
-      
+    
     /**
      * Measurement of the known size of the exploration task. Specific meaning may vary, but when progress == denominator, this should imply that exploration is complete. This value may increase as more need to explore is discovered, or may be fixed (100 recommended) if the end state is known (e.g., exploration in a known mapped environment). 0 when no meaningful size can be communicated.
      */
+    @Description("Measurement of the known size of the exploration task. Specific meaning may vary, but when progress == denominator, this should imply that exploration is complete. This value may increase as more need to explore is discovered, or may be fixed (100 recommended) if the end state is known (e.g., exploration in a known mapped environment). 0 when no meaningful size can be communicated.")
+    @Units("")
     public int denominator;
-      
+    
     /**
      * Bitmap of the exploration task status flags.
      */
+    @Description("Bitmap of the exploration task status flags.")
+    @Units("")
     public int flags;
-      
+    
     /**
      * ID of the exploration task. 255 if not applicable or unknown.
      */
+    @Description("ID of the exploration task. 255 if not applicable or unknown.")
+    @Units("")
     public short exploration_id;
-      
+    
     /**
      * In an indoor exploration task, it indicates the floor/level of the structure that is currently being explored. The level where the vehicle started the exploration is considered the level 0. INT8_MAX when unknown, not capable to provide or not applicable.
      */
+    @Description("In an indoor exploration task, it indicates the floor/level of the structure that is currently being explored. The level where the vehicle started the exploration is considered the level 0. INT8_MAX when unknown, not capable to provide or not applicable.")
+    @Units("")
     public byte level;
     
 
@@ -66,7 +82,7 @@ public class msg_exploration_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_EXPLORATION_STATUS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putUnsignedLong(time_to_timeout);
         packet.payload.putUnsignedShort(progress);
@@ -89,7 +105,7 @@ public class msg_exploration_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.time_to_timeout = payload.getUnsignedLong();
         this.progress = payload.getUnsignedShort();
@@ -109,7 +125,7 @@ public class msg_exploration_status extends MAVLinkMessage {
     public msg_exploration_status() {
         this.msgid = MAVLINK_MSG_ID_EXPLORATION_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_exploration_status extends MAVLinkMessage {
         this.level = level;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_exploration_status extends MAVLinkMessage {
      */
     public msg_exploration_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_EXPLORATION_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_exploration_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_EXPLORATION_STATUS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" time_to_timeout:"+time_to_timeout+" progress:"+progress+" denominator:"+denominator+" flags:"+flags+" exploration_id:"+exploration_id+" level:"+level+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

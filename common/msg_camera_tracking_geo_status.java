@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Camera tracking status, sent while in active tracking. Use MAV_CMD_SET_MESSAGE_INTERVAL to define message interval.
  */
@@ -19,70 +21,96 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 49;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CAMERA_TRACKING_GEO_STATUS;
 
-      
+    
     /**
      * Latitude of tracked object
      */
+    @Description("Latitude of tracked object")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude of tracked object
      */
+    @Description("Longitude of tracked object")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude of tracked object(AMSL, WGS84)
      */
+    @Description("Altitude of tracked object(AMSL, WGS84)")
+    @Units("m")
     public float alt;
-      
+    
     /**
      * Horizontal accuracy. NAN if unknown
      */
+    @Description("Horizontal accuracy. NAN if unknown")
+    @Units("m")
     public float h_acc;
-      
+    
     /**
      * Vertical accuracy. NAN if unknown
      */
+    @Description("Vertical accuracy. NAN if unknown")
+    @Units("m")
     public float v_acc;
-      
+    
     /**
      * North velocity of tracked object. NAN if unknown
      */
+    @Description("North velocity of tracked object. NAN if unknown")
+    @Units("m/s")
     public float vel_n;
-      
+    
     /**
      * East velocity of tracked object. NAN if unknown
      */
+    @Description("East velocity of tracked object. NAN if unknown")
+    @Units("m/s")
     public float vel_e;
-      
+    
     /**
      * Down velocity of tracked object. NAN if unknown
      */
+    @Description("Down velocity of tracked object. NAN if unknown")
+    @Units("m/s")
     public float vel_d;
-      
+    
     /**
      * Velocity accuracy. NAN if unknown
      */
+    @Description("Velocity accuracy. NAN if unknown")
+    @Units("m/s")
     public float vel_acc;
-      
+    
     /**
      * Distance between camera and tracked object. NAN if unknown
      */
+    @Description("Distance between camera and tracked object. NAN if unknown")
+    @Units("m")
     public float dist;
-      
+    
     /**
      * Heading in radians, in NED. NAN if unknown
      */
+    @Description("Heading in radians, in NED. NAN if unknown")
+    @Units("rad")
     public float hdg;
-      
+    
     /**
      * Accuracy of heading, in NED. NAN if unknown
      */
+    @Description("Accuracy of heading, in NED. NAN if unknown")
+    @Units("rad")
     public float hdg_acc;
-      
+    
     /**
      * Current tracking status
      */
+    @Description("Current tracking status")
+    @Units("")
     public short tracking_status;
     
 
@@ -96,7 +124,7 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CAMERA_TRACKING_GEO_STATUS;
-        
+
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
         packet.payload.putFloat(alt);
@@ -125,7 +153,7 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.lat = payload.getInt();
         this.lon = payload.getInt();
         this.alt = payload.getFloat();
@@ -151,7 +179,7 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
     public msg_camera_tracking_geo_status() {
         this.msgid = MAVLINK_MSG_ID_CAMERA_TRACKING_GEO_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -173,7 +201,7 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
         this.tracking_status = tracking_status;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -206,7 +234,7 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
      */
     public msg_camera_tracking_geo_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CAMERA_TRACKING_GEO_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -221,7 +249,7 @@ public class msg_camera_tracking_geo_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CAMERA_TRACKING_GEO_STATUS - sysid:"+sysid+" compid:"+compid+" lat:"+lat+" lon:"+lon+" alt:"+alt+" h_acc:"+h_acc+" v_acc:"+v_acc+" vel_n:"+vel_n+" vel_e:"+vel_e+" vel_d:"+vel_d+" vel_acc:"+vel_acc+" dist:"+dist+" hdg:"+hdg+" hdg_acc:"+hdg_acc+" tracking_status:"+tracking_status+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

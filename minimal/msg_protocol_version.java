@@ -9,7 +9,9 @@ package com.MAVLink.minimal;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Version and capability of protocol version. This message can be requested with MAV_CMD_REQUEST_MESSAGE and is used as part of the handshaking to establish which MAVLink version should be used on the network. Every node should respond to a request for PROTOCOL_VERSION to enable the handshaking. Library implementers should consider adding this into the default decoding state machine to allow the protocol core to respond directly.
  */
@@ -19,30 +21,40 @@ public class msg_protocol_version extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 22;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PROTOCOL_VERSION;
 
-      
+    
     /**
      * Currently active MAVLink version number * 100: v1.0 is 100, v2.0 is 200, etc.
      */
+    @Description("Currently active MAVLink version number * 100: v1.0 is 100, v2.0 is 200, etc.")
+    @Units("")
     public int version;
-      
+    
     /**
      * Minimum MAVLink version supported
      */
+    @Description("Minimum MAVLink version supported")
+    @Units("")
     public int min_version;
-      
+    
     /**
      * Maximum MAVLink version supported (set to the same value as version by default)
      */
+    @Description("Maximum MAVLink version supported (set to the same value as version by default)")
+    @Units("")
     public int max_version;
-      
+    
     /**
      * The first 8 bytes (not characters printed in hex!) of the git hash.
      */
+    @Description("The first 8 bytes (not characters printed in hex!) of the git hash.")
+    @Units("")
     public short spec_version_hash[] = new short[8];
-      
+    
     /**
      * The first 8 bytes (not characters printed in hex!) of the git hash.
      */
+    @Description("The first 8 bytes (not characters printed in hex!) of the git hash.")
+    @Units("")
     public short library_version_hash[] = new short[8];
     
 
@@ -56,7 +68,7 @@ public class msg_protocol_version extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PROTOCOL_VERSION;
-        
+
         packet.payload.putUnsignedShort(version);
         packet.payload.putUnsignedShort(min_version);
         packet.payload.putUnsignedShort(max_version);
@@ -85,16 +97,16 @@ public class msg_protocol_version extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.version = payload.getUnsignedShort();
         this.min_version = payload.getUnsignedShort();
         this.max_version = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.spec_version_hash.length; i++) {
             this.spec_version_hash[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.library_version_hash.length; i++) {
             this.library_version_hash[i] = payload.getUnsignedByte();
         }
@@ -111,7 +123,7 @@ public class msg_protocol_version extends MAVLinkMessage {
     public msg_protocol_version() {
         this.msgid = MAVLINK_MSG_ID_PROTOCOL_VERSION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +137,7 @@ public class msg_protocol_version extends MAVLinkMessage {
         this.library_version_hash = library_version_hash;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -150,7 +162,7 @@ public class msg_protocol_version extends MAVLinkMessage {
      */
     public msg_protocol_version(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PROTOCOL_VERSION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -165,7 +177,7 @@ public class msg_protocol_version extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PROTOCOL_VERSION - sysid:"+sysid+" compid:"+compid+" version:"+version+" min_version:"+min_version+" max_version:"+max_version+" spec_version_hash:"+spec_version_hash+" library_version_hash:"+library_version_hash+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

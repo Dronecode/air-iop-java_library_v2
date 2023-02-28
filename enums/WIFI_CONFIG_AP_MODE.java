@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * WiFi Mode.
  */
 public class WIFI_CONFIG_AP_MODE {

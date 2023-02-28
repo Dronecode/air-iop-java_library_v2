@@ -9,7 +9,9 @@ package com.MAVLink.ras_a;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Reports information for a detected Point-of-Interest (POI).
         This can be either set by an operator (through MAV_CMD_SET_POI_FOCUS) or through onboard software or external processes.
@@ -28,130 +30,180 @@ public class msg_poi_report extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 103;
     private static final long serialVersionUID = MAVLINK_MSG_ID_POI_REPORT;
 
-      
+    
     /**
      * Timestamp (time since UNIX epoch) of the POI detection, in UTC. 0 for unknown.
      */
+    @Description("Timestamp (time since UNIX epoch) of the POI detection, in UTC. 0 for unknown.")
+    @Units("ms")
     public long time_utc_detected;
-      
+    
     /**
      * Timestamp (time since UNIX epoch) of the last POI update, in UTC. 0 for unknown.
      */
+    @Description("Timestamp (time since UNIX epoch) of the last POI update, in UTC. 0 for unknown.")
+    @Units("ms")
     public long time_utc_updated;
-      
+    
     /**
      * Unique ID for a given POI. Updates to a POIs information should use the same uid. Maximum integer to use is 2,147,483,647 (for the purposes of type-safety when converting back and forth to floating-point fields). 0 means unknown.
      */
+    @Description("Unique ID for a given POI. Updates to a POIs information should use the same uid. Maximum integer to use is 2,147,483,647 (for the purposes of type-safety when converting back and forth to floating-point fields). 0 means unknown.")
+    @Units("")
     public long uid;
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Latitude (WGS84) of the POI. If unknown: INT32_MAX (both Lat/Lon).
      */
+    @Description("Latitude (WGS84) of the POI. If unknown: INT32_MAX (both Lat/Lon).")
+    @Units("degE7")
     public int latitude;
-      
+    
     /**
      * Longitude (WGS84) of the POI. If unknown: INT32_MAX (both Lat/Lon).
      */
+    @Description("Longitude (WGS84) of the POI. If unknown: INT32_MAX (both Lat/Lon).")
+    @Units("degE7")
     public int longitude;
-      
+    
     /**
      * Altitude of the POI with respect to the MSL. Positive for up. NaN if unknown.
      */
+    @Description("Altitude of the POI with respect to the MSL. Positive for up. NaN if unknown.")
+    @Units("m")
     public float alt_msl;
-      
+    
     /**
      * Altitude of the POI with respect to the EGM96 ellipsoid. Positive for up. NaN if unknown.
      */
+    @Description("Altitude of the POI with respect to the EGM96 ellipsoid. Positive for up. NaN if unknown.")
+    @Units("m")
     public float alt_ellip;
-      
+    
     /**
      * Altitude of the POI with respect to the ground level. Positive for up. NaN if unknown.
      */
+    @Description("Altitude of the POI with respect to the ground level. Positive for up. NaN if unknown.")
+    @Units("m")
     public float alt_ground;
-      
+    
     /**
      * Classification of the POI. Can either used the POI_CLASSIFICATION enumeration (0x0 - 0x7FFFFFFF reserved), or use the reserved range for implementation specific classifications (0x80000000 - UINT32_MAX).
      */
+    @Description("Classification of the POI. Can either used the POI_CLASSIFICATION enumeration (0x0 - 0x7FFFFFFF reserved), or use the reserved range for implementation specific classifications (0x80000000 - UINT32_MAX).")
+    @Units("")
     public long classification;
-      
+    
     /**
      * X position of the POI in the local NED frame. The local frame might either be the vehicle navigation frame or a common reference frame to multiple systems. NAN if unknown.
      */
+    @Description("X position of the POI in the local NED frame. The local frame might either be the vehicle navigation frame or a common reference frame to multiple systems. NAN if unknown.")
+    @Units("m")
     public float x;
-      
+    
     /**
      * Y position of the POI in the local NED frame. The local frame might either be the vehicle navigation frame or a common reference frame to multiple systems. NAN if unknown.
      */
+    @Description("Y position of the POI in the local NED frame. The local frame might either be the vehicle navigation frame or a common reference frame to multiple systems. NAN if unknown.")
+    @Units("m")
     public float y;
-      
+    
     /**
      * Z position of the POI in the local NED frame. The local frame might either be the vehicle navigation frame or a common reference frame to multiple systems. NAN if unknown.
      */
+    @Description("Z position of the POI in the local NED frame. The local frame might either be the vehicle navigation frame or a common reference frame to multiple systems. NAN if unknown.")
+    @Units("m")
     public float z;
-      
+    
     /**
      * Orientation quaternion (w, x, y, z order) of the POI in the NED frame. Zero-rotation is 1, 0, 0, 0. Unknown is NAN, NAN, NAN, NAN.
      */
+    @Description("Orientation quaternion (w, x, y, z order) of the POI in the NED frame. Zero-rotation is 1, 0, 0, 0. Unknown is NAN, NAN, NAN, NAN.")
+    @Units("")
     public float q[] = new float[4];
-      
+    
     /**
      * Distance from the aircraft sensor/camera focal point to the POI. NAN if unknown.
      */
+    @Description("Distance from the aircraft sensor/camera focal point to the POI. NAN if unknown.")
+    @Units("m")
     public float dist;
-      
+    
     /**
      * North velocity of the POI. NAN if unknown.
      */
+    @Description("North velocity of the POI. NAN if unknown.")
+    @Units("m/s")
     public float vel_n;
-      
+    
     /**
      * East velocity of the POI. NAN if unknown.
      */
+    @Description("East velocity of the POI. NAN if unknown.")
+    @Units("m/s")
     public float vel_e;
-      
+    
     /**
      * Down velocity of the POI. NAN if unknown.
      */
+    @Description("Down velocity of the POI. NAN if unknown.")
+    @Units("m/s")
     public float vel_d;
-      
+    
     /**
      * Heading of the POI in the NED frame. NAN if unknown.
      */
+    @Description("Heading of the POI in the NED frame. NAN if unknown.")
+    @Units("rad")
     public float hdg;
-      
+    
     /**
      * Time to live: If this time has elapsed since last update, the POI should be deleted on the receiver side. A value of 0 should indicate no timeout.
      */
+    @Description("Time to live: If this time has elapsed since last update, the POI should be deleted on the receiver side. A value of 0 should indicate no timeout.")
+    @Units("s")
     public int ttl;
-      
+    
     /**
      * Generic confidence level. Can be used for an implementation specific confidence level. 0..100, UINT8_MAX when unknown.
      */
+    @Description("Generic confidence level. Can be used for an implementation specific confidence level. 0..100, UINT8_MAX when unknown.")
+    @Units("%")
     public short confidence_overall;
-      
+    
     /**
      * Confidence level of the POI detection. 0..100, UINT8_MAX when unknown.
      */
+    @Description("Confidence level of the POI detection. 0..100, UINT8_MAX when unknown.")
+    @Units("%")
     public short confidence_detection;
-      
+    
     /**
      * Confidence level of the POI classification. 0..100, UINT8_MAX when unknown.
      */
+    @Description("Confidence level of the POI classification. 0..100, UINT8_MAX when unknown.")
+    @Units("%")
     public short confidence_classification;
-      
+    
     /**
      * Confidence level of the POI localization. 0..100, UINT8_MAX when unknown.
      */
+    @Description("Confidence level of the POI localization. 0..100, UINT8_MAX when unknown.")
+    @Units("%")
     public short confidence_localization;
-      
+    
     /**
      * Bitmask for POI status. Bit 1: POI is in focus on camera, Bit 8: POI has been cleared and should be deleted.
      */
+    @Description("Bitmask for POI status. Bit 1: POI is in focus on camera, Bit 8: POI has been cleared and should be deleted.")
+    @Units("")
     public short status_flags;
     
 
@@ -165,7 +217,7 @@ public class msg_poi_report extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_POI_REPORT;
-        
+
         packet.payload.putUnsignedLong(time_utc_detected);
         packet.payload.putUnsignedLong(time_utc_updated);
         packet.payload.putUnsignedInt(uid);
@@ -210,7 +262,7 @@ public class msg_poi_report extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_utc_detected = payload.getUnsignedLong();
         this.time_utc_updated = payload.getUnsignedLong();
         this.uid = payload.getUnsignedInt();
@@ -224,7 +276,7 @@ public class msg_poi_report extends MAVLinkMessage {
         this.x = payload.getFloat();
         this.y = payload.getFloat();
         this.z = payload.getFloat();
-         
+        
         for (int i = 0; i < this.q.length; i++) {
             this.q[i] = payload.getFloat();
         }
@@ -252,7 +304,7 @@ public class msg_poi_report extends MAVLinkMessage {
     public msg_poi_report() {
         this.msgid = MAVLINK_MSG_ID_POI_REPORT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -286,7 +338,7 @@ public class msg_poi_report extends MAVLinkMessage {
         this.status_flags = status_flags;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -331,7 +383,7 @@ public class msg_poi_report extends MAVLinkMessage {
      */
     public msg_poi_report(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_POI_REPORT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -346,7 +398,7 @@ public class msg_poi_report extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_POI_REPORT - sysid:"+sysid+" compid:"+compid+" time_utc_detected:"+time_utc_detected+" time_utc_updated:"+time_utc_updated+" uid:"+uid+" time_boot_ms:"+time_boot_ms+" latitude:"+latitude+" longitude:"+longitude+" alt_msl:"+alt_msl+" alt_ellip:"+alt_ellip+" alt_ground:"+alt_ground+" classification:"+classification+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" dist:"+dist+" vel_n:"+vel_n+" vel_e:"+vel_e+" vel_d:"+vel_d+" hdg:"+hdg+" ttl:"+ttl+" confidence_overall:"+confidence_overall+" confidence_detection:"+confidence_detection+" confidence_classification:"+confidence_classification+" confidence_localization:"+confidence_localization+" status_flags:"+status_flags+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

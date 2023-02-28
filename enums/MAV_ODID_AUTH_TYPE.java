@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * 
  */
 public class MAV_ODID_AUTH_TYPE {

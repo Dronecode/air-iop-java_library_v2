@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Emit the value of a parameter. The inclusion of param_count and param_index in the message allows the recipient to keep track of received parameters and allows them to re-request missing parameters after a loss or timeout.
  */
@@ -19,30 +21,40 @@ public class msg_param_ext_value extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 149;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PARAM_EXT_VALUE;
 
-      
+    
     /**
      * Total number of parameters
      */
+    @Description("Total number of parameters")
+    @Units("")
     public int param_count;
-      
+    
     /**
      * Index of this parameter
      */
+    @Description("Index of this parameter")
+    @Units("")
     public int param_index;
-      
+    
     /**
      * Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
      */
+    @Description("Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string")
+    @Units("")
     public byte param_id[] = new byte[16];
-      
+    
     /**
      * Parameter value
      */
+    @Description("Parameter value")
+    @Units("")
     public byte param_value[] = new byte[128];
-      
+    
     /**
      * Parameter type.
      */
+    @Description("Parameter type.")
+    @Units("")
     public short param_type;
     
 
@@ -56,7 +68,7 @@ public class msg_param_ext_value extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PARAM_EXT_VALUE;
-        
+
         packet.payload.putUnsignedShort(param_count);
         packet.payload.putUnsignedShort(param_index);
         
@@ -85,15 +97,15 @@ public class msg_param_ext_value extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.param_count = payload.getUnsignedShort();
         this.param_index = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.param_id.length; i++) {
             this.param_id[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.param_value.length; i++) {
             this.param_value[i] = payload.getByte();
         }
@@ -111,7 +123,7 @@ public class msg_param_ext_value extends MAVLinkMessage {
     public msg_param_ext_value() {
         this.msgid = MAVLINK_MSG_ID_PARAM_EXT_VALUE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +137,7 @@ public class msg_param_ext_value extends MAVLinkMessage {
         this.param_type = param_type;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -150,7 +162,7 @@ public class msg_param_ext_value extends MAVLinkMessage {
      */
     public msg_param_ext_value(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PARAM_EXT_VALUE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -223,7 +235,7 @@ public class msg_param_ext_value extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PARAM_EXT_VALUE - sysid:"+sysid+" compid:"+compid+" param_count:"+param_count+" param_index:"+param_index+" param_id:"+param_id+" param_value:"+param_value+" param_type:"+param_type+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

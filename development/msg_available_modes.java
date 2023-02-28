@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Get information about a particular flight modes.
         The message can be enumerated or requested for a particular mode using MAV_CMD_REQUEST_MESSAGE.
@@ -24,35 +26,47 @@ public class msg_available_modes extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 58;
     private static final long serialVersionUID = MAVLINK_MSG_ID_AVAILABLE_MODES;
 
-      
+    
     /**
      * A bitfield for use for autopilot-specific flags
      */
+    @Description("A bitfield for use for autopilot-specific flags")
+    @Units("")
     public long custom_mode;
-      
+    
     /**
      * The total number of available modes for the current vehicle type.
      */
+    @Description("The total number of available modes for the current vehicle type.")
+    @Units("")
     public short number_modes;
-      
+    
     /**
      * The current mode index within number_modes, indexed from 1.
      */
+    @Description("The current mode index within number_modes, indexed from 1.")
+    @Units("")
     public short mode_index;
-      
+    
     /**
      * Standard mode.
      */
+    @Description("Standard mode.")
+    @Units("")
     public short standard_mode;
-      
+    
     /**
      * System mode bitmap.
      */
+    @Description("System mode bitmap.")
+    @Units("")
     public short base_mode;
-      
+    
     /**
      * Name of custom mode, with null termination character. Should be omitted for standard modes.
      */
+    @Description("Name of custom mode, with null termination character. Should be omitted for standard modes.")
+    @Units("")
     public byte mode_name[] = new byte[50];
     
 
@@ -66,7 +80,7 @@ public class msg_available_modes extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_AVAILABLE_MODES;
-        
+
         packet.payload.putUnsignedInt(custom_mode);
         packet.payload.putUnsignedByte(number_modes);
         packet.payload.putUnsignedByte(mode_index);
@@ -92,13 +106,13 @@ public class msg_available_modes extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.custom_mode = payload.getUnsignedInt();
         this.number_modes = payload.getUnsignedByte();
         this.mode_index = payload.getUnsignedByte();
         this.standard_mode = payload.getUnsignedByte();
         this.base_mode = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.mode_name.length; i++) {
             this.mode_name[i] = payload.getByte();
         }
@@ -115,7 +129,7 @@ public class msg_available_modes extends MAVLinkMessage {
     public msg_available_modes() {
         this.msgid = MAVLINK_MSG_ID_AVAILABLE_MODES;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -130,7 +144,7 @@ public class msg_available_modes extends MAVLinkMessage {
         this.mode_name = mode_name;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -156,7 +170,7 @@ public class msg_available_modes extends MAVLinkMessage {
      */
     public msg_available_modes(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_AVAILABLE_MODES;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -200,7 +214,7 @@ public class msg_available_modes extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_AVAILABLE_MODES - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" number_modes:"+number_modes+" mode_index:"+mode_index+" standard_mode:"+standard_mode+" base_mode:"+base_mode+" mode_name:"+mode_name+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

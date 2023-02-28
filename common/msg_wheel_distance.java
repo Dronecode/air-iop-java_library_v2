@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Cumulative distance traveled for each reported wheel.
  */
@@ -19,20 +21,26 @@ public class msg_wheel_distance extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 137;
     private static final long serialVersionUID = MAVLINK_MSG_ID_WHEEL_DISTANCE;
 
-      
+    
     /**
      * Timestamp (synced to UNIX time or since system boot).
      */
+    @Description("Timestamp (synced to UNIX time or since system boot).")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Distance reported by individual wheel encoders. Forward rotations increase values, reverse rotations decrease them. Not all wheels will necessarily have wheel encoders; the mapping of encoders to wheel positions must be agreed/understood by the endpoints.
      */
+    @Description("Distance reported by individual wheel encoders. Forward rotations increase values, reverse rotations decrease them. Not all wheels will necessarily have wheel encoders; the mapping of encoders to wheel positions must be agreed/understood by the endpoints.")
+    @Units("m")
     public double distance[] = new double[16];
-      
+    
     /**
      * Number of wheels reported.
      */
+    @Description("Number of wheels reported.")
+    @Units("")
     public short count;
     
 
@@ -46,7 +54,7 @@ public class msg_wheel_distance extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_WHEEL_DISTANCE;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < distance.length; i++) {
@@ -69,9 +77,9 @@ public class msg_wheel_distance extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.distance.length; i++) {
             this.distance[i] = payload.getDouble();
         }
@@ -89,7 +97,7 @@ public class msg_wheel_distance extends MAVLinkMessage {
     public msg_wheel_distance() {
         this.msgid = MAVLINK_MSG_ID_WHEEL_DISTANCE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -101,7 +109,7 @@ public class msg_wheel_distance extends MAVLinkMessage {
         this.count = count;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -124,7 +132,7 @@ public class msg_wheel_distance extends MAVLinkMessage {
      */
     public msg_wheel_distance(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_WHEEL_DISTANCE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -139,7 +147,7 @@ public class msg_wheel_distance extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_WHEEL_DISTANCE - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" distance:"+distance+" count:"+count+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Possible responses from a WIFI_CONFIG_AP message.
  */
 public class WIFI_CONFIG_AP_RESPONSE {

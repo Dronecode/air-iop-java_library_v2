@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * These flags are used to diagnose the failure state of CELLULAR_STATUS
  */
 public class CELLULAR_NETWORK_FAILED_REASON {

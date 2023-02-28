@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Focus types for MAV_CMD_SET_CAMERA_FOCUS
  */
 public class SET_FOCUS_TYPE {

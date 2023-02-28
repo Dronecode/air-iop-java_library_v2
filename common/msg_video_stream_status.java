@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Information about the status of a video stream. It may be requested using MAV_CMD_REQUEST_MESSAGE.
  */
@@ -19,45 +21,61 @@ public class msg_video_stream_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 19;
     private static final long serialVersionUID = MAVLINK_MSG_ID_VIDEO_STREAM_STATUS;
 
-      
+    
     /**
      * Frame rate
      */
+    @Description("Frame rate")
+    @Units("Hz")
     public float framerate;
-      
+    
     /**
      * Bit rate
      */
+    @Description("Bit rate")
+    @Units("bits/s")
     public long bitrate;
-      
+    
     /**
      * Bitmap of stream status flags
      */
+    @Description("Bitmap of stream status flags")
+    @Units("")
     public int flags;
-      
+    
     /**
      * Horizontal resolution
      */
+    @Description("Horizontal resolution")
+    @Units("pix")
     public int resolution_h;
-      
+    
     /**
      * Vertical resolution
      */
+    @Description("Vertical resolution")
+    @Units("pix")
     public int resolution_v;
-      
+    
     /**
      * Video image rotation clockwise
      */
+    @Description("Video image rotation clockwise")
+    @Units("deg")
     public int rotation;
-      
+    
     /**
      * Horizontal Field of view
      */
+    @Description("Horizontal Field of view")
+    @Units("deg")
     public int hfov;
-      
+    
     /**
      * Video Stream ID (1 for first, 2 for second, etc.)
      */
+    @Description("Video Stream ID (1 for first, 2 for second, etc.)")
+    @Units("")
     public short stream_id;
     
 
@@ -71,7 +89,7 @@ public class msg_video_stream_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_VIDEO_STREAM_STATUS;
-        
+
         packet.payload.putFloat(framerate);
         packet.payload.putUnsignedInt(bitrate);
         packet.payload.putUnsignedShort(flags);
@@ -95,7 +113,7 @@ public class msg_video_stream_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.framerate = payload.getFloat();
         this.bitrate = payload.getUnsignedInt();
         this.flags = payload.getUnsignedShort();
@@ -116,7 +134,7 @@ public class msg_video_stream_status extends MAVLinkMessage {
     public msg_video_stream_status() {
         this.msgid = MAVLINK_MSG_ID_VIDEO_STREAM_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +151,7 @@ public class msg_video_stream_status extends MAVLinkMessage {
         this.stream_id = stream_id;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -161,7 +179,7 @@ public class msg_video_stream_status extends MAVLinkMessage {
      */
     public msg_video_stream_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_VIDEO_STREAM_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -176,7 +194,7 @@ public class msg_video_stream_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_VIDEO_STREAM_STATUS - sysid:"+sysid+" compid:"+compid+" framerate:"+framerate+" bitrate:"+bitrate+" flags:"+flags+" resolution_h:"+resolution_h+" resolution_v:"+resolution_v+" rotation:"+rotation+" hfov:"+hfov+" stream_id:"+stream_id+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

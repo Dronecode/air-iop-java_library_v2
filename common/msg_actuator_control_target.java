@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Set the vehicle attitude and body angular rates.
  */
@@ -19,20 +21,26 @@ public class msg_actuator_control_target extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 41;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ACTUATOR_CONTROL_TARGET;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.
      */
+    @Description("Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.")
+    @Units("")
     public float controls[] = new float[8];
-      
+    
     /**
-     * Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.
+     * Actuator group. The '_mlx' indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.
      */
+    @Description("Actuator group. The '_mlx' indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.")
+    @Units("")
     public short group_mlx;
     
 
@@ -46,7 +54,7 @@ public class msg_actuator_control_target extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ACTUATOR_CONTROL_TARGET;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < controls.length; i++) {
@@ -69,9 +77,9 @@ public class msg_actuator_control_target extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.controls.length; i++) {
             this.controls[i] = payload.getFloat();
         }
@@ -89,7 +97,7 @@ public class msg_actuator_control_target extends MAVLinkMessage {
     public msg_actuator_control_target() {
         this.msgid = MAVLINK_MSG_ID_ACTUATOR_CONTROL_TARGET;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -101,7 +109,7 @@ public class msg_actuator_control_target extends MAVLinkMessage {
         this.group_mlx = group_mlx;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -124,7 +132,7 @@ public class msg_actuator_control_target extends MAVLinkMessage {
      */
     public msg_actuator_control_target(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ACTUATOR_CONTROL_TARGET;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -139,7 +147,7 @@ public class msg_actuator_control_target extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ACTUATOR_CONTROL_TARGET - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" controls:"+controls+" group_mlx:"+group_mlx+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

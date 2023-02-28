@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Detected WiFi network status information. This message is sent per each WiFi network detected in range with known SSID and general status parameters.
  */
@@ -19,30 +21,40 @@ public class msg_wifi_network_info extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 37;
     private static final long serialVersionUID = MAVLINK_MSG_ID_WIFI_NETWORK_INFO;
 
-      
+    
     /**
      * WiFi network data rate. Set to UINT16_MAX if data_rate information is not supplied.
      */
+    @Description("WiFi network data rate. Set to UINT16_MAX if data_rate information is not supplied.")
+    @Units("MiB/s")
     public int data_rate;
-      
+    
     /**
      * Name of Wi-Fi network (SSID).
      */
+    @Description("Name of Wi-Fi network (SSID).")
+    @Units("")
     public byte ssid[] = new byte[32];
-      
+    
     /**
      * WiFi network operating channel ID. Set to 0 if unknown or unidentified.
      */
+    @Description("WiFi network operating channel ID. Set to 0 if unknown or unidentified.")
+    @Units("")
     public short channel_id;
-      
+    
     /**
      * WiFi network signal quality.
      */
+    @Description("WiFi network signal quality.")
+    @Units("%")
     public short signal_quality;
-      
+    
     /**
      * WiFi network security type.
      */
+    @Description("WiFi network security type.")
+    @Units("")
     public short security;
     
 
@@ -56,7 +68,7 @@ public class msg_wifi_network_info extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_WIFI_NETWORK_INFO;
-        
+
         packet.payload.putUnsignedShort(data_rate);
         
         for (int i = 0; i < ssid.length; i++) {
@@ -81,9 +93,9 @@ public class msg_wifi_network_info extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.data_rate = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.ssid.length; i++) {
             this.ssid[i] = payload.getByte();
         }
@@ -103,7 +115,7 @@ public class msg_wifi_network_info extends MAVLinkMessage {
     public msg_wifi_network_info() {
         this.msgid = MAVLINK_MSG_ID_WIFI_NETWORK_INFO;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +129,7 @@ public class msg_wifi_network_info extends MAVLinkMessage {
         this.security = security;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -142,7 +154,7 @@ public class msg_wifi_network_info extends MAVLinkMessage {
      */
     public msg_wifi_network_info(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_WIFI_NETWORK_INFO;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -186,7 +198,7 @@ public class msg_wifi_network_info extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_WIFI_NETWORK_INFO - sysid:"+sysid+" compid:"+compid+" data_rate:"+data_rate+" ssid:"+ssid+" channel_id:"+channel_id+" signal_quality:"+signal_quality+" security:"+security+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

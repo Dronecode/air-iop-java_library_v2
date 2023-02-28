@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Data stream status information.
  */
@@ -19,20 +21,26 @@ public class msg_data_stream extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 4;
     private static final long serialVersionUID = MAVLINK_MSG_ID_DATA_STREAM;
 
-      
+    
     /**
      * The message rate
      */
+    @Description("The message rate")
+    @Units("Hz")
     public int message_rate;
-      
+    
     /**
      * The ID of the requested data stream
      */
+    @Description("The ID of the requested data stream")
+    @Units("")
     public short stream_id;
-      
+    
     /**
      * 1 stream is enabled, 0 stream is stopped.
      */
+    @Description("1 stream is enabled, 0 stream is stopped.")
+    @Units("")
     public short on_off;
     
 
@@ -46,7 +54,7 @@ public class msg_data_stream extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_DATA_STREAM;
-        
+
         packet.payload.putUnsignedShort(message_rate);
         packet.payload.putUnsignedByte(stream_id);
         packet.payload.putUnsignedByte(on_off);
@@ -65,7 +73,7 @@ public class msg_data_stream extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.message_rate = payload.getUnsignedShort();
         this.stream_id = payload.getUnsignedByte();
         this.on_off = payload.getUnsignedByte();
@@ -81,7 +89,7 @@ public class msg_data_stream extends MAVLinkMessage {
     public msg_data_stream() {
         this.msgid = MAVLINK_MSG_ID_DATA_STREAM;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -93,7 +101,7 @@ public class msg_data_stream extends MAVLinkMessage {
         this.on_off = on_off;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +124,7 @@ public class msg_data_stream extends MAVLinkMessage {
      */
     public msg_data_stream(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_DATA_STREAM;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +139,7 @@ public class msg_data_stream extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_DATA_STREAM - sysid:"+sysid+" compid:"+compid+" message_rate:"+message_rate+" stream_id:"+stream_id+" on_off:"+on_off+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

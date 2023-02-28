@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Request one or more events to be (re-)sent. If first_sequence==last_sequence, only a single event is requested. Note that first_sequence can be larger than last_sequence (because the sequence number can wrap). Each sequence will trigger an EVENT or EVENT_ERROR response.
  */
@@ -19,25 +21,33 @@ public class msg_request_event extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 6;
     private static final long serialVersionUID = MAVLINK_MSG_ID_REQUEST_EVENT;
 
-      
+    
     /**
      * First sequence number of the requested event.
      */
+    @Description("First sequence number of the requested event.")
+    @Units("")
     public int first_sequence;
-      
+    
     /**
      * Last sequence number of the requested event.
      */
+    @Description("Last sequence number of the requested event.")
+    @Units("")
     public int last_sequence;
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
     
 
@@ -51,7 +61,7 @@ public class msg_request_event extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_REQUEST_EVENT;
-        
+
         packet.payload.putUnsignedShort(first_sequence);
         packet.payload.putUnsignedShort(last_sequence);
         packet.payload.putUnsignedByte(target_system);
@@ -71,7 +81,7 @@ public class msg_request_event extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.first_sequence = payload.getUnsignedShort();
         this.last_sequence = payload.getUnsignedShort();
         this.target_system = payload.getUnsignedByte();
@@ -88,7 +98,7 @@ public class msg_request_event extends MAVLinkMessage {
     public msg_request_event() {
         this.msgid = MAVLINK_MSG_ID_REQUEST_EVENT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -101,7 +111,7 @@ public class msg_request_event extends MAVLinkMessage {
         this.target_component = target_component;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -125,7 +135,7 @@ public class msg_request_event extends MAVLinkMessage {
      */
     public msg_request_event(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_REQUEST_EVENT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -140,7 +150,7 @@ public class msg_request_event extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_REQUEST_EVENT - sysid:"+sysid+" compid:"+compid+" first_sequence:"+first_sequence+" last_sequence:"+last_sequence+" target_system:"+target_system+" target_component:"+target_component+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

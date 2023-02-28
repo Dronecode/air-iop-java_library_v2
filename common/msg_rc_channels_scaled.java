@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The scaled values of the RC channels received: (-100%) -10000, (0%) 0, (100%) 10000. Channels that are inactive should be set to UINT16_MAX.
  */
@@ -19,60 +21,82 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 22;
     private static final long serialVersionUID = MAVLINK_MSG_ID_RC_CHANNELS_SCALED;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * RC channel 1 value scaled.
      */
+    @Description("RC channel 1 value scaled.")
+    @Units("")
     public short chan1_scaled;
-      
+    
     /**
      * RC channel 2 value scaled.
      */
+    @Description("RC channel 2 value scaled.")
+    @Units("")
     public short chan2_scaled;
-      
+    
     /**
      * RC channel 3 value scaled.
      */
+    @Description("RC channel 3 value scaled.")
+    @Units("")
     public short chan3_scaled;
-      
+    
     /**
      * RC channel 4 value scaled.
      */
+    @Description("RC channel 4 value scaled.")
+    @Units("")
     public short chan4_scaled;
-      
+    
     /**
      * RC channel 5 value scaled.
      */
+    @Description("RC channel 5 value scaled.")
+    @Units("")
     public short chan5_scaled;
-      
+    
     /**
      * RC channel 6 value scaled.
      */
+    @Description("RC channel 6 value scaled.")
+    @Units("")
     public short chan6_scaled;
-      
+    
     /**
      * RC channel 7 value scaled.
      */
+    @Description("RC channel 7 value scaled.")
+    @Units("")
     public short chan7_scaled;
-      
+    
     /**
      * RC channel 8 value scaled.
      */
+    @Description("RC channel 8 value scaled.")
+    @Units("")
     public short chan8_scaled;
-      
+    
     /**
      * Servo output port (set of 8 outputs = 1 port). Flight stacks running on Pixhawk should use: 0 = MAIN, 1 = AUX.
      */
+    @Description("Servo output port (set of 8 outputs = 1 port). Flight stacks running on Pixhawk should use: 0 = MAIN, 1 = AUX.")
+    @Units("")
     public short port;
-      
+    
     /**
      * Receive signal strength indicator in device-dependent units/scale. Values: [0-254], UINT8_MAX: invalid/unknown.
      */
+    @Description("Receive signal strength indicator in device-dependent units/scale. Values: [0-254], UINT8_MAX: invalid/unknown.")
+    @Units("")
     public short rssi;
     
 
@@ -86,7 +110,7 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_RC_CHANNELS_SCALED;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putShort(chan1_scaled);
         packet.payload.putShort(chan2_scaled);
@@ -113,7 +137,7 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.chan1_scaled = payload.getShort();
         this.chan2_scaled = payload.getShort();
@@ -137,7 +161,7 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
     public msg_rc_channels_scaled() {
         this.msgid = MAVLINK_MSG_ID_RC_CHANNELS_SCALED;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +181,7 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
         this.rssi = rssi;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -188,7 +212,7 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
      */
     public msg_rc_channels_scaled(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_RC_CHANNELS_SCALED;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -203,7 +227,7 @@ public class msg_rc_channels_scaled extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_RC_CHANNELS_SCALED - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" chan1_scaled:"+chan1_scaled+" chan2_scaled:"+chan2_scaled+" chan3_scaled:"+chan3_scaled+" chan4_scaled:"+chan4_scaled+" chan5_scaled:"+chan5_scaled+" chan6_scaled:"+chan6_scaled+" chan7_scaled:"+chan7_scaled+" chan8_scaled:"+chan8_scaled+" port:"+port+" rssi:"+rssi+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

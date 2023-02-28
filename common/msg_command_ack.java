@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Report status of a command. Includes feedback whether the command was executed. The command microservice is documented at https://mavlink.io/en/services/command.html
  */
@@ -19,35 +21,47 @@ public class msg_command_ack extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 10;
     private static final long serialVersionUID = MAVLINK_MSG_ID_COMMAND_ACK;
 
-      
+    
     /**
      * Command ID (of acknowledged command).
      */
+    @Description("Command ID (of acknowledged command).")
+    @Units("")
     public int command;
-      
+    
     /**
      * Result of command.
      */
+    @Description("Result of command.")
+    @Units("")
     public short result;
-      
+    
     /**
      * Also used as result_param1, it can be set with an enum containing the errors reasons of why the command was denied, or the progress percentage when result is MAV_RESULT_IN_PROGRESS (UINT8_MAX if the progress is unknown).
      */
+    @Description("Also used as result_param1, it can be set with an enum containing the errors reasons of why the command was denied, or the progress percentage when result is MAV_RESULT_IN_PROGRESS (UINT8_MAX if the progress is unknown).")
+    @Units("")
     public short progress;
-      
+    
     /**
      * Additional parameter of the result, example: which parameter of MAV_CMD_NAV_WAYPOINT caused it to be denied.
      */
+    @Description("Additional parameter of the result, example: which parameter of MAV_CMD_NAV_WAYPOINT caused it to be denied.")
+    @Units("")
     public int result_param2;
-      
+    
     /**
      * System ID of the target recipient. This is the ID of the system that sent the command for which this COMMAND_ACK is an acknowledgement.
      */
+    @Description("System ID of the target recipient. This is the ID of the system that sent the command for which this COMMAND_ACK is an acknowledgement.")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID of the target recipient. This is the ID of the system that sent the command for which this COMMAND_ACK is an acknowledgement.
      */
+    @Description("Component ID of the target recipient. This is the ID of the system that sent the command for which this COMMAND_ACK is an acknowledgement.")
+    @Units("")
     public short target_component;
     
 
@@ -61,7 +75,7 @@ public class msg_command_ack extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_COMMAND_ACK;
-        
+
         packet.payload.putUnsignedShort(command);
         packet.payload.putUnsignedByte(result);
         
@@ -83,7 +97,7 @@ public class msg_command_ack extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.command = payload.getUnsignedShort();
         this.result = payload.getUnsignedByte();
         
@@ -102,7 +116,7 @@ public class msg_command_ack extends MAVLinkMessage {
     public msg_command_ack() {
         this.msgid = MAVLINK_MSG_ID_COMMAND_ACK;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +131,7 @@ public class msg_command_ack extends MAVLinkMessage {
         this.target_component = target_component;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -143,7 +157,7 @@ public class msg_command_ack extends MAVLinkMessage {
      */
     public msg_command_ack(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_COMMAND_ACK;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -158,7 +172,7 @@ public class msg_command_ack extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_COMMAND_ACK - sysid:"+sysid+" compid:"+compid+" command:"+command+" result:"+result+" progress:"+progress+" result_param2:"+result_param2+" target_system:"+target_system+" target_component:"+target_component+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

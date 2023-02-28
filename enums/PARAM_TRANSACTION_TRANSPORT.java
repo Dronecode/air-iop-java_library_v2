@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Possible transport layers to set and get parameters via mavlink during a parameter transaction.
  */
 public class PARAM_TRANSACTION_TRANSPORT {

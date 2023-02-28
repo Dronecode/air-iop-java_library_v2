@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Provides state for additional features
  */
@@ -19,15 +21,19 @@ public class msg_extended_sys_state extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 2;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EXTENDED_SYS_STATE;
 
-      
+    
     /**
      * The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.
      */
+    @Description("The VTOL state if applicable. Is set to MAV_VTOL_STATE_UNDEFINED if UAV is not in VTOL configuration.")
+    @Units("")
     public short vtol_state;
-      
+    
     /**
      * The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
      */
+    @Description("The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.")
+    @Units("")
     public short landed_state;
     
 
@@ -41,7 +47,7 @@ public class msg_extended_sys_state extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_EXTENDED_SYS_STATE;
-        
+
         packet.payload.putUnsignedByte(vtol_state);
         packet.payload.putUnsignedByte(landed_state);
         
@@ -59,7 +65,7 @@ public class msg_extended_sys_state extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.vtol_state = payload.getUnsignedByte();
         this.landed_state = payload.getUnsignedByte();
         
@@ -74,7 +80,7 @@ public class msg_extended_sys_state extends MAVLinkMessage {
     public msg_extended_sys_state() {
         this.msgid = MAVLINK_MSG_ID_EXTENDED_SYS_STATE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +91,7 @@ public class msg_extended_sys_state extends MAVLinkMessage {
         this.landed_state = landed_state;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -107,7 +113,7 @@ public class msg_extended_sys_state extends MAVLinkMessage {
      */
     public msg_extended_sys_state(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_EXTENDED_SYS_STATE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -122,7 +128,7 @@ public class msg_extended_sys_state extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_EXTENDED_SYS_STATE - sysid:"+sysid+" compid:"+compid+" vtol_state:"+vtol_state+" landed_state:"+landed_state+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Report button state change.
  */
@@ -19,20 +21,26 @@ public class msg_button_change extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 9;
     private static final long serialVersionUID = MAVLINK_MSG_ID_BUTTON_CHANGE;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Time of last change of button state.
      */
+    @Description("Time of last change of button state.")
+    @Units("ms")
     public long last_change_ms;
-      
+    
     /**
      * Bitmap for state of buttons.
      */
+    @Description("Bitmap for state of buttons.")
+    @Units("")
     public short state;
     
 
@@ -46,7 +54,7 @@ public class msg_button_change extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_BUTTON_CHANGE;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putUnsignedInt(last_change_ms);
         packet.payload.putUnsignedByte(state);
@@ -65,7 +73,7 @@ public class msg_button_change extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.last_change_ms = payload.getUnsignedInt();
         this.state = payload.getUnsignedByte();
@@ -81,7 +89,7 @@ public class msg_button_change extends MAVLinkMessage {
     public msg_button_change() {
         this.msgid = MAVLINK_MSG_ID_BUTTON_CHANGE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -93,7 +101,7 @@ public class msg_button_change extends MAVLinkMessage {
         this.state = state;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +124,7 @@ public class msg_button_change extends MAVLinkMessage {
      */
     public msg_button_change(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_BUTTON_CHANGE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +139,7 @@ public class msg_button_change extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_BUTTON_CHANGE - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" last_change_ms:"+last_change_ms+" state:"+state+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

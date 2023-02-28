@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Data for filling the OpenDroneID Authentication message. The Authentication Message defines a field that can provide a means of authenticity for the identity of the UAS (Unmanned Aircraft System). The Authentication message can have two different formats. For data page 0, the fields PageCount, Length and TimeStamp are present and AuthData is only 17 bytes. For data page 1 through 15, PageCount, Length and TimeStamp are not present and the size of AuthData is 23 bytes.
  */
@@ -19,50 +21,68 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 53;
     private static final long serialVersionUID = MAVLINK_MSG_ID_OPEN_DRONE_ID_AUTHENTICATION;
 
-      
+    
     /**
      * This field is only present for page 0. 32 bit Unix Timestamp in seconds since 00:00:00 01/01/2019.
      */
+    @Description("This field is only present for page 0. 32 bit Unix Timestamp in seconds since 00:00:00 01/01/2019.")
+    @Units("s")
     public long timestamp;
-      
+    
     /**
      * System ID (0 for broadcast).
      */
+    @Description("System ID (0 for broadcast).")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID (0 for broadcast).
      */
+    @Description("Component ID (0 for broadcast).")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. 
      */
+    @Description("Only used for drone ID data received from other UAs. See detailed description at https://mavlink.io/en/services/opendroneid.html. ")
+    @Units("")
     public short id_or_mac[] = new short[20];
-      
+    
     /**
      * Indicates the type of authentication.
      */
+    @Description("Indicates the type of authentication.")
+    @Units("")
     public short authentication_type;
-      
+    
     /**
      * Allowed range is 0 - 15.
      */
+    @Description("Allowed range is 0 - 15.")
+    @Units("")
     public short data_page;
-      
+    
     /**
      * This field is only present for page 0. Allowed range is 0 - 15. See the description of struct ODID_Auth_data at https://github.com/opendroneid/opendroneid-core-c/blob/master/libopendroneid/opendroneid.h.
      */
+    @Description("This field is only present for page 0. Allowed range is 0 - 15. See the description of struct ODID_Auth_data at https://github.com/opendroneid/opendroneid-core-c/blob/master/libopendroneid/opendroneid.h.")
+    @Units("")
     public short last_page_index;
-      
+    
     /**
      * This field is only present for page 0. Total bytes of authentication_data from all data pages. See the description of struct ODID_Auth_data at https://github.com/opendroneid/opendroneid-core-c/blob/master/libopendroneid/opendroneid.h.
      */
+    @Description("This field is only present for page 0. Total bytes of authentication_data from all data pages. See the description of struct ODID_Auth_data at https://github.com/opendroneid/opendroneid-core-c/blob/master/libopendroneid/opendroneid.h.")
+    @Units("bytes")
     public short length;
-      
+    
     /**
      * Opaque authentication data. For page 0, the size is only 17 bytes. For other pages, the size is 23 bytes. Shall be filled with nulls in the unused portion of the field.
      */
+    @Description("Opaque authentication data. For page 0, the size is only 17 bytes. For other pages, the size is 23 bytes. Shall be filled with nulls in the unused portion of the field.")
+    @Units("")
     public short authentication_data[] = new short[23];
     
 
@@ -76,7 +96,7 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_AUTHENTICATION;
-        
+
         packet.payload.putUnsignedInt(timestamp);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -109,11 +129,11 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.timestamp = payload.getUnsignedInt();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.id_or_mac.length; i++) {
             this.id_or_mac[i] = payload.getUnsignedByte();
         }
@@ -122,7 +142,7 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
         this.data_page = payload.getUnsignedByte();
         this.last_page_index = payload.getUnsignedByte();
         this.length = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.authentication_data.length; i++) {
             this.authentication_data[i] = payload.getUnsignedByte();
         }
@@ -139,7 +159,7 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
     public msg_open_drone_id_authentication() {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_AUTHENTICATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -157,7 +177,7 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
         this.authentication_data = authentication_data;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -186,7 +206,7 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
      */
     public msg_open_drone_id_authentication(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_OPEN_DRONE_ID_AUTHENTICATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -201,7 +221,7 @@ public class msg_open_drone_id_authentication extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_OPEN_DRONE_ID_AUTHENTICATION - sysid:"+sysid+" compid:"+compid+" timestamp:"+timestamp+" target_system:"+target_system+" target_component:"+target_component+" id_or_mac:"+id_or_mac+" authentication_type:"+authentication_type+" data_page:"+data_page+" last_page_index:"+last_page_index+" length:"+length+" authentication_data:"+authentication_data+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

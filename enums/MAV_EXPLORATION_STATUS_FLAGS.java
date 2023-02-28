@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Exploration status flags, sent as part of the EXPLORATION_STATUS message.
  */
 public class MAV_EXPLORATION_STATUS_FLAGS {

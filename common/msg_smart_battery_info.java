@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Smart Battery information (static/infrequent update). Use for updates from: smart battery to flight stack, flight stack to GCS. Use BATTERY_STATUS for smart battery frequent updates.
  */
@@ -19,90 +21,124 @@ public class msg_smart_battery_info extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 109;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SMART_BATTERY_INFO;
 
-      
+    
     /**
      * Capacity when full according to manufacturer, -1: field not provided.
      */
+    @Description("Capacity when full according to manufacturer, -1: field not provided.")
+    @Units("mAh")
     public int capacity_full_specification;
-      
+    
     /**
      * Capacity when full (accounting for battery degradation), -1: field not provided.
      */
+    @Description("Capacity when full (accounting for battery degradation), -1: field not provided.")
+    @Units("mAh")
     public int capacity_full;
-      
+    
     /**
      * Charge/discharge cycle count. UINT16_MAX: field not provided.
      */
+    @Description("Charge/discharge cycle count. UINT16_MAX: field not provided.")
+    @Units("")
     public int cycle_count;
-      
+    
     /**
      * Battery weight. 0: field not provided.
      */
+    @Description("Battery weight. 0: field not provided.")
+    @Units("g")
     public int weight;
-      
+    
     /**
      * Minimum per-cell voltage when discharging. If not supplied set to UINT16_MAX value.
      */
+    @Description("Minimum per-cell voltage when discharging. If not supplied set to UINT16_MAX value.")
+    @Units("mV")
     public int discharge_minimum_voltage;
-      
+    
     /**
      * Minimum per-cell voltage when charging. If not supplied set to UINT16_MAX value.
      */
+    @Description("Minimum per-cell voltage when charging. If not supplied set to UINT16_MAX value.")
+    @Units("mV")
     public int charging_minimum_voltage;
-      
+    
     /**
      * Minimum per-cell voltage when resting. If not supplied set to UINT16_MAX value.
      */
+    @Description("Minimum per-cell voltage when resting. If not supplied set to UINT16_MAX value.")
+    @Units("mV")
     public int resting_minimum_voltage;
-      
+    
     /**
      * Battery ID
      */
+    @Description("Battery ID")
+    @Units("")
     public short id;
-      
+    
     /**
      * Function of the battery
      */
+    @Description("Function of the battery")
+    @Units("")
     public short battery_function;
-      
+    
     /**
      * Type (chemistry) of the battery
      */
+    @Description("Type (chemistry) of the battery")
+    @Units("")
     public short type;
-      
+    
     /**
      * Serial number in ASCII characters, 0 terminated. All 0: field not provided.
      */
+    @Description("Serial number in ASCII characters, 0 terminated. All 0: field not provided.")
+    @Units("")
     public byte serial_number[] = new byte[16];
-      
+    
     /**
      * Static device name in ASCII characters, 0 terminated. All 0: field not provided. Encode as manufacturer name then product name separated using an underscore.
      */
+    @Description("Static device name in ASCII characters, 0 terminated. All 0: field not provided. Encode as manufacturer name then product name separated using an underscore.")
+    @Units("")
     public byte device_name[] = new byte[50];
-      
+    
     /**
      * Maximum per-cell voltage when charged. 0: field not provided.
      */
+    @Description("Maximum per-cell voltage when charged. 0: field not provided.")
+    @Units("mV")
     public int charging_maximum_voltage;
-      
+    
     /**
      * Number of battery cells in series. 0: field not provided.
      */
+    @Description("Number of battery cells in series. 0: field not provided.")
+    @Units("")
     public short cells_in_series;
-      
+    
     /**
      * Maximum pack discharge current. 0: field not provided.
      */
+    @Description("Maximum pack discharge current. 0: field not provided.")
+    @Units("mA")
     public long discharge_maximum_current;
-      
+    
     /**
      * Maximum pack discharge burst current. 0: field not provided.
      */
+    @Description("Maximum pack discharge burst current. 0: field not provided.")
+    @Units("mA")
     public long discharge_maximum_burst_current;
-      
+    
     /**
      * Manufacture date (DD/MM/YYYY) in ASCII characters, 0 terminated. All 0: field not provided.
      */
+    @Description("Manufacture date (DD/MM/YYYY) in ASCII characters, 0 terminated. All 0: field not provided.")
+    @Units("")
     public byte manufacture_date[] = new byte[11];
     
 
@@ -116,7 +152,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SMART_BATTERY_INFO;
-        
+
         packet.payload.putInt(capacity_full_specification);
         packet.payload.putInt(capacity_full);
         packet.payload.putUnsignedShort(cycle_count);
@@ -161,7 +197,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.capacity_full_specification = payload.getInt();
         this.capacity_full = payload.getInt();
         this.cycle_count = payload.getUnsignedShort();
@@ -172,12 +208,12 @@ public class msg_smart_battery_info extends MAVLinkMessage {
         this.id = payload.getUnsignedByte();
         this.battery_function = payload.getUnsignedByte();
         this.type = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.serial_number.length; i++) {
             this.serial_number[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.device_name.length; i++) {
             this.device_name[i] = payload.getByte();
         }
@@ -188,7 +224,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
              this.cells_in_series = payload.getUnsignedByte();
              this.discharge_maximum_current = payload.getUnsignedInt();
              this.discharge_maximum_burst_current = payload.getUnsignedInt();
-              
+             
         for (int i = 0; i < this.manufacture_date.length; i++) {
             this.manufacture_date[i] = payload.getByte();
         }
@@ -203,7 +239,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
     public msg_smart_battery_info() {
         this.msgid = MAVLINK_MSG_ID_SMART_BATTERY_INFO;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -229,7 +265,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
         this.manufacture_date = manufacture_date;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -266,7 +302,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
      */
     public msg_smart_battery_info(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SMART_BATTERY_INFO;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -368,7 +404,7 @@ public class msg_smart_battery_info extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SMART_BATTERY_INFO - sysid:"+sysid+" compid:"+compid+" capacity_full_specification:"+capacity_full_specification+" capacity_full:"+capacity_full+" cycle_count:"+cycle_count+" weight:"+weight+" discharge_minimum_voltage:"+discharge_minimum_voltage+" charging_minimum_voltage:"+charging_minimum_voltage+" resting_minimum_voltage:"+resting_minimum_voltage+" id:"+id+" battery_function:"+battery_function+" type:"+type+" serial_number:"+serial_number+" device_name:"+device_name+" charging_maximum_voltage:"+charging_maximum_voltage+" cells_in_series:"+cells_in_series+" discharge_maximum_current:"+discharge_maximum_current+" discharge_maximum_burst_current:"+discharge_maximum_burst_current+" manufacture_date:"+manufacture_date+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

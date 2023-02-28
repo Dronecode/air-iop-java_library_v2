@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Information about a storage medium. This message is sent in response to a request with MAV_CMD_REQUEST_MESSAGE and whenever the status of the storage changes (STORAGE_STATUS). Use MAV_CMD_REQUEST_MESSAGE.param2 to indicate the index/id of requested storage: 0 for all, 1 for first, 2 for second, etc.
  */
@@ -19,68 +21,89 @@ public class msg_storage_information extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 61;
     private static final long serialVersionUID = MAVLINK_MSG_ID_STORAGE_INFORMATION;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Total capacity. If storage is not ready (STORAGE_STATUS_READY) value will be ignored.
      */
+    @Description("Total capacity. If storage is not ready (STORAGE_STATUS_READY) value will be ignored.")
+    @Units("MiB")
     public float total_capacity;
-      
+    
     /**
      * Used capacity. If storage is not ready (STORAGE_STATUS_READY) value will be ignored.
      */
+    @Description("Used capacity. If storage is not ready (STORAGE_STATUS_READY) value will be ignored.")
+    @Units("MiB")
     public float used_capacity;
-      
+    
     /**
      * Available storage capacity. If storage is not ready (STORAGE_STATUS_READY) value will be ignored.
      */
+    @Description("Available storage capacity. If storage is not ready (STORAGE_STATUS_READY) value will be ignored.")
+    @Units("MiB")
     public float available_capacity;
-      
+    
     /**
      * Read speed.
      */
+    @Description("Read speed.")
+    @Units("MiB/s")
     public float read_speed;
-      
+    
     /**
      * Write speed.
      */
+    @Description("Write speed.")
+    @Units("MiB/s")
     public float write_speed;
-      
+    
     /**
      * Storage ID (1 for first, 2 for second, etc.)
      */
+    @Description("Storage ID (1 for first, 2 for second, etc.)")
+    @Units("")
     public short storage_id;
-      
+    
     /**
      * Number of storage devices
      */
+    @Description("Number of storage devices")
+    @Units("")
     public short storage_count;
-      
+    
     /**
      * Status of storage
      */
+    @Description("Status of storage")
+    @Units("")
     public short status;
-      
+    
     /**
      * Type of storage
      */
+    @Description("Type of storage")
+    @Units("")
     public short type;
-      
+    
     /**
      * Textual storage name to be used in UI (microSD 1, Internal Memory, etc.) This is a NULL terminated string. If it is exactly 32 characters long, add a terminating NULL. If this string is empty, the generic type is shown to the user.
      */
+    @Description("Textual storage name to be used in UI (microSD 1, Internal Memory, etc.) This is a NULL terminated string. If it is exactly 32 characters long, add a terminating NULL. If this string is empty, the generic type is shown to the user.")
+    @Units("")
     public byte name[] = new byte[32];
-      
+    
     /**
-     * Flags indicating whether this instance is preferred storage for photos, videos, etc.
-        Note: Implementations should initially set the flags on the system-default storage id used for saving media (if possible/supported).
-        This setting can then be overridden using MAV_CMD_SET_STORAGE_USAGE.
-        If the media usage flags are not set, a GCS may assume storage ID 1 is the default storage for all media types.
+     * Flags indicating whether this instance is preferred storage for photos, videos, etc.         Note: Implementations should initially set the flags on the system-default storage id used for saving media (if possible/supported).         This setting can then be overridden using MAV_CMD_SET_STORAGE_USAGE.         If the media usage flags are not set, a GCS may assume storage ID 1 is the default storage for all media types.
      */
+    @Description("Flags indicating whether this instance is preferred storage for photos, videos, etc.         Note: Implementations should initially set the flags on the system-default storage id used for saving media (if possible/supported).         This setting can then be overridden using MAV_CMD_SET_STORAGE_USAGE.         If the media usage flags are not set, a GCS may assume storage ID 1 is the default storage for all media types.")
+    @Units("")
     public short storage_usage;
     
 
@@ -94,7 +117,7 @@ public class msg_storage_information extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_STORAGE_INFORMATION;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putFloat(total_capacity);
         packet.payload.putFloat(used_capacity);
@@ -126,7 +149,7 @@ public class msg_storage_information extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.total_capacity = payload.getFloat();
         this.used_capacity = payload.getFloat();
@@ -139,7 +162,7 @@ public class msg_storage_information extends MAVLinkMessage {
         
         if (isMavlink2) {
              this.type = payload.getUnsignedByte();
-              
+             
         for (int i = 0; i < this.name.length; i++) {
             this.name[i] = payload.getByte();
         }
@@ -155,7 +178,7 @@ public class msg_storage_information extends MAVLinkMessage {
     public msg_storage_information() {
         this.msgid = MAVLINK_MSG_ID_STORAGE_INFORMATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -176,7 +199,7 @@ public class msg_storage_information extends MAVLinkMessage {
         this.storage_usage = storage_usage;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -208,7 +231,7 @@ public class msg_storage_information extends MAVLinkMessage {
      */
     public msg_storage_information(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_STORAGE_INFORMATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -252,7 +275,7 @@ public class msg_storage_information extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_STORAGE_INFORMATION - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" total_capacity:"+total_capacity+" used_capacity:"+used_capacity+" available_capacity:"+available_capacity+" read_speed:"+read_speed+" write_speed:"+write_speed+" storage_id:"+storage_id+" storage_count:"+storage_count+" status:"+status+" type:"+type+" name:"+name+" storage_usage:"+storage_usage+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

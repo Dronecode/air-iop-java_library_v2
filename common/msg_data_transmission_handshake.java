@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Handshake message to initiate, control and stop image streaming when using the Image Transmission Protocol: https://mavlink.io/en/services/image_transmission.html.
  */
@@ -19,40 +21,54 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 13;
     private static final long serialVersionUID = MAVLINK_MSG_ID_DATA_TRANSMISSION_HANDSHAKE;
 
-      
+    
     /**
      * total data size (set on ACK only).
      */
+    @Description("total data size (set on ACK only).")
+    @Units("bytes")
     public long size;
-      
+    
     /**
      * Width of a matrix or image.
      */
+    @Description("Width of a matrix or image.")
+    @Units("")
     public int width;
-      
+    
     /**
      * Height of a matrix or image.
      */
+    @Description("Height of a matrix or image.")
+    @Units("")
     public int height;
-      
+    
     /**
      * Number of packets being sent (set on ACK only).
      */
+    @Description("Number of packets being sent (set on ACK only).")
+    @Units("")
     public int packets;
-      
+    
     /**
      * Type of requested/acknowledged data.
      */
+    @Description("Type of requested/acknowledged data.")
+    @Units("")
     public short type;
-      
+    
     /**
      * Payload size per packet (normally 253 byte, see DATA field size in message ENCAPSULATED_DATA) (set on ACK only).
      */
+    @Description("Payload size per packet (normally 253 byte, see DATA field size in message ENCAPSULATED_DATA) (set on ACK only).")
+    @Units("bytes")
     public short payload;
-      
+    
     /**
      * JPEG quality. Values: [1-100].
      */
+    @Description("JPEG quality. Values: [1-100].")
+    @Units("%")
     public short jpg_quality;
     
 
@@ -66,7 +82,7 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_DATA_TRANSMISSION_HANDSHAKE;
-        
+
         packet.payload.putUnsignedInt(size);
         packet.payload.putUnsignedShort(width);
         packet.payload.putUnsignedShort(height);
@@ -89,7 +105,7 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.size = payload.getUnsignedInt();
         this.width = payload.getUnsignedShort();
         this.height = payload.getUnsignedShort();
@@ -109,7 +125,7 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
     public msg_data_transmission_handshake() {
         this.msgid = MAVLINK_MSG_ID_DATA_TRANSMISSION_HANDSHAKE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
         this.jpg_quality = jpg_quality;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
      */
     public msg_data_transmission_handshake(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_DATA_TRANSMISSION_HANDSHAKE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_data_transmission_handshake extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_DATA_TRANSMISSION_HANDSHAKE - sysid:"+sysid+" compid:"+compid+" size:"+size+" width:"+width+" height:"+height+" packets:"+packets+" type:"+type+" payload:"+payload+" jpg_quality:"+jpg_quality+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

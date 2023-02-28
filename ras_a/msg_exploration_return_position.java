@@ -9,7 +9,9 @@ package com.MAVLink.ras_a;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Provides the return-from-exploration position when an exploration is completed (e.g. volume set by the exploration boundaries does not have new open areas for
         the vehicle to explore) or canceled (e.g. the operator stops the exploration task and requests the vehicle to leave the defined exploration area).
@@ -24,55 +26,75 @@ public class msg_exploration_return_position extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 44;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Latitude (WGS84). INT32_MAX when unknown.
      */
+    @Description("Latitude (WGS84). INT32_MAX when unknown.")
+    @Units("degE7")
     public int latitude;
-      
+    
     /**
      * Longitude (WGS84). INT32_MAX when unknown.
      */
+    @Description("Longitude (WGS84). INT32_MAX when unknown.")
+    @Units("degE7")
     public int longitude;
-      
+    
     /**
      * Altitude (MSL). Positive for up. Note that virtually all GPS modules provide both WGS84 and MSL. INT32_MAX when unknown.
      */
+    @Description("Altitude (MSL). Positive for up. Note that virtually all GPS modules provide both WGS84 and MSL. INT32_MAX when unknown.")
+    @Units("mm")
     public int altitude;
-      
+    
     /**
      * Altitude above ground. INT32_MAX when unknown.
      */
+    @Description("Altitude above ground. INT32_MAX when unknown.")
+    @Units("mm")
     public int relative_alt;
-      
+    
     /**
      * Altitude relative to WGS84 geoid. INT32_MAX when unknown.
      */
+    @Description("Altitude relative to WGS84 geoid. INT32_MAX when unknown.")
+    @Units("mm")
     public int geoid_alt;
-      
+    
     /**
      * Local X position of this position in the local coordinate NED frame. NaN when unknown.
      */
+    @Description("Local X position of this position in the local coordinate NED frame. NaN when unknown.")
+    @Units("m")
     public float x;
-      
+    
     /**
      * Local Y position of this position in the local coordinate NED frame. NaN when unknown.
      */
+    @Description("Local Y position of this position in the local coordinate NED frame. NaN when unknown.")
+    @Units("m")
     public float y;
-      
+    
     /**
      * Local Z position of this position in the local coordinate NED frame. NaN when unknown.
      */
+    @Description("Local Z position of this position in the local coordinate NED frame. NaN when unknown.")
+    @Units("m")
     public float z;
-      
+    
     /**
      * World to surface heading transformation of the return-from-exploration position. Used to indicate the heading with respect to the ground. NaN when unknown.
      */
+    @Description("World to surface heading transformation of the return-from-exploration position. Used to indicate the heading with respect to the ground. NaN when unknown.")
+    @Units("rad")
     public float yaw;
     
 
@@ -86,7 +108,7 @@ public class msg_exploration_return_position extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putInt(latitude);
         packet.payload.putInt(longitude);
@@ -112,7 +134,7 @@ public class msg_exploration_return_position extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.latitude = payload.getInt();
         this.longitude = payload.getInt();
@@ -135,7 +157,7 @@ public class msg_exploration_return_position extends MAVLinkMessage {
     public msg_exploration_return_position() {
         this.msgid = MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -154,7 +176,7 @@ public class msg_exploration_return_position extends MAVLinkMessage {
         this.yaw = yaw;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -184,7 +206,7 @@ public class msg_exploration_return_position extends MAVLinkMessage {
      */
     public msg_exploration_return_position(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -199,7 +221,7 @@ public class msg_exploration_return_position extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" latitude:"+latitude+" longitude:"+longitude+" altitude:"+altitude+" relative_alt:"+relative_alt+" geoid_alt:"+geoid_alt+" x:"+x+" y:"+y+" z:"+z+" yaw:"+yaw+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

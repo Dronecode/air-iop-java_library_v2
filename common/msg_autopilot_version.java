@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Version and capability of autopilot software. This should be emitted in response to a request with MAV_CMD_REQUEST_MESSAGE.
  */
@@ -19,65 +21,89 @@ public class msg_autopilot_version extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 78;
     private static final long serialVersionUID = MAVLINK_MSG_ID_AUTOPILOT_VERSION;
 
-      
+    
     /**
      * Bitmap of capabilities
      */
+    @Description("Bitmap of capabilities")
+    @Units("")
     public long capabilities;
-      
+    
     /**
      * UID if provided by hardware (see uid2)
      */
+    @Description("UID if provided by hardware (see uid2)")
+    @Units("")
     public long uid;
-      
+    
     /**
      * Firmware version number
      */
+    @Description("Firmware version number")
+    @Units("")
     public long flight_sw_version;
-      
+    
     /**
      * Middleware version number
      */
+    @Description("Middleware version number")
+    @Units("")
     public long middleware_sw_version;
-      
+    
     /**
      * Operating system version number
      */
+    @Description("Operating system version number")
+    @Units("")
     public long os_sw_version;
-      
+    
     /**
      * HW / board version (last 8 bits should be silicon ID, if any). The first 16 bits of this field specify https://github.com/PX4/PX4-Bootloader/blob/master/board_types.txt
      */
+    @Description("HW / board version (last 8 bits should be silicon ID, if any). The first 16 bits of this field specify https://github.com/PX4/PX4-Bootloader/blob/master/board_types.txt")
+    @Units("")
     public long board_version;
-      
+    
     /**
      * ID of the board vendor
      */
+    @Description("ID of the board vendor")
+    @Units("")
     public int vendor_id;
-      
+    
     /**
      * ID of the product
      */
+    @Description("ID of the product")
+    @Units("")
     public int product_id;
-      
+    
     /**
      * Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
      */
+    @Description("Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.")
+    @Units("")
     public short flight_custom_version[] = new short[8];
-      
+    
     /**
      * Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
      */
+    @Description("Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.")
+    @Units("")
     public short middleware_custom_version[] = new short[8];
-      
+    
     /**
      * Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
      */
+    @Description("Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.")
+    @Units("")
     public short os_custom_version[] = new short[8];
-      
+    
     /**
      * UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise use uid)
      */
+    @Description("UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise use uid)")
+    @Units("")
     public short uid2[] = new short[18];
     
 
@@ -91,7 +117,7 @@ public class msg_autopilot_version extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_AUTOPILOT_VERSION;
-        
+
         packet.payload.putUnsignedLong(capabilities);
         packet.payload.putUnsignedLong(uid);
         packet.payload.putUnsignedInt(flight_sw_version);
@@ -135,7 +161,7 @@ public class msg_autopilot_version extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.capabilities = payload.getUnsignedLong();
         this.uid = payload.getUnsignedLong();
         this.flight_sw_version = payload.getUnsignedInt();
@@ -144,24 +170,24 @@ public class msg_autopilot_version extends MAVLinkMessage {
         this.board_version = payload.getUnsignedInt();
         this.vendor_id = payload.getUnsignedShort();
         this.product_id = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.flight_custom_version.length; i++) {
             this.flight_custom_version[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.middleware_custom_version.length; i++) {
             this.middleware_custom_version[i] = payload.getUnsignedByte();
         }
                 
-         
+        
         for (int i = 0; i < this.os_custom_version.length; i++) {
             this.os_custom_version[i] = payload.getUnsignedByte();
         }
                 
         
         if (isMavlink2) {
-              
+             
         for (int i = 0; i < this.uid2.length; i++) {
             this.uid2[i] = payload.getUnsignedByte();
         }
@@ -176,7 +202,7 @@ public class msg_autopilot_version extends MAVLinkMessage {
     public msg_autopilot_version() {
         this.msgid = MAVLINK_MSG_ID_AUTOPILOT_VERSION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -197,7 +223,7 @@ public class msg_autopilot_version extends MAVLinkMessage {
         this.uid2 = uid2;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -229,7 +255,7 @@ public class msg_autopilot_version extends MAVLinkMessage {
      */
     public msg_autopilot_version(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_AUTOPILOT_VERSION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -244,7 +270,7 @@ public class msg_autopilot_version extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_AUTOPILOT_VERSION - sysid:"+sysid+" compid:"+compid+" capabilities:"+capabilities+" uid:"+uid+" flight_sw_version:"+flight_sw_version+" middleware_sw_version:"+middleware_sw_version+" os_sw_version:"+os_sw_version+" board_version:"+board_version+" vendor_id:"+vendor_id+" product_id:"+product_id+" flight_custom_version:"+flight_custom_version+" middleware_custom_version:"+middleware_custom_version+" os_custom_version:"+os_custom_version+" uid2:"+uid2+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Configure cellular modems.
         This message is re-emitted as an acknowledgement by the modem.
@@ -21,45 +23,61 @@ public class msg_cellular_config extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 84;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CELLULAR_CONFIG;
 
-      
+    
     /**
      * Enable/disable LTE. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.
      */
+    @Description("Enable/disable LTE. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.")
+    @Units("")
     public short enable_lte;
-      
+    
     /**
      * Enable/disable PIN on the SIM card. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.
      */
+    @Description("Enable/disable PIN on the SIM card. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.")
+    @Units("")
     public short enable_pin;
-      
+    
     /**
      * PIN sent to the SIM card. Blank when PIN is disabled. Empty when message is sent back as a response.
      */
+    @Description("PIN sent to the SIM card. Blank when PIN is disabled. Empty when message is sent back as a response.")
+    @Units("")
     public byte pin[] = new byte[16];
-      
+    
     /**
      * New PIN when changing the PIN. Blank to leave it unchanged. Empty when message is sent back as a response.
      */
+    @Description("New PIN when changing the PIN. Blank to leave it unchanged. Empty when message is sent back as a response.")
+    @Units("")
     public byte new_pin[] = new byte[16];
-      
+    
     /**
      * Name of the cellular APN. Blank to leave it unchanged. Current APN when sent back as a response.
      */
+    @Description("Name of the cellular APN. Blank to leave it unchanged. Current APN when sent back as a response.")
+    @Units("")
     public byte apn[] = new byte[32];
-      
+    
     /**
      * Required PUK code in case the user failed to authenticate 3 times with the PIN. Empty when message is sent back as a response.
      */
+    @Description("Required PUK code in case the user failed to authenticate 3 times with the PIN. Empty when message is sent back as a response.")
+    @Units("")
     public byte puk[] = new byte[16];
-      
+    
     /**
      * Enable/disable roaming. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.
      */
+    @Description("Enable/disable roaming. 0: setting unchanged, 1: disabled, 2: enabled. Current setting when sent back as a response.")
+    @Units("")
     public short roaming;
-      
+    
     /**
      * Message acceptance response (sent back to GS).
      */
+    @Description("Message acceptance response (sent back to GS).")
+    @Units("")
     public short response;
     
 
@@ -73,7 +91,7 @@ public class msg_cellular_config extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CELLULAR_CONFIG;
-        
+
         packet.payload.putUnsignedByte(enable_lte);
         packet.payload.putUnsignedByte(enable_pin);
         
@@ -113,25 +131,25 @@ public class msg_cellular_config extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.enable_lte = payload.getUnsignedByte();
         this.enable_pin = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.pin.length; i++) {
             this.pin[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.new_pin.length; i++) {
             this.new_pin[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.apn.length; i++) {
             this.apn[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.puk.length; i++) {
             this.puk[i] = payload.getByte();
         }
@@ -150,7 +168,7 @@ public class msg_cellular_config extends MAVLinkMessage {
     public msg_cellular_config() {
         this.msgid = MAVLINK_MSG_ID_CELLULAR_CONFIG;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -167,7 +185,7 @@ public class msg_cellular_config extends MAVLinkMessage {
         this.response = response;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -195,7 +213,7 @@ public class msg_cellular_config extends MAVLinkMessage {
      */
     public msg_cellular_config(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CELLULAR_CONFIG;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -326,7 +344,7 @@ public class msg_cellular_config extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CELLULAR_CONFIG - sysid:"+sysid+" compid:"+compid+" enable_lte:"+enable_lte+" enable_pin:"+enable_pin+" pin:"+pin+" new_pin:"+new_pin+" apn:"+apn+" puk:"+puk+" roaming:"+roaming+" response:"+response+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

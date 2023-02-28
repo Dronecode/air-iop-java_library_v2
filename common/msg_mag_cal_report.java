@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Reports results of completed compass calibration. Sent until MAG_CAL_ACK received.
  */
@@ -19,95 +21,131 @@ public class msg_mag_cal_report extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 54;
     private static final long serialVersionUID = MAVLINK_MSG_ID_MAG_CAL_REPORT;
 
-      
+    
     /**
      * RMS milligauss residuals.
      */
+    @Description("RMS milligauss residuals.")
+    @Units("mgauss")
     public float fitness;
-      
+    
     /**
      * X offset.
      */
+    @Description("X offset.")
+    @Units("")
     public float ofs_x;
-      
+    
     /**
      * Y offset.
      */
+    @Description("Y offset.")
+    @Units("")
     public float ofs_y;
-      
+    
     /**
      * Z offset.
      */
+    @Description("Z offset.")
+    @Units("")
     public float ofs_z;
-      
+    
     /**
      * X diagonal (matrix 11).
      */
+    @Description("X diagonal (matrix 11).")
+    @Units("")
     public float diag_x;
-      
+    
     /**
      * Y diagonal (matrix 22).
      */
+    @Description("Y diagonal (matrix 22).")
+    @Units("")
     public float diag_y;
-      
+    
     /**
      * Z diagonal (matrix 33).
      */
+    @Description("Z diagonal (matrix 33).")
+    @Units("")
     public float diag_z;
-      
+    
     /**
      * X off-diagonal (matrix 12 and 21).
      */
+    @Description("X off-diagonal (matrix 12 and 21).")
+    @Units("")
     public float offdiag_x;
-      
+    
     /**
      * Y off-diagonal (matrix 13 and 31).
      */
+    @Description("Y off-diagonal (matrix 13 and 31).")
+    @Units("")
     public float offdiag_y;
-      
+    
     /**
      * Z off-diagonal (matrix 32 and 23).
      */
+    @Description("Z off-diagonal (matrix 32 and 23).")
+    @Units("")
     public float offdiag_z;
-      
+    
     /**
      * Compass being calibrated.
      */
+    @Description("Compass being calibrated.")
+    @Units("")
     public short compass_id;
-      
+    
     /**
      * Bitmask of compasses being calibrated.
      */
+    @Description("Bitmask of compasses being calibrated.")
+    @Units("")
     public short cal_mask;
-      
+    
     /**
      * Calibration Status.
      */
+    @Description("Calibration Status.")
+    @Units("")
     public short cal_status;
-      
+    
     /**
      * 0=requires a MAV_CMD_DO_ACCEPT_MAG_CAL, 1=saved to parameters.
      */
+    @Description("0=requires a MAV_CMD_DO_ACCEPT_MAG_CAL, 1=saved to parameters.")
+    @Units("")
     public short autosaved;
-      
+    
     /**
      * Confidence in orientation (higher is better).
      */
+    @Description("Confidence in orientation (higher is better).")
+    @Units("")
     public float orientation_confidence;
-      
+    
     /**
      * orientation before calibration.
      */
+    @Description("orientation before calibration.")
+    @Units("")
     public short old_orientation;
-      
+    
     /**
      * orientation after calibration.
      */
+    @Description("orientation after calibration.")
+    @Units("")
     public short new_orientation;
-      
+    
     /**
      * field radius correction factor
      */
+    @Description("field radius correction factor")
+    @Units("")
     public float scale_factor;
     
 
@@ -121,7 +159,7 @@ public class msg_mag_cal_report extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_MAG_CAL_REPORT;
-        
+
         packet.payload.putFloat(fitness);
         packet.payload.putFloat(ofs_x);
         packet.payload.putFloat(ofs_y);
@@ -155,7 +193,7 @@ public class msg_mag_cal_report extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.fitness = payload.getFloat();
         this.ofs_x = payload.getFloat();
         this.ofs_y = payload.getFloat();
@@ -186,7 +224,7 @@ public class msg_mag_cal_report extends MAVLinkMessage {
     public msg_mag_cal_report() {
         this.msgid = MAVLINK_MSG_ID_MAG_CAL_REPORT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -213,7 +251,7 @@ public class msg_mag_cal_report extends MAVLinkMessage {
         this.scale_factor = scale_factor;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -251,7 +289,7 @@ public class msg_mag_cal_report extends MAVLinkMessage {
      */
     public msg_mag_cal_report(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_MAG_CAL_REPORT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -266,7 +304,7 @@ public class msg_mag_cal_report extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_MAG_CAL_REPORT - sysid:"+sysid+" compid:"+compid+" fitness:"+fitness+" ofs_x:"+ofs_x+" ofs_y:"+ofs_y+" ofs_z:"+ofs_z+" diag_x:"+diag_x+" diag_y:"+diag_y+" diag_z:"+diag_z+" offdiag_x:"+offdiag_x+" offdiag_y:"+offdiag_y+" offdiag_z:"+offdiag_z+" compass_id:"+compass_id+" cal_mask:"+cal_mask+" cal_status:"+cal_status+" autosaved:"+autosaved+" orientation_confidence:"+orientation_confidence+" old_orientation:"+old_orientation+" new_orientation:"+new_orientation+" scale_factor:"+scale_factor+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

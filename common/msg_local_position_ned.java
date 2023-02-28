@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The filtered local position (e.g. fused computer vision and accelerometers). Coordinate frame is right-handed, Z-axis down (aeronautical frame, NED / north-east-down convention)
  */
@@ -19,40 +21,54 @@ public class msg_local_position_ned extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 28;
     private static final long serialVersionUID = MAVLINK_MSG_ID_LOCAL_POSITION_NED;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * X Position
      */
+    @Description("X Position")
+    @Units("m")
     public float x;
-      
+    
     /**
      * Y Position
      */
+    @Description("Y Position")
+    @Units("m")
     public float y;
-      
+    
     /**
      * Z Position
      */
+    @Description("Z Position")
+    @Units("m")
     public float z;
-      
+    
     /**
      * X Speed
      */
+    @Description("X Speed")
+    @Units("m/s")
     public float vx;
-      
+    
     /**
      * Y Speed
      */
+    @Description("Y Speed")
+    @Units("m/s")
     public float vy;
-      
+    
     /**
      * Z Speed
      */
+    @Description("Z Speed")
+    @Units("m/s")
     public float vz;
     
 
@@ -66,7 +82,7 @@ public class msg_local_position_ned extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_LOCAL_POSITION_NED;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putFloat(x);
         packet.payload.putFloat(y);
@@ -89,7 +105,7 @@ public class msg_local_position_ned extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.x = payload.getFloat();
         this.y = payload.getFloat();
@@ -109,7 +125,7 @@ public class msg_local_position_ned extends MAVLinkMessage {
     public msg_local_position_ned() {
         this.msgid = MAVLINK_MSG_ID_LOCAL_POSITION_NED;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_local_position_ned extends MAVLinkMessage {
         this.vz = vz;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_local_position_ned extends MAVLinkMessage {
      */
     public msg_local_position_ned(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_LOCAL_POSITION_NED;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_local_position_ned extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_LOCAL_POSITION_NED - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" x:"+x+" y:"+y+" z:"+z+" vx:"+vx+" vy:"+vy+" vz:"+vz+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

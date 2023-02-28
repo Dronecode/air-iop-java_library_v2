@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * These flags encode the cellular network status
  */
 public class CELLULAR_STATUS_FLAG {

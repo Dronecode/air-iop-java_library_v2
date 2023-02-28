@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Distance sensor information for an onboard rangefinder.
  */
@@ -19,65 +21,89 @@ public class msg_distance_sensor extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 39;
     private static final long serialVersionUID = MAVLINK_MSG_ID_DISTANCE_SENSOR;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Minimum distance the sensor can measure
      */
+    @Description("Minimum distance the sensor can measure")
+    @Units("cm")
     public int min_distance;
-      
+    
     /**
      * Maximum distance the sensor can measure
      */
+    @Description("Maximum distance the sensor can measure")
+    @Units("cm")
     public int max_distance;
-      
+    
     /**
      * Current distance reading
      */
+    @Description("Current distance reading")
+    @Units("cm")
     public int current_distance;
-      
+    
     /**
      * Type of distance sensor.
      */
+    @Description("Type of distance sensor.")
+    @Units("")
     public short type;
-      
+    
     /**
      * Onboard ID of the sensor
      */
+    @Description("Onboard ID of the sensor")
+    @Units("")
     public short id;
-      
+    
     /**
      * Direction the sensor faces. downward-facing: ROTATION_PITCH_270, upward-facing: ROTATION_PITCH_90, backward-facing: ROTATION_PITCH_180, forward-facing: ROTATION_NONE, left-facing: ROTATION_YAW_90, right-facing: ROTATION_YAW_270
      */
+    @Description("Direction the sensor faces. downward-facing: ROTATION_PITCH_270, upward-facing: ROTATION_PITCH_90, backward-facing: ROTATION_PITCH_180, forward-facing: ROTATION_NONE, left-facing: ROTATION_YAW_90, right-facing: ROTATION_YAW_270")
+    @Units("")
     public short orientation;
-      
+    
     /**
      * Measurement variance. Max standard deviation is 6cm. UINT8_MAX if unknown.
      */
+    @Description("Measurement variance. Max standard deviation is 6cm. UINT8_MAX if unknown.")
+    @Units("cm^2")
     public short covariance;
-      
+    
     /**
      * Horizontal Field of View (angle) where the distance measurement is valid and the field of view is known. Otherwise this is set to 0.
      */
+    @Description("Horizontal Field of View (angle) where the distance measurement is valid and the field of view is known. Otherwise this is set to 0.")
+    @Units("rad")
     public float horizontal_fov;
-      
+    
     /**
      * Vertical Field of View (angle) where the distance measurement is valid and the field of view is known. Otherwise this is set to 0.
      */
+    @Description("Vertical Field of View (angle) where the distance measurement is valid and the field of view is known. Otherwise this is set to 0.")
+    @Units("rad")
     public float vertical_fov;
-      
+    
     /**
-     * Quaternion of the sensor orientation in vehicle body frame (w, x, y, z order, zero-rotation is 1, 0, 0, 0). Zero-rotation is along the vehicle body x-axis. This field is required if the orientation is set to MAV_SENSOR_ROTATION_CUSTOM. Set it to 0 if invalid."
+     * Quaternion of the sensor orientation in vehicle body frame (w, x, y, z order, zero-rotation is 1, 0, 0, 0). Zero-rotation is along the vehicle body x-axis. This field is required if the orientation is set to MAV_SENSOR_ROTATION_CUSTOM. Set it to 0 if invalid.'
      */
+    @Description("Quaternion of the sensor orientation in vehicle body frame (w, x, y, z order, zero-rotation is 1, 0, 0, 0). Zero-rotation is along the vehicle body x-axis. This field is required if the orientation is set to MAV_SENSOR_ROTATION_CUSTOM. Set it to 0 if invalid.'")
+    @Units("")
     public float quaternion[] = new float[4];
-      
+    
     /**
      * Signal quality of the sensor. Specific to each sensor type, representing the relation of the signal strength with the target reflectivity, distance, size or aspect, but normalised as a percentage. 0 = unknown/unset signal quality, 1 = invalid signal, 100 = perfect signal.
      */
+    @Description("Signal quality of the sensor. Specific to each sensor type, representing the relation of the signal strength with the target reflectivity, distance, size or aspect, but normalised as a percentage. 0 = unknown/unset signal quality, 1 = invalid signal, 100 = perfect signal.")
+    @Units("%")
     public short signal_quality;
     
 
@@ -91,7 +117,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_DISTANCE_SENSOR;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putUnsignedShort(min_distance);
         packet.payload.putUnsignedShort(max_distance);
@@ -123,7 +149,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.min_distance = payload.getUnsignedShort();
         this.max_distance = payload.getUnsignedShort();
@@ -136,7 +162,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
         if (isMavlink2) {
              this.horizontal_fov = payload.getFloat();
              this.vertical_fov = payload.getFloat();
-              
+             
         for (int i = 0; i < this.quaternion.length; i++) {
             this.quaternion[i] = payload.getFloat();
         }
@@ -152,7 +178,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
     public msg_distance_sensor() {
         this.msgid = MAVLINK_MSG_ID_DISTANCE_SENSOR;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -173,7 +199,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
         this.signal_quality = signal_quality;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -205,7 +231,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
      */
     public msg_distance_sensor(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_DISTANCE_SENSOR;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -220,7 +246,7 @@ public class msg_distance_sensor extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_DISTANCE_SENSOR - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" min_distance:"+min_distance+" max_distance:"+max_distance+" current_distance:"+current_distance+" type:"+type+" id:"+id+" orientation:"+orientation+" covariance:"+covariance+" horizontal_fov:"+horizontal_fov+" vertical_fov:"+vertical_fov+" quaternion:"+quaternion+" signal_quality:"+signal_quality+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

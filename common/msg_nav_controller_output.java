@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The state of the navigation and position controller.
  */
@@ -19,45 +21,61 @@ public class msg_nav_controller_output extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 26;
     private static final long serialVersionUID = MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT;
 
-      
+    
     /**
      * Current desired roll
      */
+    @Description("Current desired roll")
+    @Units("deg")
     public float nav_roll;
-      
+    
     /**
      * Current desired pitch
      */
+    @Description("Current desired pitch")
+    @Units("deg")
     public float nav_pitch;
-      
+    
     /**
      * Current altitude error
      */
+    @Description("Current altitude error")
+    @Units("m")
     public float alt_error;
-      
+    
     /**
      * Current airspeed error
      */
+    @Description("Current airspeed error")
+    @Units("m/s")
     public float aspd_error;
-      
+    
     /**
      * Current crosstrack error on x-y plane
      */
+    @Description("Current crosstrack error on x-y plane")
+    @Units("m")
     public float xtrack_error;
-      
+    
     /**
      * Current desired heading
      */
+    @Description("Current desired heading")
+    @Units("deg")
     public short nav_bearing;
-      
+    
     /**
      * Bearing to current waypoint/target
      */
+    @Description("Bearing to current waypoint/target")
+    @Units("deg")
     public short target_bearing;
-      
+    
     /**
      * Distance to active waypoint
      */
+    @Description("Distance to active waypoint")
+    @Units("m")
     public int wp_dist;
     
 
@@ -71,7 +89,7 @@ public class msg_nav_controller_output extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT;
-        
+
         packet.payload.putFloat(nav_roll);
         packet.payload.putFloat(nav_pitch);
         packet.payload.putFloat(alt_error);
@@ -95,7 +113,7 @@ public class msg_nav_controller_output extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.nav_roll = payload.getFloat();
         this.nav_pitch = payload.getFloat();
         this.alt_error = payload.getFloat();
@@ -116,7 +134,7 @@ public class msg_nav_controller_output extends MAVLinkMessage {
     public msg_nav_controller_output() {
         this.msgid = MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +151,7 @@ public class msg_nav_controller_output extends MAVLinkMessage {
         this.wp_dist = wp_dist;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -161,7 +179,7 @@ public class msg_nav_controller_output extends MAVLinkMessage {
      */
     public msg_nav_controller_output(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -176,7 +194,7 @@ public class msg_nav_controller_output extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT - sysid:"+sysid+" compid:"+compid+" nav_roll:"+nav_roll+" nav_pitch:"+nav_pitch+" alt_error:"+alt_error+" aspd_error:"+aspd_error+" xtrack_error:"+xtrack_error+" nav_bearing:"+nav_bearing+" target_bearing:"+target_bearing+" wp_dist:"+wp_dist+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

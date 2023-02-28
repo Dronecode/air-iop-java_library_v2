@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * A message containing logged data which requires a LOGGING_ACK to be sent back
  */
@@ -19,35 +21,47 @@ public class msg_logging_data_acked extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 255;
     private static final long serialVersionUID = MAVLINK_MSG_ID_LOGGING_DATA_ACKED;
 
-      
+    
     /**
      * sequence number (can wrap)
      */
+    @Description("sequence number (can wrap)")
+    @Units("")
     public int sequence;
-      
+    
     /**
      * system ID of the target
      */
+    @Description("system ID of the target")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * component ID of the target
      */
+    @Description("component ID of the target")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * data length
      */
+    @Description("data length")
+    @Units("bytes")
     public short length;
-      
+    
     /**
      * offset into data where first message starts. This can be used for recovery, when a previous message got lost (set to UINT8_MAX if no start exists).
      */
+    @Description("offset into data where first message starts. This can be used for recovery, when a previous message got lost (set to UINT8_MAX if no start exists).")
+    @Units("bytes")
     public short first_message_offset;
-      
+    
     /**
      * logged data
      */
+    @Description("logged data")
+    @Units("")
     public short data[] = new short[249];
     
 
@@ -61,7 +75,7 @@ public class msg_logging_data_acked extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_LOGGING_DATA_ACKED;
-        
+
         packet.payload.putUnsignedShort(sequence);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -87,13 +101,13 @@ public class msg_logging_data_acked extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.sequence = payload.getUnsignedShort();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
         this.length = payload.getUnsignedByte();
         this.first_message_offset = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.data.length; i++) {
             this.data[i] = payload.getUnsignedByte();
         }
@@ -110,7 +124,7 @@ public class msg_logging_data_acked extends MAVLinkMessage {
     public msg_logging_data_acked() {
         this.msgid = MAVLINK_MSG_ID_LOGGING_DATA_ACKED;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +139,7 @@ public class msg_logging_data_acked extends MAVLinkMessage {
         this.data = data;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -151,7 +165,7 @@ public class msg_logging_data_acked extends MAVLinkMessage {
      */
     public msg_logging_data_acked(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_LOGGING_DATA_ACKED;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -166,7 +180,7 @@ public class msg_logging_data_acked extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_LOGGING_DATA_ACKED - sysid:"+sysid+" compid:"+compid+" sequence:"+sequence+" target_system:"+target_system+" target_component:"+target_component+" length:"+length+" first_message_offset:"+first_message_offset+" data:"+data+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

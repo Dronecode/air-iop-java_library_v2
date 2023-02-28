@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The global position, as returned by the Global Positioning System (GPS). This is
                 NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION_INT for the global position estimate.
@@ -20,85 +22,117 @@ public class msg_gps_raw_int extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 52;
     private static final long serialVersionUID = MAVLINK_MSG_ID_GPS_RAW_INT;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Latitude (WGS84, EGM96 ellipsoid)
      */
+    @Description("Latitude (WGS84, EGM96 ellipsoid)")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude (WGS84, EGM96 ellipsoid)
      */
+    @Description("Longitude (WGS84, EGM96 ellipsoid)")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude (MSL). Positive for up. Note that virtually all GPS modules provide the MSL altitude in addition to the WGS84 altitude.
      */
+    @Description("Altitude (MSL). Positive for up. Note that virtually all GPS modules provide the MSL altitude in addition to the WGS84 altitude.")
+    @Units("mm")
     public int alt;
-      
+    
     /**
      * GPS HDOP horizontal dilution of position (unitless * 100). If unknown, set to: UINT16_MAX
      */
+    @Description("GPS HDOP horizontal dilution of position (unitless * 100). If unknown, set to: UINT16_MAX")
+    @Units("")
     public int eph;
-      
+    
     /**
      * GPS VDOP vertical dilution of position (unitless * 100). If unknown, set to: UINT16_MAX
      */
+    @Description("GPS VDOP vertical dilution of position (unitless * 100). If unknown, set to: UINT16_MAX")
+    @Units("")
     public int epv;
-      
+    
     /**
      * GPS ground speed. If unknown, set to: UINT16_MAX
      */
+    @Description("GPS ground speed. If unknown, set to: UINT16_MAX")
+    @Units("cm/s")
     public int vel;
-      
+    
     /**
      * Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
      */
+    @Description("Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX")
+    @Units("cdeg")
     public int cog;
-      
+    
     /**
      * GPS fix type.
      */
+    @Description("GPS fix type.")
+    @Units("")
     public short fix_type;
-      
+    
     /**
      * Number of satellites visible. If unknown, set to UINT8_MAX
      */
+    @Description("Number of satellites visible. If unknown, set to UINT8_MAX")
+    @Units("")
     public short satellites_visible;
-      
+    
     /**
      * Altitude (above WGS84, EGM96 ellipsoid). Positive for up.
      */
+    @Description("Altitude (above WGS84, EGM96 ellipsoid). Positive for up.")
+    @Units("mm")
     public int alt_ellipsoid;
-      
+    
     /**
      * Position uncertainty.
      */
+    @Description("Position uncertainty.")
+    @Units("mm")
     public long h_acc;
-      
+    
     /**
      * Altitude uncertainty.
      */
+    @Description("Altitude uncertainty.")
+    @Units("mm")
     public long v_acc;
-      
+    
     /**
      * Speed uncertainty.
      */
+    @Description("Speed uncertainty.")
+    @Units("mm")
     public long vel_acc;
-      
+    
     /**
      * Heading / track uncertainty
      */
+    @Description("Heading / track uncertainty")
+    @Units("degE5")
     public long hdg_acc;
-      
+    
     /**
      * Yaw in earth frame from north. Use 0 if this GPS does not provide yaw. Use UINT16_MAX if this GPS is configured to provide yaw and is currently unable to provide it. Use 36000 for north.
      */
+    @Description("Yaw in earth frame from north. Use 0 if this GPS does not provide yaw. Use UINT16_MAX if this GPS is configured to provide yaw and is currently unable to provide it. Use 36000 for north.")
+    @Units("cdeg")
     public int yaw;
     
 
@@ -112,7 +146,7 @@ public class msg_gps_raw_int extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_GPS_RAW_INT;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
@@ -144,7 +178,7 @@ public class msg_gps_raw_int extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
@@ -173,7 +207,7 @@ public class msg_gps_raw_int extends MAVLinkMessage {
     public msg_gps_raw_int() {
         this.msgid = MAVLINK_MSG_ID_GPS_RAW_INT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -198,7 +232,7 @@ public class msg_gps_raw_int extends MAVLinkMessage {
         this.yaw = yaw;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -234,7 +268,7 @@ public class msg_gps_raw_int extends MAVLinkMessage {
      */
     public msg_gps_raw_int(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_GPS_RAW_INT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -249,7 +283,7 @@ public class msg_gps_raw_int extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_GPS_RAW_INT - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" lat:"+lat+" lon:"+lon+" alt:"+alt+" eph:"+eph+" epv:"+epv+" vel:"+vel+" cog:"+cog+" fix_type:"+fix_type+" satellites_visible:"+satellites_visible+" alt_ellipsoid:"+alt_ellipsoid+" h_acc:"+h_acc+" v_acc:"+v_acc+" vel_acc:"+vel_acc+" hdg_acc:"+hdg_acc+" yaw:"+yaw+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

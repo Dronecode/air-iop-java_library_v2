@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Orientation of a mount
  */
@@ -19,30 +21,40 @@ public class msg_mount_orientation extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 20;
     private static final long serialVersionUID = MAVLINK_MSG_ID_MOUNT_ORIENTATION;
 
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
-      
+    
     /**
      * Roll in global frame (set to NaN for invalid).
      */
+    @Description("Roll in global frame (set to NaN for invalid).")
+    @Units("deg")
     public float roll;
-      
+    
     /**
      * Pitch in global frame (set to NaN for invalid).
      */
+    @Description("Pitch in global frame (set to NaN for invalid).")
+    @Units("deg")
     public float pitch;
-      
+    
     /**
      * Yaw relative to vehicle (set to NaN for invalid).
      */
+    @Description("Yaw relative to vehicle (set to NaN for invalid).")
+    @Units("deg")
     public float yaw;
-      
+    
     /**
      * Yaw in absolute frame relative to Earth's North, north is 0 (set to NaN for invalid).
      */
+    @Description("Yaw in absolute frame relative to Earth's North, north is 0 (set to NaN for invalid).")
+    @Units("deg")
     public float yaw_absolute;
     
 
@@ -56,7 +68,7 @@ public class msg_mount_orientation extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_MOUNT_ORIENTATION;
-        
+
         packet.payload.putUnsignedInt(time_boot_ms);
         packet.payload.putFloat(roll);
         packet.payload.putFloat(pitch);
@@ -77,7 +89,7 @@ public class msg_mount_orientation extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_boot_ms = payload.getUnsignedInt();
         this.roll = payload.getFloat();
         this.pitch = payload.getFloat();
@@ -95,7 +107,7 @@ public class msg_mount_orientation extends MAVLinkMessage {
     public msg_mount_orientation() {
         this.msgid = MAVLINK_MSG_ID_MOUNT_ORIENTATION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +121,7 @@ public class msg_mount_orientation extends MAVLinkMessage {
         this.yaw_absolute = yaw_absolute;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -134,7 +146,7 @@ public class msg_mount_orientation extends MAVLinkMessage {
      */
     public msg_mount_orientation(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_MOUNT_ORIENTATION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -149,7 +161,7 @@ public class msg_mount_orientation extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_MOUNT_ORIENTATION - sysid:"+sysid+" compid:"+compid+" time_boot_ms:"+time_boot_ms+" roll:"+roll+" pitch:"+pitch+" yaw:"+yaw+" yaw_absolute:"+yaw_absolute+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

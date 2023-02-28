@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Video stream types
  */
 public class VIDEO_STREAM_TYPE {

@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Checksum for the current mission, rally point or geofence plan, or for the "combined" plan (a GCS can use these checksums to determine if it has matching plans).
         This message must be broadcast with the appropriate checksum following any change to a mission, geofence or rally point definition
@@ -28,15 +30,19 @@ public class msg_mission_checksum extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 5;
     private static final long serialVersionUID = MAVLINK_MSG_ID_MISSION_CHECKSUM;
 
-      
+    
     /**
      * CRC32 checksum of current plan for specified type.
      */
+    @Description("CRC32 checksum of current plan for specified type.")
+    @Units("")
     public long checksum;
-      
+    
     /**
      * Mission type.
      */
+    @Description("Mission type.")
+    @Units("")
     public short mission_type;
     
 
@@ -50,7 +56,7 @@ public class msg_mission_checksum extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_MISSION_CHECKSUM;
-        
+
         packet.payload.putUnsignedInt(checksum);
         packet.payload.putUnsignedByte(mission_type);
         
@@ -68,7 +74,7 @@ public class msg_mission_checksum extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.checksum = payload.getUnsignedInt();
         this.mission_type = payload.getUnsignedByte();
         
@@ -83,7 +89,7 @@ public class msg_mission_checksum extends MAVLinkMessage {
     public msg_mission_checksum() {
         this.msgid = MAVLINK_MSG_ID_MISSION_CHECKSUM;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -94,7 +100,7 @@ public class msg_mission_checksum extends MAVLinkMessage {
         this.mission_type = mission_type;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +122,7 @@ public class msg_mission_checksum extends MAVLinkMessage {
      */
     public msg_mission_checksum(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_MISSION_CHECKSUM;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +137,7 @@ public class msg_mission_checksum extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_MISSION_CHECKSUM - sysid:"+sysid+" compid:"+compid+" checksum:"+checksum+" mission_type:"+mission_type+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

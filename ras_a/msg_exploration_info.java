@@ -9,7 +9,9 @@ package com.MAVLink.ras_a;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Provides configuration information about an exploration task.
         The message can be requested using the MAV_CMD_REQUEST_MESSAGE command, where param 3 should be used to set which exploration task to get.
@@ -22,120 +24,166 @@ public class msg_exploration_info extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 86;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EXPLORATION_INFO;
 
-      
+    
     /**
      * Time limit to execute the exploration. Reaching this time triggers the behavior defined in the behaviour_after_stopping field. Set to 0 when the exploration time is not limited.
      */
+    @Description("Time limit to execute the exploration. Reaching this time triggers the behavior defined in the behaviour_after_stopping field. Set to 0 when the exploration time is not limited.")
+    @Units("s")
     public long time_limit;
-      
+    
     /**
      * Exploration cuboid boundaries point 1 Latitude (WGS84). INT32_MAX if unknown. p1_lat == p3_lat.
      */
+    @Description("Exploration cuboid boundaries point 1 Latitude (WGS84). INT32_MAX if unknown. p1_lat == p3_lat.")
+    @Units("degE7")
     public int boundaries_p1_lat;
-      
+    
     /**
      * Exploration cuboid boundaries point 1 Longitude (WGS84). INT32_MAX if unknown. p1_lat == p3_lat.
      */
+    @Description("Exploration cuboid boundaries point 1 Longitude (WGS84). INT32_MAX if unknown. p1_lat == p3_lat.")
+    @Units("degE7")
     public int boundaries_p1_lon;
-      
+    
     /**
      * Exploration cuboid boundaries point 1 Altitude (MSL). NaN if unknown. p1_alt == p2_alt.
      */
+    @Description("Exploration cuboid boundaries point 1 Altitude (MSL). NaN if unknown. p1_alt == p2_alt.")
+    @Units("m")
     public float boundaries_p1_alt;
-      
+    
     /**
      * Exploration cuboid boundaries point 1 local NED X coordinate. NaN if unknown. p1_x == p3_x.
      */
+    @Description("Exploration cuboid boundaries point 1 local NED X coordinate. NaN if unknown. p1_x == p3_x.")
+    @Units("m")
     public float boundaries_p1_x;
-      
+    
     /**
      * Exploration cuboid boundaries point 1 local NED Y coordinate. NaN if unknown. p1_y == p3_y.
      */
+    @Description("Exploration cuboid boundaries point 1 local NED Y coordinate. NaN if unknown. p1_y == p3_y.")
+    @Units("m")
     public float boundaries_p1_y;
-      
+    
     /**
      * Exploration cuboid boundaries point 1 local NED Z coordinate. NaN if unknown. p1_z == p2_z.
      */
+    @Description("Exploration cuboid boundaries point 1 local NED Z coordinate. NaN if unknown. p1_z == p2_z.")
+    @Units("m")
     public float boundaries_p1_z;
-      
+    
     /**
      * Exploration cuboid boundaries point 2 Latitude (WGS84). INT32_MAX if unknown.
      */
+    @Description("Exploration cuboid boundaries point 2 Latitude (WGS84). INT32_MAX if unknown.")
+    @Units("degE7")
     public int boundaries_p2_lat;
-      
+    
     /**
      * Exploration cuboid boundaries point 2 Longitude (WGS84). INT32_MAX if unknown.
      */
+    @Description("Exploration cuboid boundaries point 2 Longitude (WGS84). INT32_MAX if unknown.")
+    @Units("degE7")
     public int boundaries_p2_lon;
-      
+    
     /**
      * Exploration cuboid boundaries point 2 local NED X coordinate. NaN if unknown.
      */
+    @Description("Exploration cuboid boundaries point 2 local NED X coordinate. NaN if unknown.")
+    @Units("m")
     public float boundaries_p2_x;
-      
+    
     /**
      * Exploration cuboid boundaries point 2 local NED Y coordinate. NaN if unknown.
      */
+    @Description("Exploration cuboid boundaries point 2 local NED Y coordinate. NaN if unknown.")
+    @Units("m")
     public float boundaries_p2_y;
-      
+    
     /**
      * Exploration cuboid boundaries point 3 Altitude (MSL). NaN if unknown.
      */
+    @Description("Exploration cuboid boundaries point 3 Altitude (MSL). NaN if unknown.")
+    @Units("m")
     public float boundaries_p3_alt;
-      
+    
     /**
      * Exploration cuboid boundaries point 3 local NED Z coordinate. NaN if unknown.
      */
+    @Description("Exploration cuboid boundaries point 3 local NED Z coordinate. NaN if unknown.")
+    @Units("m")
     public float boundaries_p3_z;
-      
+    
     /**
      * Currently defined ingress portal ID. This portal ID can either be set by the system autonomy engine or by an offboard controller or operator using MAV_CMD_SET_INGRESS_PORTAL. When unknown, not applicable or not deterministic, set to UINT32_MAX.
      */
+    @Description("Currently defined ingress portal ID. This portal ID can either be set by the system autonomy engine or by an offboard controller or operator using MAV_CMD_SET_INGRESS_PORTAL. When unknown, not applicable or not deterministic, set to UINT32_MAX.")
+    @Units("")
     public long ingress_portal_id;
-      
+    
     /**
      * Currently defined ingress portal Latitude (WGS84). INT32_MAX if unknown, not applicable or when ingress_portal_id is set and different from UINT32_MAX.
      */
+    @Description("Currently defined ingress portal Latitude (WGS84). INT32_MAX if unknown, not applicable or when ingress_portal_id is set and different from UINT32_MAX.")
+    @Units("degE7")
     public int ingress_portal_lat;
-      
+    
     /**
      * Currently defined ingress portal Longitude (WGS84). INT32_MAX if unknown, not applicable or when ingress_portal_id is set and different from UINT32_MAX.
      */
+    @Description("Currently defined ingress portal Longitude (WGS84). INT32_MAX if unknown, not applicable or when ingress_portal_id is set and different from UINT32_MAX.")
+    @Units("degE7")
     public int ingress_portal_lon;
-      
+    
     /**
      * Currently defined ingress portal Altitude (MSL). NaN if unknown, not applicable or when ingress_portal_id is set and different from UINT32_MAX.
      */
+    @Description("Currently defined ingress portal Altitude (MSL). NaN if unknown, not applicable or when ingress_portal_id is set and different from UINT32_MAX.")
+    @Units("m")
     public float ingress_portal_alt;
-      
+    
     /**
      * Currently defined egress portal ID. This portal ID can either be set by the system autonomy engine or by an offboard controller or operator using MAV_CMD_SET_EGRESS_PORTAL. When unknown, not applicable or not deterministic, set to UINT32_MAX.
      */
+    @Description("Currently defined egress portal ID. This portal ID can either be set by the system autonomy engine or by an offboard controller or operator using MAV_CMD_SET_EGRESS_PORTAL. When unknown, not applicable or not deterministic, set to UINT32_MAX.")
+    @Units("")
     public long egress_portal_id;
-      
+    
     /**
      * Currently defined egress portal Latitude (WGS84). INT32_MAX if unknown, not applicable or when egress_portal_id is set and different from UINT32_MAX.
      */
+    @Description("Currently defined egress portal Latitude (WGS84). INT32_MAX if unknown, not applicable or when egress_portal_id is set and different from UINT32_MAX.")
+    @Units("degE7")
     public int egress_portal_lat;
-      
+    
     /**
      * Currently defined egress portal Longitude (WGS84). INT32_MAX if unknown, not applicable or when egress_portal_id is set and different from UINT32_MAX.
      */
+    @Description("Currently defined egress portal Longitude (WGS84). INT32_MAX if unknown, not applicable or when egress_portal_id is set and different from UINT32_MAX.")
+    @Units("degE7")
     public int egress_portal_lon;
-      
+    
     /**
      * Currently defined egress portal Altitude (MSL). NaN if unknown, not applicable or when egress_portal_id is set and different from UINT32_MAX.
      */
+    @Description("Currently defined egress portal Altitude (MSL). NaN if unknown, not applicable or when egress_portal_id is set and different from UINT32_MAX.")
+    @Units("m")
     public float egress_portal_alt;
-      
+    
     /**
      * ID of the exploration task. 255 to get the information of the current running exploration task.
      */
+    @Description("ID of the exploration task. 255 to get the information of the current running exploration task.")
+    @Units("")
     public short exploration_id;
-      
+    
     /**
      * The behavior after stopping the exploration task. 0: Hold, 1: Land, 2: Return (to exploration return position).
      */
+    @Description("The behavior after stopping the exploration task. 0: Hold, 1: Land, 2: Return (to exploration return position).")
+    @Units("")
     public short behaviour_after_stopping;
     
 
@@ -149,7 +197,7 @@ public class msg_exploration_info extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_EXPLORATION_INFO;
-        
+
         packet.payload.putUnsignedInt(time_limit);
         packet.payload.putInt(boundaries_p1_lat);
         packet.payload.putInt(boundaries_p1_lon);
@@ -188,7 +236,7 @@ public class msg_exploration_info extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_limit = payload.getUnsignedInt();
         this.boundaries_p1_lat = payload.getInt();
         this.boundaries_p1_lon = payload.getInt();
@@ -224,7 +272,7 @@ public class msg_exploration_info extends MAVLinkMessage {
     public msg_exploration_info() {
         this.msgid = MAVLINK_MSG_ID_EXPLORATION_INFO;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -256,7 +304,7 @@ public class msg_exploration_info extends MAVLinkMessage {
         this.behaviour_after_stopping = behaviour_after_stopping;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -299,7 +347,7 @@ public class msg_exploration_info extends MAVLinkMessage {
      */
     public msg_exploration_info(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_EXPLORATION_INFO;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -314,7 +362,7 @@ public class msg_exploration_info extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_EXPLORATION_INFO - sysid:"+sysid+" compid:"+compid+" time_limit:"+time_limit+" boundaries_p1_lat:"+boundaries_p1_lat+" boundaries_p1_lon:"+boundaries_p1_lon+" boundaries_p1_alt:"+boundaries_p1_alt+" boundaries_p1_x:"+boundaries_p1_x+" boundaries_p1_y:"+boundaries_p1_y+" boundaries_p1_z:"+boundaries_p1_z+" boundaries_p2_lat:"+boundaries_p2_lat+" boundaries_p2_lon:"+boundaries_p2_lon+" boundaries_p2_x:"+boundaries_p2_x+" boundaries_p2_y:"+boundaries_p2_y+" boundaries_p3_alt:"+boundaries_p3_alt+" boundaries_p3_z:"+boundaries_p3_z+" ingress_portal_id:"+ingress_portal_id+" ingress_portal_lat:"+ingress_portal_lat+" ingress_portal_lon:"+ingress_portal_lon+" ingress_portal_alt:"+ingress_portal_alt+" egress_portal_id:"+egress_portal_id+" egress_portal_lat:"+egress_portal_lat+" egress_portal_lon:"+egress_portal_lon+" egress_portal_alt:"+egress_portal_alt+" exploration_id:"+exploration_id+" behaviour_after_stopping:"+behaviour_after_stopping+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

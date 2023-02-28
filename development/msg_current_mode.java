@@ -9,7 +9,9 @@ package com.MAVLink.development;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Get the current mode.
         This should be emitted on any mode change, and broadcast at low rate (nominally 0.5 Hz).
@@ -22,20 +24,26 @@ public class msg_current_mode extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 6;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CURRENT_MODE;
 
-      
+    
     /**
      * A bitfield for use for autopilot-specific flags
      */
+    @Description("A bitfield for use for autopilot-specific flags")
+    @Units("")
     public long custom_mode;
-      
+    
     /**
      * Standard mode.
      */
+    @Description("Standard mode.")
+    @Units("")
     public short standard_mode;
-      
+    
     /**
      * System mode bitmap.
      */
+    @Description("System mode bitmap.")
+    @Units("")
     public short base_mode;
     
 
@@ -49,7 +57,7 @@ public class msg_current_mode extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CURRENT_MODE;
-        
+
         packet.payload.putUnsignedInt(custom_mode);
         packet.payload.putUnsignedByte(standard_mode);
         packet.payload.putUnsignedByte(base_mode);
@@ -68,7 +76,7 @@ public class msg_current_mode extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.custom_mode = payload.getUnsignedInt();
         this.standard_mode = payload.getUnsignedByte();
         this.base_mode = payload.getUnsignedByte();
@@ -84,7 +92,7 @@ public class msg_current_mode extends MAVLinkMessage {
     public msg_current_mode() {
         this.msgid = MAVLINK_MSG_ID_CURRENT_MODE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -96,7 +104,7 @@ public class msg_current_mode extends MAVLinkMessage {
         this.base_mode = base_mode;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -119,7 +127,7 @@ public class msg_current_mode extends MAVLinkMessage {
      */
     public msg_current_mode(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CURRENT_MODE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -134,7 +142,7 @@ public class msg_current_mode extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CURRENT_MODE - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" standard_mode:"+standard_mode+" base_mode:"+base_mode+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

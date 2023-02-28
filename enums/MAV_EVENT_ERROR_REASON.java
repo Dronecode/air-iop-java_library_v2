@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Reason for an event error response.
  */
 public class MAV_EVENT_ERROR_REASON {

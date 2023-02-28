@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Micro air vehicle / autopilot classes. This identifies the individual model.
  */
 public class MAV_AUTOPILOT {

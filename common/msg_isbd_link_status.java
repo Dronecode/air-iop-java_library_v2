@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Status of the Iridium SBD link.
  */
@@ -19,45 +21,61 @@ public class msg_isbd_link_status extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 24;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ISBD_LINK_STATUS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long timestamp;
-      
+    
     /**
      * Timestamp of the last successful sbd session. The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp of the last successful sbd session. The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long last_heartbeat;
-      
+    
     /**
      * Number of failed SBD sessions.
      */
+    @Description("Number of failed SBD sessions.")
+    @Units("")
     public int failed_sessions;
-      
+    
     /**
      * Number of successful SBD sessions.
      */
+    @Description("Number of successful SBD sessions.")
+    @Units("")
     public int successful_sessions;
-      
+    
     /**
      * Signal quality equal to the number of bars displayed on the ISU signal strength indicator. Range is 0 to 5, where 0 indicates no signal and 5 indicates maximum signal strength.
      */
+    @Description("Signal quality equal to the number of bars displayed on the ISU signal strength indicator. Range is 0 to 5, where 0 indicates no signal and 5 indicates maximum signal strength.")
+    @Units("")
     public short signal_quality;
-      
+    
     /**
      * 1: Ring call pending, 0: No call pending.
      */
+    @Description("1: Ring call pending, 0: No call pending.")
+    @Units("")
     public short ring_pending;
-      
+    
     /**
      * 1: Transmission session pending, 0: No transmission session pending.
      */
+    @Description("1: Transmission session pending, 0: No transmission session pending.")
+    @Units("")
     public short tx_session_pending;
-      
+    
     /**
      * 1: Receiving session pending, 0: No receiving session pending.
      */
+    @Description("1: Receiving session pending, 0: No receiving session pending.")
+    @Units("")
     public short rx_session_pending;
     
 
@@ -71,7 +89,7 @@ public class msg_isbd_link_status extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ISBD_LINK_STATUS;
-        
+
         packet.payload.putUnsignedLong(timestamp);
         packet.payload.putUnsignedLong(last_heartbeat);
         packet.payload.putUnsignedShort(failed_sessions);
@@ -95,7 +113,7 @@ public class msg_isbd_link_status extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.timestamp = payload.getUnsignedLong();
         this.last_heartbeat = payload.getUnsignedLong();
         this.failed_sessions = payload.getUnsignedShort();
@@ -116,7 +134,7 @@ public class msg_isbd_link_status extends MAVLinkMessage {
     public msg_isbd_link_status() {
         this.msgid = MAVLINK_MSG_ID_ISBD_LINK_STATUS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +151,7 @@ public class msg_isbd_link_status extends MAVLinkMessage {
         this.rx_session_pending = rx_session_pending;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -161,7 +179,7 @@ public class msg_isbd_link_status extends MAVLinkMessage {
      */
     public msg_isbd_link_status(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ISBD_LINK_STATUS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -176,7 +194,7 @@ public class msg_isbd_link_status extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ISBD_LINK_STATUS - sysid:"+sysid+" compid:"+compid+" timestamp:"+timestamp+" last_heartbeat:"+last_heartbeat+" failed_sessions:"+failed_sessions+" successful_sessions:"+successful_sessions+" signal_quality:"+signal_quality+" ring_pending:"+ring_pending+" tx_session_pending:"+tx_session_pending+" rx_session_pending:"+rx_session_pending+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

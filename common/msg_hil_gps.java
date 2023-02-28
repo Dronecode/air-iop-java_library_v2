@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The global position, as returned by the Global Positioning System (GPS). This is
                  NOT the global position estimate of the system, but rather a RAW sensor value. See message GLOBAL_POSITION_INT for the global position estimate.
@@ -20,80 +22,110 @@ public class msg_hil_gps extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 39;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIL_GPS;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Latitude (WGS84)
      */
+    @Description("Latitude (WGS84)")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude (WGS84)
      */
+    @Description("Longitude (WGS84)")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude (MSL). Positive for up.
      */
+    @Description("Altitude (MSL). Positive for up.")
+    @Units("mm")
     public int alt;
-      
+    
     /**
      * GPS HDOP horizontal dilution of position (unitless * 100). If unknown, set to: UINT16_MAX
      */
+    @Description("GPS HDOP horizontal dilution of position (unitless * 100). If unknown, set to: UINT16_MAX")
+    @Units("")
     public int eph;
-      
+    
     /**
      * GPS VDOP vertical dilution of position (unitless * 100). If unknown, set to: UINT16_MAX
      */
+    @Description("GPS VDOP vertical dilution of position (unitless * 100). If unknown, set to: UINT16_MAX")
+    @Units("")
     public int epv;
-      
+    
     /**
      * GPS ground speed. If unknown, set to: UINT16_MAX
      */
+    @Description("GPS ground speed. If unknown, set to: UINT16_MAX")
+    @Units("cm/s")
     public int vel;
-      
+    
     /**
      * GPS velocity in north direction in earth-fixed NED frame
      */
+    @Description("GPS velocity in north direction in earth-fixed NED frame")
+    @Units("cm/s")
     public short vn;
-      
+    
     /**
      * GPS velocity in east direction in earth-fixed NED frame
      */
+    @Description("GPS velocity in east direction in earth-fixed NED frame")
+    @Units("cm/s")
     public short ve;
-      
+    
     /**
      * GPS velocity in down direction in earth-fixed NED frame
      */
+    @Description("GPS velocity in down direction in earth-fixed NED frame")
+    @Units("cm/s")
     public short vd;
-      
+    
     /**
      * Course over ground (NOT heading, but direction of movement), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
      */
+    @Description("Course over ground (NOT heading, but direction of movement), 0.0..359.99 degrees. If unknown, set to: UINT16_MAX")
+    @Units("cdeg")
     public int cog;
-      
+    
     /**
      * 0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
      */
+    @Description("0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.")
+    @Units("")
     public short fix_type;
-      
+    
     /**
      * Number of satellites visible. If unknown, set to UINT8_MAX
      */
+    @Description("Number of satellites visible. If unknown, set to UINT8_MAX")
+    @Units("")
     public short satellites_visible;
-      
+    
     /**
      * GPS ID (zero indexed). Used for multiple GPS inputs
      */
+    @Description("GPS ID (zero indexed). Used for multiple GPS inputs")
+    @Units("")
     public short id;
-      
+    
     /**
      * Yaw of vehicle relative to Earth's North, zero means not available, use 36000 for north
      */
+    @Description("Yaw of vehicle relative to Earth's North, zero means not available, use 36000 for north")
+    @Units("cdeg")
     public int yaw;
     
 
@@ -107,7 +139,7 @@ public class msg_hil_gps extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIL_GPS;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
@@ -138,7 +170,7 @@ public class msg_hil_gps extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
@@ -166,7 +198,7 @@ public class msg_hil_gps extends MAVLinkMessage {
     public msg_hil_gps() {
         this.msgid = MAVLINK_MSG_ID_HIL_GPS;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -190,7 +222,7 @@ public class msg_hil_gps extends MAVLinkMessage {
         this.yaw = yaw;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -225,7 +257,7 @@ public class msg_hil_gps extends MAVLinkMessage {
      */
     public msg_hil_gps(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIL_GPS;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -240,7 +272,7 @@ public class msg_hil_gps extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIL_GPS - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" lat:"+lat+" lon:"+lon+" alt:"+alt+" eph:"+eph+" epv:"+epv+" vel:"+vel+" vn:"+vn+" ve:"+ve+" vd:"+vd+" cog:"+cog+" fix_type:"+fix_type+" satellites_visible:"+satellites_visible+" id:"+id+" yaw:"+yaw+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

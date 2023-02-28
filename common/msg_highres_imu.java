@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The IMU readings in SI units in NED body frame
  */
@@ -19,85 +21,117 @@ public class msg_highres_imu extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 63;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HIGHRES_IMU;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * X acceleration
      */
+    @Description("X acceleration")
+    @Units("m/s/s")
     public float xacc;
-      
+    
     /**
      * Y acceleration
      */
+    @Description("Y acceleration")
+    @Units("m/s/s")
     public float yacc;
-      
+    
     /**
      * Z acceleration
      */
+    @Description("Z acceleration")
+    @Units("m/s/s")
     public float zacc;
-      
+    
     /**
      * Angular speed around X axis
      */
+    @Description("Angular speed around X axis")
+    @Units("rad/s")
     public float xgyro;
-      
+    
     /**
      * Angular speed around Y axis
      */
+    @Description("Angular speed around Y axis")
+    @Units("rad/s")
     public float ygyro;
-      
+    
     /**
      * Angular speed around Z axis
      */
+    @Description("Angular speed around Z axis")
+    @Units("rad/s")
     public float zgyro;
-      
+    
     /**
      * X Magnetic field
      */
+    @Description("X Magnetic field")
+    @Units("gauss")
     public float xmag;
-      
+    
     /**
      * Y Magnetic field
      */
+    @Description("Y Magnetic field")
+    @Units("gauss")
     public float ymag;
-      
+    
     /**
      * Z Magnetic field
      */
+    @Description("Z Magnetic field")
+    @Units("gauss")
     public float zmag;
-      
+    
     /**
      * Absolute pressure
      */
+    @Description("Absolute pressure")
+    @Units("hPa")
     public float abs_pressure;
-      
+    
     /**
      * Differential pressure
      */
+    @Description("Differential pressure")
+    @Units("hPa")
     public float diff_pressure;
-      
+    
     /**
      * Altitude calculated from pressure
      */
+    @Description("Altitude calculated from pressure")
+    @Units("")
     public float pressure_alt;
-      
+    
     /**
      * Temperature
      */
+    @Description("Temperature")
+    @Units("degC")
     public float temperature;
-      
+    
     /**
      * Bitmap for fields that have updated since last message
      */
+    @Description("Bitmap for fields that have updated since last message")
+    @Units("")
     public int fields_updated;
-      
+    
     /**
      * Id. Ids are numbered from 0 and map to IMUs numbered from 1 (e.g. IMU1 will have a message with id=0)
      */
+    @Description("Id. Ids are numbered from 0 and map to IMUs numbered from 1 (e.g. IMU1 will have a message with id=0)")
+    @Units("")
     public short id;
     
 
@@ -111,7 +145,7 @@ public class msg_highres_imu extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HIGHRES_IMU;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(xacc);
         packet.payload.putFloat(yacc);
@@ -143,7 +177,7 @@ public class msg_highres_imu extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.xacc = payload.getFloat();
         this.yacc = payload.getFloat();
@@ -172,7 +206,7 @@ public class msg_highres_imu extends MAVLinkMessage {
     public msg_highres_imu() {
         this.msgid = MAVLINK_MSG_ID_HIGHRES_IMU;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -197,7 +231,7 @@ public class msg_highres_imu extends MAVLinkMessage {
         this.id = id;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -233,7 +267,7 @@ public class msg_highres_imu extends MAVLinkMessage {
      */
     public msg_highres_imu(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HIGHRES_IMU;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -248,7 +282,7 @@ public class msg_highres_imu extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HIGHRES_IMU - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" xacc:"+xacc+" yacc:"+yacc+" zacc:"+zacc+" xgyro:"+xgyro+" ygyro:"+ygyro+" zgyro:"+zgyro+" xmag:"+xmag+" ymag:"+ymag+" zmag:"+zmag+" abs_pressure:"+abs_pressure+" diff_pressure:"+diff_pressure+" pressure_alt:"+pressure_alt+" temperature:"+temperature+" fields_updated:"+fields_updated+" id:"+id+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

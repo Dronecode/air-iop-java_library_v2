@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * File transfer protocol message: https://mavlink.io/en/services/ftp.html.
  */
@@ -19,25 +21,33 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 254;
     private static final long serialVersionUID = MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL;
 
-      
+    
     /**
      * Network ID (0 for broadcast)
      */
+    @Description("Network ID (0 for broadcast)")
+    @Units("")
     public short target_network;
-      
+    
     /**
      * System ID (0 for broadcast)
      */
+    @Description("System ID (0 for broadcast)")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID (0 for broadcast)
      */
+    @Description("Component ID (0 for broadcast)")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields. The content/format of this block is defined in https://mavlink.io/en/services/ftp.html.
      */
+    @Description("Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields. The content/format of this block is defined in https://mavlink.io/en/services/ftp.html.")
+    @Units("")
     public short payload[] = new short[251];
     
 
@@ -51,7 +61,7 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL;
-        
+
         packet.payload.putUnsignedByte(target_network);
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
@@ -75,11 +85,11 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_network = payload.getUnsignedByte();
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.payload.length; i++) {
             this.payload[i] = payload.getUnsignedByte();
         }
@@ -96,7 +106,7 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
     public msg_file_transfer_protocol() {
         this.msgid = MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +119,7 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
         this.payload = payload;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -133,7 +143,7 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
      */
     public msg_file_transfer_protocol(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -148,7 +158,7 @@ public class msg_file_transfer_protocol extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_FILE_TRANSFER_PROTOCOL - sysid:"+sysid+" compid:"+compid+" target_network:"+target_network+" target_system:"+target_system+" target_component:"+target_component+" payload:"+payload+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

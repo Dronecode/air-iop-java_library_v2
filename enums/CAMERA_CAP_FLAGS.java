@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Camera capability flags (Bitmap)
  */
 public class CAMERA_CAP_FLAGS {

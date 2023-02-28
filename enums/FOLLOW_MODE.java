@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * These values define various methods of following a subject
  */
 public class FOLLOW_MODE {

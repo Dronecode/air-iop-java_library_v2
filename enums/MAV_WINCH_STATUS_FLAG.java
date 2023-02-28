@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Winch status flags used in WINCH_STATUS
  */
 public class MAV_WINCH_STATUS_FLAG {
@@ -21,6 +21,9 @@ public class MAV_WINCH_STATUS_FLAG {
    public static final int MAV_WINCH_STATUS_RETRACTING = 256; /* Winch is returning to the fully retracted position. | */
    public static final int MAV_WINCH_STATUS_REDELIVER = 512; /* Winch is redelivering the payload. This is a failover state if the line tension goes above a threshold during RETRACTING. | */
    public static final int MAV_WINCH_STATUS_ABANDON_LINE = 1024; /* Winch is abandoning the line and possibly payload. Winch unspools the entire calculated line length. This is a failover state from REDELIVER if the number of attempts exceeds a threshold. | */
-   public static final int MAV_WINCH_STATUS_FLAG_ENUM_END = 1025; /*  | */
+   public static final int MAV_WINCH_STATUS_LOCKING = 2048; /* Winch is engaging the locking mechanism. | */
+   public static final int MAV_WINCH_STATUS_LOAD_LINE = 4096; /* Winch is spooling on line. | */
+   public static final int MAV_WINCH_STATUS_LOAD_PAYLOAD = 8192; /* Winch is loading a payload. | */
+   public static final int MAV_WINCH_STATUS_FLAG_ENUM_END = 8193; /*  | */
 }
             

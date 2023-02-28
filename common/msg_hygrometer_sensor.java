@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Temperature and humidity from hygrometer.
  */
@@ -19,20 +21,26 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 5;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HYGROMETER_SENSOR;
 
-      
+    
     /**
      * Temperature
      */
+    @Description("Temperature")
+    @Units("cdegC")
     public short temperature;
-      
+    
     /**
      * Humidity
      */
+    @Description("Humidity")
+    @Units("c%")
     public int humidity;
-      
+    
     /**
      * Hygrometer ID
      */
+    @Description("Hygrometer ID")
+    @Units("")
     public short id;
     
 
@@ -46,7 +54,7 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HYGROMETER_SENSOR;
-        
+
         packet.payload.putShort(temperature);
         packet.payload.putUnsignedShort(humidity);
         packet.payload.putUnsignedByte(id);
@@ -65,7 +73,7 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.temperature = payload.getShort();
         this.humidity = payload.getUnsignedShort();
         this.id = payload.getUnsignedByte();
@@ -81,7 +89,7 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
     public msg_hygrometer_sensor() {
         this.msgid = MAVLINK_MSG_ID_HYGROMETER_SENSOR;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -93,7 +101,7 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
         this.id = id;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -116,7 +124,7 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
      */
     public msg_hygrometer_sensor(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HYGROMETER_SENSOR;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -131,7 +139,7 @@ public class msg_hygrometer_sensor extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HYGROMETER_SENSOR - sysid:"+sysid+" compid:"+compid+" temperature:"+temperature+" humidity:"+humidity+" id:"+id+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

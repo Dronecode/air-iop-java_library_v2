@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The location of a landing target. See: https://mavlink.io/en/services/landing_target.html
  */
@@ -19,75 +21,103 @@ public class msg_landing_target extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 60;
     private static final long serialVersionUID = MAVLINK_MSG_ID_LANDING_TARGET;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * X-axis angular offset of the target from the center of the image
      */
+    @Description("X-axis angular offset of the target from the center of the image")
+    @Units("rad")
     public float angle_x;
-      
+    
     /**
      * Y-axis angular offset of the target from the center of the image
      */
+    @Description("Y-axis angular offset of the target from the center of the image")
+    @Units("rad")
     public float angle_y;
-      
+    
     /**
      * Distance to the target from the vehicle
      */
+    @Description("Distance to the target from the vehicle")
+    @Units("m")
     public float distance;
-      
+    
     /**
      * Size of target along x-axis
      */
+    @Description("Size of target along x-axis")
+    @Units("rad")
     public float size_x;
-      
+    
     /**
      * Size of target along y-axis
      */
+    @Description("Size of target along y-axis")
+    @Units("rad")
     public float size_y;
-      
+    
     /**
      * The ID of the target if multiple targets are present
      */
+    @Description("The ID of the target if multiple targets are present")
+    @Units("")
     public short target_num;
-      
+    
     /**
      * Coordinate frame used for following fields.
      */
+    @Description("Coordinate frame used for following fields.")
+    @Units("")
     public short frame;
-      
+    
     /**
      * X Position of the landing target in MAV_FRAME
      */
+    @Description("X Position of the landing target in MAV_FRAME")
+    @Units("m")
     public float x;
-      
+    
     /**
      * Y Position of the landing target in MAV_FRAME
      */
+    @Description("Y Position of the landing target in MAV_FRAME")
+    @Units("m")
     public float y;
-      
+    
     /**
      * Z Position of the landing target in MAV_FRAME
      */
+    @Description("Z Position of the landing target in MAV_FRAME")
+    @Units("m")
     public float z;
-      
+    
     /**
      * Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
      */
+    @Description("Quaternion of landing target orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)")
+    @Units("")
     public float q[] = new float[4];
-      
+    
     /**
      * Type of landing target
      */
+    @Description("Type of landing target")
+    @Units("")
     public short type;
-      
+    
     /**
      * Boolean indicating whether the position fields (x, y, z, q, type) contain valid target position information (valid: 1, invalid: 0). Default is 0 (invalid).
      */
+    @Description("Boolean indicating whether the position fields (x, y, z, q, type) contain valid target position information (valid: 1, invalid: 0). Default is 0 (invalid).")
+    @Units("")
     public short position_valid;
     
 
@@ -101,7 +131,7 @@ public class msg_landing_target extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_LANDING_TARGET;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(angle_x);
         packet.payload.putFloat(angle_y);
@@ -135,7 +165,7 @@ public class msg_landing_target extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.angle_x = payload.getFloat();
         this.angle_y = payload.getFloat();
@@ -149,7 +179,7 @@ public class msg_landing_target extends MAVLinkMessage {
              this.x = payload.getFloat();
              this.y = payload.getFloat();
              this.z = payload.getFloat();
-              
+             
         for (int i = 0; i < this.q.length; i++) {
             this.q[i] = payload.getFloat();
         }
@@ -166,7 +196,7 @@ public class msg_landing_target extends MAVLinkMessage {
     public msg_landing_target() {
         this.msgid = MAVLINK_MSG_ID_LANDING_TARGET;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -189,7 +219,7 @@ public class msg_landing_target extends MAVLinkMessage {
         this.position_valid = position_valid;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -223,7 +253,7 @@ public class msg_landing_target extends MAVLinkMessage {
      */
     public msg_landing_target(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_LANDING_TARGET;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -238,7 +268,7 @@ public class msg_landing_target extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_LANDING_TARGET - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" angle_x:"+angle_x+" angle_y:"+angle_y+" distance:"+distance+" size_x:"+size_x+" size_y:"+size_y+" target_num:"+target_num+" frame:"+frame+" x:"+x+" y:"+y+" z:"+z+" q:"+q+" type:"+type+" position_valid:"+position_valid+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

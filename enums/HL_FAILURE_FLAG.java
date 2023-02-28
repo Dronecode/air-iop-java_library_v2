@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags to report failure cases over the high latency telemtry.
  */
 public class HL_FAILURE_FLAG {

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Motion capture attitude and position
  */
@@ -19,35 +21,47 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 120;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ATT_POS_MOCAP;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
      */
+    @Description("Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)")
+    @Units("")
     public float q[] = new float[4];
-      
+    
     /**
      * X position (NED)
      */
+    @Description("X position (NED)")
+    @Units("m")
     public float x;
-      
+    
     /**
      * Y position (NED)
      */
+    @Description("Y position (NED)")
+    @Units("m")
     public float y;
-      
+    
     /**
      * Z position (NED)
      */
+    @Description("Z position (NED)")
+    @Units("m")
     public float z;
-      
+    
     /**
      * Row-major representation of a pose 6x6 cross-covariance matrix upper right triangle (states: x, y, z, roll, pitch, yaw; first six entries are the first ROW, next five entries are the second ROW, etc.). If unknown, assign NaN value to first element in the array.
      */
+    @Description("Row-major representation of a pose 6x6 cross-covariance matrix upper right triangle (states: x, y, z, roll, pitch, yaw; first six entries are the first ROW, next five entries are the second ROW, etc.). If unknown, assign NaN value to first element in the array.")
+    @Units("")
     public float covariance[] = new float[21];
     
 
@@ -61,7 +75,7 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ATT_POS_MOCAP;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         
         for (int i = 0; i < q.length; i++) {
@@ -91,9 +105,9 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
-         
+        
         for (int i = 0; i < this.q.length; i++) {
             this.q[i] = payload.getFloat();
         }
@@ -103,7 +117,7 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
         this.z = payload.getFloat();
         
         if (isMavlink2) {
-              
+             
         for (int i = 0; i < this.covariance.length; i++) {
             this.covariance[i] = payload.getFloat();
         }
@@ -118,7 +132,7 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
     public msg_att_pos_mocap() {
         this.msgid = MAVLINK_MSG_ID_ATT_POS_MOCAP;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -133,7 +147,7 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
         this.covariance = covariance;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -159,7 +173,7 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
      */
     public msg_att_pos_mocap(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ATT_POS_MOCAP;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -174,7 +188,7 @@ public class msg_att_pos_mocap extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ATT_POS_MOCAP - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" q:"+q+" x:"+x+" y:"+y+" z:"+z+" covariance:"+covariance+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Request for terrain data and terrain status. See terrain protocol docs: https://mavlink.io/en/services/terrain.html
  */
@@ -19,25 +21,33 @@ public class msg_terrain_request extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 18;
     private static final long serialVersionUID = MAVLINK_MSG_ID_TERRAIN_REQUEST;
 
-      
+    
     /**
      * Bitmask of requested 4x4 grids (row major 8x7 array of grids, 56 bits)
      */
+    @Description("Bitmask of requested 4x4 grids (row major 8x7 array of grids, 56 bits)")
+    @Units("")
     public long mask;
-      
+    
     /**
      * Latitude of SW corner of first grid
      */
+    @Description("Latitude of SW corner of first grid")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude of SW corner of first grid
      */
+    @Description("Longitude of SW corner of first grid")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Grid spacing
      */
+    @Description("Grid spacing")
+    @Units("m")
     public int grid_spacing;
     
 
@@ -51,7 +61,7 @@ public class msg_terrain_request extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_TERRAIN_REQUEST;
-        
+
         packet.payload.putUnsignedLong(mask);
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
@@ -71,7 +81,7 @@ public class msg_terrain_request extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.mask = payload.getUnsignedLong();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
@@ -88,7 +98,7 @@ public class msg_terrain_request extends MAVLinkMessage {
     public msg_terrain_request() {
         this.msgid = MAVLINK_MSG_ID_TERRAIN_REQUEST;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -101,7 +111,7 @@ public class msg_terrain_request extends MAVLinkMessage {
         this.grid_spacing = grid_spacing;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -125,7 +135,7 @@ public class msg_terrain_request extends MAVLinkMessage {
      */
     public msg_terrain_request(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_TERRAIN_REQUEST;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -140,7 +150,7 @@ public class msg_terrain_request extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_TERRAIN_REQUEST - sysid:"+sysid+" compid:"+compid+" mask:"+mask+" lat:"+lat+" lon:"+lon+" grid_spacing:"+grid_spacing+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

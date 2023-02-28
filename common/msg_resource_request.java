@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The autopilot is requesting a resource (file, binary, other type of data)
  */
@@ -19,30 +21,40 @@ public class msg_resource_request extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 243;
     private static final long serialVersionUID = MAVLINK_MSG_ID_RESOURCE_REQUEST;
 
-      
+    
     /**
      * Request ID. This ID should be re-used when sending back URI contents
      */
+    @Description("Request ID. This ID should be re-used when sending back URI contents")
+    @Units("")
     public short request_id;
-      
+    
     /**
      * The type of requested URI. 0 = a file via URL. 1 = a UAVCAN binary
      */
+    @Description("The type of requested URI. 0 = a file via URL. 1 = a UAVCAN binary")
+    @Units("")
     public short uri_type;
-      
+    
     /**
      * The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends on the URI type enum)
      */
+    @Description("The requested unique resource identifier (URI). It is not necessarily a straight domain name (depends on the URI type enum)")
+    @Units("")
     public short uri[] = new short[120];
-      
+    
     /**
      * The way the autopilot wants to receive the URI. 0 = MAVLink FTP. 1 = binary stream.
      */
+    @Description("The way the autopilot wants to receive the URI. 0 = MAVLink FTP. 1 = binary stream.")
+    @Units("")
     public short transfer_type;
-      
+    
     /**
      * The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type has a storage associated (e.g. MAVLink FTP).
      */
+    @Description("The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type has a storage associated (e.g. MAVLink FTP).")
+    @Units("")
     public short storage[] = new short[120];
     
 
@@ -56,7 +68,7 @@ public class msg_resource_request extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_RESOURCE_REQUEST;
-        
+
         packet.payload.putUnsignedByte(request_id);
         packet.payload.putUnsignedByte(uri_type);
         
@@ -85,16 +97,16 @@ public class msg_resource_request extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.request_id = payload.getUnsignedByte();
         this.uri_type = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.uri.length; i++) {
             this.uri[i] = payload.getUnsignedByte();
         }
                 
         this.transfer_type = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.storage.length; i++) {
             this.storage[i] = payload.getUnsignedByte();
         }
@@ -111,7 +123,7 @@ public class msg_resource_request extends MAVLinkMessage {
     public msg_resource_request() {
         this.msgid = MAVLINK_MSG_ID_RESOURCE_REQUEST;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +137,7 @@ public class msg_resource_request extends MAVLinkMessage {
         this.storage = storage;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -150,7 +162,7 @@ public class msg_resource_request extends MAVLinkMessage {
      */
     public msg_resource_request(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_RESOURCE_REQUEST;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -165,7 +177,7 @@ public class msg_resource_request extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_RESOURCE_REQUEST - sysid:"+sysid+" compid:"+compid+" request_id:"+request_id+" uri_type:"+uri_type+" uri:"+uri+" transfer_type:"+transfer_type+" storage:"+storage+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

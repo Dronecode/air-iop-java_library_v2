@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The global position resulting from GPS and sensor fusion.
  */
@@ -19,95 +21,131 @@ public class msg_utm_global_position extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 70;
     private static final long serialVersionUID = MAVLINK_MSG_ID_UTM_GLOBAL_POSITION;
 
-      
+    
     /**
      * Time of applicability of position (microseconds since UNIX epoch).
      */
+    @Description("Time of applicability of position (microseconds since UNIX epoch).")
+    @Units("us")
     public long time;
-      
+    
     /**
      * Latitude (WGS84)
      */
+    @Description("Latitude (WGS84)")
+    @Units("degE7")
     public int lat;
-      
+    
     /**
      * Longitude (WGS84)
      */
+    @Description("Longitude (WGS84)")
+    @Units("degE7")
     public int lon;
-      
+    
     /**
      * Altitude (WGS84)
      */
+    @Description("Altitude (WGS84)")
+    @Units("mm")
     public int alt;
-      
+    
     /**
      * Altitude above ground
      */
+    @Description("Altitude above ground")
+    @Units("mm")
     public int relative_alt;
-      
+    
     /**
      * Next waypoint, latitude (WGS84)
      */
+    @Description("Next waypoint, latitude (WGS84)")
+    @Units("degE7")
     public int next_lat;
-      
+    
     /**
      * Next waypoint, longitude (WGS84)
      */
+    @Description("Next waypoint, longitude (WGS84)")
+    @Units("degE7")
     public int next_lon;
-      
+    
     /**
      * Next waypoint, altitude (WGS84)
      */
+    @Description("Next waypoint, altitude (WGS84)")
+    @Units("mm")
     public int next_alt;
-      
+    
     /**
      * Ground X speed (latitude, positive north)
      */
+    @Description("Ground X speed (latitude, positive north)")
+    @Units("cm/s")
     public short vx;
-      
+    
     /**
      * Ground Y speed (longitude, positive east)
      */
+    @Description("Ground Y speed (longitude, positive east)")
+    @Units("cm/s")
     public short vy;
-      
+    
     /**
      * Ground Z speed (altitude, positive down)
      */
+    @Description("Ground Z speed (altitude, positive down)")
+    @Units("cm/s")
     public short vz;
-      
+    
     /**
      * Horizontal position uncertainty (standard deviation)
      */
+    @Description("Horizontal position uncertainty (standard deviation)")
+    @Units("mm")
     public int h_acc;
-      
+    
     /**
      * Altitude uncertainty (standard deviation)
      */
+    @Description("Altitude uncertainty (standard deviation)")
+    @Units("mm")
     public int v_acc;
-      
+    
     /**
      * Speed uncertainty (standard deviation)
      */
+    @Description("Speed uncertainty (standard deviation)")
+    @Units("cm/s")
     public int vel_acc;
-      
+    
     /**
      * Time until next update. Set to 0 if unknown or in data driven mode.
      */
+    @Description("Time until next update. Set to 0 if unknown or in data driven mode.")
+    @Units("cs")
     public int update_rate;
-      
+    
     /**
      * Unique UAS ID.
      */
+    @Description("Unique UAS ID.")
+    @Units("")
     public short uas_id[] = new short[18];
-      
+    
     /**
      * Flight state
      */
+    @Description("Flight state")
+    @Units("")
     public short flight_state;
-      
+    
     /**
      * Bitwise OR combination of the data available flags.
      */
+    @Description("Bitwise OR combination of the data available flags.")
+    @Units("")
     public short flags;
     
 
@@ -121,7 +159,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_UTM_GLOBAL_POSITION;
-        
+
         packet.payload.putUnsignedLong(time);
         packet.payload.putInt(lat);
         packet.payload.putInt(lon);
@@ -159,7 +197,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time = payload.getUnsignedLong();
         this.lat = payload.getInt();
         this.lon = payload.getInt();
@@ -175,7 +213,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
         this.v_acc = payload.getUnsignedShort();
         this.vel_acc = payload.getUnsignedShort();
         this.update_rate = payload.getUnsignedShort();
-         
+        
         for (int i = 0; i < this.uas_id.length; i++) {
             this.uas_id[i] = payload.getUnsignedByte();
         }
@@ -194,7 +232,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
     public msg_utm_global_position() {
         this.msgid = MAVLINK_MSG_ID_UTM_GLOBAL_POSITION;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -221,7 +259,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
         this.flags = flags;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -259,7 +297,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
      */
     public msg_utm_global_position(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_UTM_GLOBAL_POSITION;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -274,7 +312,7 @@ public class msg_utm_global_position extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_UTM_GLOBAL_POSITION - sysid:"+sysid+" compid:"+compid+" time:"+time+" lat:"+lat+" lon:"+lon+" alt:"+alt+" relative_alt:"+relative_alt+" next_lat:"+next_lat+" next_lon:"+next_lon+" next_alt:"+next_alt+" vx:"+vx+" vy:"+vy+" vz:"+vz+" h_acc:"+h_acc+" v_acc:"+v_acc+" vel_acc:"+vel_acc+" update_rate:"+update_rate+" uas_id:"+uas_id+" flight_state:"+flight_state+" flags:"+flags+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

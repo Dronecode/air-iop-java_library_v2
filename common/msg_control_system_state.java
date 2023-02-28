@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The smoothed, monotonic system state used to feed the control loops of the system.
  */
@@ -19,90 +21,124 @@ public class msg_control_system_state extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 100;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * X acceleration in body frame
      */
+    @Description("X acceleration in body frame")
+    @Units("m/s/s")
     public float x_acc;
-      
+    
     /**
      * Y acceleration in body frame
      */
+    @Description("Y acceleration in body frame")
+    @Units("m/s/s")
     public float y_acc;
-      
+    
     /**
      * Z acceleration in body frame
      */
+    @Description("Z acceleration in body frame")
+    @Units("m/s/s")
     public float z_acc;
-      
+    
     /**
      * X velocity in body frame
      */
+    @Description("X velocity in body frame")
+    @Units("m/s")
     public float x_vel;
-      
+    
     /**
      * Y velocity in body frame
      */
+    @Description("Y velocity in body frame")
+    @Units("m/s")
     public float y_vel;
-      
+    
     /**
      * Z velocity in body frame
      */
+    @Description("Z velocity in body frame")
+    @Units("m/s")
     public float z_vel;
-      
+    
     /**
      * X position in local frame
      */
+    @Description("X position in local frame")
+    @Units("m")
     public float x_pos;
-      
+    
     /**
      * Y position in local frame
      */
+    @Description("Y position in local frame")
+    @Units("m")
     public float y_pos;
-      
+    
     /**
      * Z position in local frame
      */
+    @Description("Z position in local frame")
+    @Units("m")
     public float z_pos;
-      
+    
     /**
      * Airspeed, set to -1 if unknown
      */
+    @Description("Airspeed, set to -1 if unknown")
+    @Units("m/s")
     public float airspeed;
-      
+    
     /**
      * Variance of body velocity estimate
      */
+    @Description("Variance of body velocity estimate")
+    @Units("")
     public float vel_variance[] = new float[3];
-      
+    
     /**
      * Variance in local position
      */
+    @Description("Variance in local position")
+    @Units("")
     public float pos_variance[] = new float[3];
-      
+    
     /**
      * The attitude, represented as Quaternion
      */
+    @Description("The attitude, represented as Quaternion")
+    @Units("")
     public float q[] = new float[4];
-      
+    
     /**
      * Angular rate in roll axis
      */
+    @Description("Angular rate in roll axis")
+    @Units("rad/s")
     public float roll_rate;
-      
+    
     /**
      * Angular rate in pitch axis
      */
+    @Description("Angular rate in pitch axis")
+    @Units("rad/s")
     public float pitch_rate;
-      
+    
     /**
      * Angular rate in yaw axis
      */
+    @Description("Angular rate in yaw axis")
+    @Units("rad/s")
     public float yaw_rate;
     
 
@@ -116,7 +152,7 @@ public class msg_control_system_state extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(x_acc);
         packet.payload.putFloat(y_acc);
@@ -161,7 +197,7 @@ public class msg_control_system_state extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.x_acc = payload.getFloat();
         this.y_acc = payload.getFloat();
@@ -173,17 +209,17 @@ public class msg_control_system_state extends MAVLinkMessage {
         this.y_pos = payload.getFloat();
         this.z_pos = payload.getFloat();
         this.airspeed = payload.getFloat();
-         
+        
         for (int i = 0; i < this.vel_variance.length; i++) {
             this.vel_variance[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.pos_variance.length; i++) {
             this.pos_variance[i] = payload.getFloat();
         }
                 
-         
+        
         for (int i = 0; i < this.q.length; i++) {
             this.q[i] = payload.getFloat();
         }
@@ -203,7 +239,7 @@ public class msg_control_system_state extends MAVLinkMessage {
     public msg_control_system_state() {
         this.msgid = MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -229,7 +265,7 @@ public class msg_control_system_state extends MAVLinkMessage {
         this.yaw_rate = yaw_rate;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -266,7 +302,7 @@ public class msg_control_system_state extends MAVLinkMessage {
      */
     public msg_control_system_state(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -281,7 +317,7 @@ public class msg_control_system_state extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CONTROL_SYSTEM_STATE - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" x_acc:"+x_acc+" y_acc:"+y_acc+" z_acc:"+z_acc+" x_vel:"+x_vel+" y_vel:"+y_vel+" z_vel:"+z_vel+" x_pos:"+x_pos+" y_pos:"+y_pos+" z_pos:"+z_pos+" airspeed:"+airspeed+" vel_variance:"+vel_variance+" pos_variance:"+pos_variance+" q:"+q+" roll_rate:"+roll_rate+" pitch_rate:"+pitch_rate+" yaw_rate:"+yaw_rate+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

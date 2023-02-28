@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The current system altitude.
  */
@@ -19,40 +21,54 @@ public class msg_altitude extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 32;
     private static final long serialVersionUID = MAVLINK_MSG_ID_ALTITUDE;
 
-      
+    
     /**
      * Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.
      */
+    @Description("Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.")
+    @Units("us")
     public long time_usec;
-      
+    
     /**
      * This altitude measure is initialized on system boot and monotonic (it is never reset, but represents the local altitude change). The only guarantee on this field is that it will never be reset and is consistent within a flight. The recommended value for this field is the uncorrected barometric altitude at boot time. This altitude will also drift and vary between flights.
      */
+    @Description("This altitude measure is initialized on system boot and monotonic (it is never reset, but represents the local altitude change). The only guarantee on this field is that it will never be reset and is consistent within a flight. The recommended value for this field is the uncorrected barometric altitude at boot time. This altitude will also drift and vary between flights.")
+    @Units("m")
     public float altitude_monotonic;
-      
+    
     /**
      * This altitude measure is strictly above mean sea level and might be non-monotonic (it might reset on events like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output MSL by default and not the WGS84 altitude.
      */
+    @Description("This altitude measure is strictly above mean sea level and might be non-monotonic (it might reset on events like GPS lock or when a new QNH value is set). It should be the altitude to which global altitude waypoints are compared to. Note that it is *not* the GPS altitude, however, most GPS modules already output MSL by default and not the WGS84 altitude.")
+    @Units("m")
     public float altitude_amsl;
-      
+    
     /**
      * This is the local altitude in the local coordinate frame. It is not the altitude above home, but in reference to the coordinate origin (0, 0, 0). It is up-positive.
      */
+    @Description("This is the local altitude in the local coordinate frame. It is not the altitude above home, but in reference to the coordinate origin (0, 0, 0). It is up-positive.")
+    @Units("m")
     public float altitude_local;
-      
+    
     /**
      * This is the altitude above the home position. It resets on each change of the current home position.
      */
+    @Description("This is the altitude above the home position. It resets on each change of the current home position.")
+    @Units("m")
     public float altitude_relative;
-      
+    
     /**
      * This is the altitude above terrain. It might be fed by a terrain database or an altimeter. Values smaller than -1000 should be interpreted as unknown.
      */
+    @Description("This is the altitude above terrain. It might be fed by a terrain database or an altimeter. Values smaller than -1000 should be interpreted as unknown.")
+    @Units("m")
     public float altitude_terrain;
-      
+    
     /**
      * This is not the altitude, but the clear space below the system according to the fused clearance estimate. It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving target. A negative value indicates no measurement available.
      */
+    @Description("This is not the altitude, but the clear space below the system according to the fused clearance estimate. It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving target. A negative value indicates no measurement available.")
+    @Units("m")
     public float bottom_clearance;
     
 
@@ -66,7 +82,7 @@ public class msg_altitude extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_ALTITUDE;
-        
+
         packet.payload.putUnsignedLong(time_usec);
         packet.payload.putFloat(altitude_monotonic);
         packet.payload.putFloat(altitude_amsl);
@@ -89,7 +105,7 @@ public class msg_altitude extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_usec = payload.getUnsignedLong();
         this.altitude_monotonic = payload.getFloat();
         this.altitude_amsl = payload.getFloat();
@@ -109,7 +125,7 @@ public class msg_altitude extends MAVLinkMessage {
     public msg_altitude() {
         this.msgid = MAVLINK_MSG_ID_ALTITUDE;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +141,7 @@ public class msg_altitude extends MAVLinkMessage {
         this.bottom_clearance = bottom_clearance;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -152,7 +168,7 @@ public class msg_altitude extends MAVLinkMessage {
      */
     public msg_altitude(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_ALTITUDE;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -167,7 +183,7 @@ public class msg_altitude extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_ALTITUDE - sysid:"+sysid+" compid:"+compid+" time_usec:"+time_usec+" altitude_monotonic:"+altitude_monotonic+" altitude_amsl:"+altitude_amsl+" altitude_local:"+altitude_local+" altitude_relative:"+altitude_relative+" altitude_terrain:"+altitude_terrain+" bottom_clearance:"+bottom_clearance+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

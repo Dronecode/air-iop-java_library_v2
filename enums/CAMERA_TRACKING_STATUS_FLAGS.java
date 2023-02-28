@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Camera tracking status flags
  */
 public class CAMERA_TRACKING_STATUS_FLAGS {

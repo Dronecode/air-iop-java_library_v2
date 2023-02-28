@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Camera tracking modes
  */
 public class CAMERA_TRACKING_MODE {

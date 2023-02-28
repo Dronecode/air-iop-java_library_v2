@@ -9,7 +9,9 @@ package com.MAVLink.minimal;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The heartbeat message shows that a system or component is present and responding. The type and autopilot fields (along with the message component id), allow the receiving system to treat further messages from this system appropriately (e.g. by laying out the user interface based on the autopilot). This microservice is documented at https://mavlink.io/en/services/heartbeat.html
  */
@@ -19,35 +21,47 @@ public class msg_heartbeat extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 9;
     private static final long serialVersionUID = MAVLINK_MSG_ID_HEARTBEAT;
 
-      
+    
     /**
      * A bitfield for use for autopilot-specific flags
      */
+    @Description("A bitfield for use for autopilot-specific flags")
+    @Units("")
     public long custom_mode;
-      
+    
     /**
      * Vehicle or component type. For a flight controller component the vehicle type (quadrotor, helicopter, etc.). For other components the component type (e.g. camera, gimbal, etc.). This should be used in preference to component id for identifying the component type.
      */
+    @Description("Vehicle or component type. For a flight controller component the vehicle type (quadrotor, helicopter, etc.). For other components the component type (e.g. camera, gimbal, etc.). This should be used in preference to component id for identifying the component type.")
+    @Units("")
     public short type;
-      
+    
     /**
      * Autopilot type / class. Use MAV_AUTOPILOT_INVALID for components that are not flight controllers.
      */
+    @Description("Autopilot type / class. Use MAV_AUTOPILOT_INVALID for components that are not flight controllers.")
+    @Units("")
     public short autopilot;
-      
+    
     /**
      * System mode bitmap.
      */
+    @Description("System mode bitmap.")
+    @Units("")
     public short base_mode;
-      
+    
     /**
      * System status flag.
      */
+    @Description("System status flag.")
+    @Units("")
     public short system_status;
-      
+    
     /**
      * MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version
      */
+    @Description("MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version")
+    @Units("")
     public short mavlink_version;
     
 
@@ -61,7 +75,7 @@ public class msg_heartbeat extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_HEARTBEAT;
-        
+
         packet.payload.putUnsignedInt(custom_mode);
         packet.payload.putUnsignedByte(type);
         packet.payload.putUnsignedByte(autopilot);
@@ -83,7 +97,7 @@ public class msg_heartbeat extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.custom_mode = payload.getUnsignedInt();
         this.type = payload.getUnsignedByte();
         this.autopilot = payload.getUnsignedByte();
@@ -102,7 +116,7 @@ public class msg_heartbeat extends MAVLinkMessage {
     public msg_heartbeat() {
         this.msgid = MAVLINK_MSG_ID_HEARTBEAT;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -117,7 +131,7 @@ public class msg_heartbeat extends MAVLinkMessage {
         this.mavlink_version = mavlink_version;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -143,7 +157,7 @@ public class msg_heartbeat extends MAVLinkMessage {
      */
     public msg_heartbeat(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_HEARTBEAT;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -158,7 +172,7 @@ public class msg_heartbeat extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_HEARTBEAT - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" type:"+type+" autopilot:"+autopilot+" base_mode:"+base_mode+" system_status:"+system_status+" mavlink_version:"+mavlink_version+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

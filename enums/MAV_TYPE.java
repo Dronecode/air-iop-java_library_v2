@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * MAVLINK component type reported in HEARTBEAT message. Flight controllers must report the type of the vehicle on which they are mounted (e.g. MAV_TYPE_OCTOROTOR). All other components must report a value appropriate for their type (e.g. a camera must use MAV_TYPE_CAMERA).
  */
 public class MAV_TYPE {
@@ -34,7 +34,7 @@ public class MAV_TYPE {
    public static final int MAV_TYPE_VTOL_TILTROTOR = 21; /* Tiltrotor VTOL. Fuselage and wings stay (nominally) horizontal in all flight phases. It able to tilt (some) rotors to provide thrust in cruise flight. | */
    public static final int MAV_TYPE_VTOL_FIXEDROTOR = 22; /* VTOL with separate fixed rotors for hover and cruise flight. Fuselage and wings stay (nominally) horizontal in all flight phases. | */
    public static final int MAV_TYPE_VTOL_TAILSITTER = 23; /* Tailsitter VTOL. Fuselage and wings orientation changes depending on flight phase: vertical for hover, horizontal for cruise. Use more specific VTOL MAV_TYPE_VTOL_DUOROTOR or MAV_TYPE_VTOL_QUADROTOR if appropriate. | */
-   public static final int MAV_TYPE_VTOL_RESERVED4 = 24; /* VTOL reserved 4 | */
+   public static final int MAV_TYPE_VTOL_TILTWING = 24; /* Tiltwing VTOL. Fuselage stays horizontal in all flight phases. The whole wing, along with any attached engine, can tilt between vertical and horizontal mode. | */
    public static final int MAV_TYPE_VTOL_RESERVED5 = 25; /* VTOL reserved 5 | */
    public static final int MAV_TYPE_GIMBAL = 26; /* Gimbal | */
    public static final int MAV_TYPE_ADSB = 27; /* ADSB system | */

@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Result from a MAVLink command (MAV_CMD)
  */
 public class MAV_RESULT {

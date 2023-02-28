@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Point-of-Interest geometry types.
  */
 public class POI_GEOMETRY_TYPE {

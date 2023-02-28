@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Control a serial port. This can be used for raw access to an onboard serial peripheral such as a GPS or telemetry radio. It is designed to make it possible to update the devices firmware via MAVLink messages or change the devices settings. A message with zero bytes can be used to change just the baudrate.
  */
@@ -19,45 +21,61 @@ public class msg_serial_control extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 81;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SERIAL_CONTROL;
 
-      
+    
     /**
      * Baudrate of transfer. Zero means no change.
      */
+    @Description("Baudrate of transfer. Zero means no change.")
+    @Units("bits/s")
     public long baudrate;
-      
+    
     /**
      * Timeout for reply data
      */
+    @Description("Timeout for reply data")
+    @Units("ms")
     public int timeout;
-      
+    
     /**
      * Serial control device type.
      */
+    @Description("Serial control device type.")
+    @Units("")
     public short device;
-      
+    
     /**
      * Bitmap of serial control flags.
      */
+    @Description("Bitmap of serial control flags.")
+    @Units("")
     public short flags;
-      
+    
     /**
      * how many bytes in this transfer
      */
+    @Description("how many bytes in this transfer")
+    @Units("bytes")
     public short count;
-      
+    
     /**
      * serial data
      */
+    @Description("serial data")
+    @Units("")
     public short data[] = new short[70];
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
     
 
@@ -71,7 +89,7 @@ public class msg_serial_control extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SERIAL_CONTROL;
-        
+
         packet.payload.putUnsignedInt(baudrate);
         packet.payload.putUnsignedShort(timeout);
         packet.payload.putUnsignedByte(device);
@@ -99,13 +117,13 @@ public class msg_serial_control extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.baudrate = payload.getUnsignedInt();
         this.timeout = payload.getUnsignedShort();
         this.device = payload.getUnsignedByte();
         this.flags = payload.getUnsignedByte();
         this.count = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.data.length; i++) {
             this.data[i] = payload.getUnsignedByte();
         }
@@ -124,7 +142,7 @@ public class msg_serial_control extends MAVLinkMessage {
     public msg_serial_control() {
         this.msgid = MAVLINK_MSG_ID_SERIAL_CONTROL;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -141,7 +159,7 @@ public class msg_serial_control extends MAVLinkMessage {
         this.target_component = target_component;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -169,7 +187,7 @@ public class msg_serial_control extends MAVLinkMessage {
      */
     public msg_serial_control(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SERIAL_CONTROL;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -184,7 +202,7 @@ public class msg_serial_control extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SERIAL_CONTROL - sysid:"+sysid+" compid:"+compid+" baudrate:"+baudrate+" timeout:"+timeout+" device:"+device+" flags:"+flags+" count:"+count+" data:"+data+" target_system:"+target_system+" target_component:"+target_component+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

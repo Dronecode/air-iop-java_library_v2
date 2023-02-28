@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * The system time is the time of the master clock, typically the computer clock of the main onboard computer.
  */
@@ -19,15 +21,19 @@ public class msg_system_time extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 12;
     private static final long serialVersionUID = MAVLINK_MSG_ID_SYSTEM_TIME;
 
-      
+    
     /**
      * Timestamp (UNIX epoch time).
      */
+    @Description("Timestamp (UNIX epoch time).")
+    @Units("us")
     public long time_unix_usec;
-      
+    
     /**
      * Timestamp (time since system boot).
      */
+    @Description("Timestamp (time since system boot).")
+    @Units("ms")
     public long time_boot_ms;
     
 
@@ -41,7 +47,7 @@ public class msg_system_time extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_SYSTEM_TIME;
-        
+
         packet.payload.putUnsignedLong(time_unix_usec);
         packet.payload.putUnsignedInt(time_boot_ms);
         
@@ -59,7 +65,7 @@ public class msg_system_time extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.time_unix_usec = payload.getUnsignedLong();
         this.time_boot_ms = payload.getUnsignedInt();
         
@@ -74,7 +80,7 @@ public class msg_system_time extends MAVLinkMessage {
     public msg_system_time() {
         this.msgid = MAVLINK_MSG_ID_SYSTEM_TIME;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -85,7 +91,7 @@ public class msg_system_time extends MAVLinkMessage {
         this.time_boot_ms = time_boot_ms;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -107,7 +113,7 @@ public class msg_system_time extends MAVLinkMessage {
      */
     public msg_system_time(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_SYSTEM_TIME;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -122,7 +128,7 @@ public class msg_system_time extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_SYSTEM_TIME - sysid:"+sysid+" compid:"+compid+" time_unix_usec:"+time_unix_usec+" time_boot_ms:"+time_boot_ms+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

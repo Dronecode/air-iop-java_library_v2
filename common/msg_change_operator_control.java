@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Request to control this MAV
  */
@@ -19,25 +21,33 @@ public class msg_change_operator_control extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 28;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CHANGE_OPERATOR_CONTROL;
 
-      
+    
     /**
      * System the GCS requests control for
      */
+    @Description("System the GCS requests control for")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * 0: request control of this MAV, 1: Release control of this MAV
      */
+    @Description("0: request control of this MAV, 1: Release control of this MAV")
+    @Units("")
     public short control_request;
-      
+    
     /**
      * 0: key as plaintext, 1-255: future, different hashing/encryption variants. The GCS should in general use the safest mode possible initially and then gradually move down the encryption level if it gets a NACK message indicating an encryption mismatch.
      */
+    @Description("0: key as plaintext, 1-255: future, different hashing/encryption variants. The GCS should in general use the safest mode possible initially and then gradually move down the encryption level if it gets a NACK message indicating an encryption mismatch.")
+    @Units("rad")
     public short version;
-      
+    
     /**
-     * Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The characters may involve A-Z, a-z, 0-9, and "!?,.-"
+     * Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The characters may involve A-Z, a-z, 0-9, and '!?,.-'
      */
+    @Description("Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The characters may involve A-Z, a-z, 0-9, and '!?,.-'")
+    @Units("")
     public byte passkey[] = new byte[25];
     
 
@@ -51,7 +61,7 @@ public class msg_change_operator_control extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_CHANGE_OPERATOR_CONTROL;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(control_request);
         packet.payload.putUnsignedByte(version);
@@ -75,11 +85,11 @@ public class msg_change_operator_control extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.control_request = payload.getUnsignedByte();
         this.version = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.passkey.length; i++) {
             this.passkey[i] = payload.getByte();
         }
@@ -96,7 +106,7 @@ public class msg_change_operator_control extends MAVLinkMessage {
     public msg_change_operator_control() {
         this.msgid = MAVLINK_MSG_ID_CHANGE_OPERATOR_CONTROL;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -109,7 +119,7 @@ public class msg_change_operator_control extends MAVLinkMessage {
         this.passkey = passkey;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -133,7 +143,7 @@ public class msg_change_operator_control extends MAVLinkMessage {
      */
     public msg_change_operator_control(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_CHANGE_OPERATOR_CONTROL;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -177,7 +187,7 @@ public class msg_change_operator_control extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_CHANGE_OPERATOR_CONTROL - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" control_request:"+control_request+" version:"+version+" passkey:"+passkey+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */

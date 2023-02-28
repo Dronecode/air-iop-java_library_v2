@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * Flags in the HIGHRES_IMU message indicate which fields have updated since the last message
  */
 public class HIGHRES_IMU_UPDATED_FLAGS {

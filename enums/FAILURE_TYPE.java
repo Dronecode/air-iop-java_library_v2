@@ -6,7 +6,7 @@
 
 package com.MAVLink.enums;
 
-/** 
+/**
  * List of possible failure type to inject.
  */
 public class FAILURE_TYPE {

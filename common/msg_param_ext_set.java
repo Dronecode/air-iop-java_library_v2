@@ -9,7 +9,9 @@ package com.MAVLink.common;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPayload;
-        
+import com.MAVLink.Messages.Units;
+import com.MAVLink.Messages.Description;
+
 /**
  * Set a parameter value. In order to deal with message loss (and retransmission of PARAM_EXT_SET), when setting a parameter value and the new value is the same as the current value, you will immediately get a PARAM_ACK_ACCEPTED response. If the current state is PARAM_ACK_IN_PROGRESS, you will accordingly receive a PARAM_ACK_IN_PROGRESS in response.
  */
@@ -19,30 +21,40 @@ public class msg_param_ext_set extends MAVLinkMessage {
     public static final int MAVLINK_MSG_LENGTH = 147;
     private static final long serialVersionUID = MAVLINK_MSG_ID_PARAM_EXT_SET;
 
-      
+    
     /**
      * System ID
      */
+    @Description("System ID")
+    @Units("")
     public short target_system;
-      
+    
     /**
      * Component ID
      */
+    @Description("Component ID")
+    @Units("")
     public short target_component;
-      
+    
     /**
      * Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
      */
+    @Description("Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string")
+    @Units("")
     public byte param_id[] = new byte[16];
-      
+    
     /**
      * Parameter value
      */
+    @Description("Parameter value")
+    @Units("")
     public byte param_value[] = new byte[128];
-      
+    
     /**
      * Parameter type.
      */
+    @Description("Parameter type.")
+    @Units("")
     public short param_type;
     
 
@@ -56,7 +68,7 @@ public class msg_param_ext_set extends MAVLinkMessage {
         packet.sysid = sysid;
         packet.compid = compid;
         packet.msgid = MAVLINK_MSG_ID_PARAM_EXT_SET;
-        
+
         packet.payload.putUnsignedByte(target_system);
         packet.payload.putUnsignedByte(target_component);
         
@@ -85,15 +97,15 @@ public class msg_param_ext_set extends MAVLinkMessage {
     @Override
     public void unpack(MAVLinkPayload payload) {
         payload.resetIndex();
-        
+
         this.target_system = payload.getUnsignedByte();
         this.target_component = payload.getUnsignedByte();
-         
+        
         for (int i = 0; i < this.param_id.length; i++) {
             this.param_id[i] = payload.getByte();
         }
                 
-         
+        
         for (int i = 0; i < this.param_value.length; i++) {
             this.param_value[i] = payload.getByte();
         }
@@ -111,7 +123,7 @@ public class msg_param_ext_set extends MAVLinkMessage {
     public msg_param_ext_set() {
         this.msgid = MAVLINK_MSG_ID_PARAM_EXT_SET;
     }
-    
+
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
@@ -125,7 +137,7 @@ public class msg_param_ext_set extends MAVLinkMessage {
         this.param_type = param_type;
         
     }
-    
+
     /**
      * Constructor for a new message, initializes everything
      */
@@ -150,7 +162,7 @@ public class msg_param_ext_set extends MAVLinkMessage {
      */
     public msg_param_ext_set(MAVLinkPacket mavLinkPacket) {
         this.msgid = MAVLINK_MSG_ID_PARAM_EXT_SET;
-        
+
         this.sysid = mavLinkPacket.sysid;
         this.compid = mavLinkPacket.compid;
         this.isMavlink2 = mavLinkPacket.isMavlink2;
@@ -223,7 +235,7 @@ public class msg_param_ext_set extends MAVLinkMessage {
     public String toString() {
         return "MAVLINK_MSG_ID_PARAM_EXT_SET - sysid:"+sysid+" compid:"+compid+" target_system:"+target_system+" target_component:"+target_component+" param_id:"+param_id+" param_value:"+param_value+" param_type:"+param_type+"";
     }
-    
+
     /**
      * Returns a human-readable string of the name of the message
      */
