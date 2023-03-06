@@ -22,7 +22,7 @@ import com.MAVLink.Messages.Description;
  */
 public class msg_exploration_return_position extends MAVLinkMessage {
 
-    public static final int MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION = 452;
+    public static final int MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION = 51102;
     public static final int MAVLINK_MSG_LENGTH = 44;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION;
 

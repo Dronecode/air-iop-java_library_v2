@@ -17,7 +17,7 @@ import com.MAVLink.Messages.Description;
  */
 public class msg_exploration_status extends MAVLinkMessage {
 
-    public static final int MAVLINK_MSG_ID_EXPLORATION_STATUS = 450;
+    public static final int MAVLINK_MSG_ID_EXPLORATION_STATUS = 51100;
     public static final int MAVLINK_MSG_LENGTH = 24;
     private static final long serialVersionUID = MAVLINK_MSG_ID_EXPLORATION_STATUS;
 

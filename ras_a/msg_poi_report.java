@@ -26,7 +26,7 @@ import com.MAVLink.Messages.Description;
  */
 public class msg_poi_report extends MAVLinkMessage {
 
-    public static final int MAVLINK_MSG_ID_POI_REPORT = 238;
+    public static final int MAVLINK_MSG_ID_POI_REPORT = 51000;
     public static final int MAVLINK_MSG_LENGTH = 103;
     private static final long serialVersionUID = MAVLINK_MSG_ID_POI_REPORT;
 

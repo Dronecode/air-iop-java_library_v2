@@ -522,8 +522,6 @@ public class MAVLinkPacket implements Serializable {
                 return  new msg_high_latency(this);
                         case msg_high_latency2.MAVLINK_MSG_ID_HIGH_LATENCY2:
                 return  new msg_high_latency2(this);
-                        case msg_poi_report.MAVLINK_MSG_ID_POI_REPORT:
-                return  new msg_poi_report(this);
                         case msg_vibration.MAVLINK_MSG_ID_VIBRATION:
                 return  new msg_vibration(this);
                         case msg_home_position.MAVLINK_MSG_ID_HOME_POSITION:
@@ -704,12 +702,6 @@ public class MAVLinkPacket implements Serializable {
                 return  new msg_available_modes(this);
                         case msg_current_mode.MAVLINK_MSG_ID_CURRENT_MODE:
                 return  new msg_current_mode(this);
-                        case msg_exploration_status.MAVLINK_MSG_ID_EXPLORATION_STATUS:
-                return  new msg_exploration_status(this);
-                        case msg_exploration_info.MAVLINK_MSG_ID_EXPLORATION_INFO:
-                return  new msg_exploration_info(this);
-                        case msg_exploration_return_position.MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION:
-                return  new msg_exploration_return_position(this);
                         case msg_wheel_distance.MAVLINK_MSG_ID_WHEEL_DISTANCE:
                 return  new msg_wheel_distance(this);
                         case msg_winch_status.MAVLINK_MSG_ID_WINCH_STATUS:
@@ -734,6 +726,14 @@ public class MAVLinkPacket implements Serializable {
                 return  new msg_open_drone_id_system_update(this);
                         case msg_hygrometer_sensor.MAVLINK_MSG_ID_HYGROMETER_SENSOR:
                 return  new msg_hygrometer_sensor(this);
+                        case msg_poi_report.MAVLINK_MSG_ID_POI_REPORT:
+                return  new msg_poi_report(this);
+                        case msg_exploration_status.MAVLINK_MSG_ID_EXPLORATION_STATUS:
+                return  new msg_exploration_status(this);
+                        case msg_exploration_info.MAVLINK_MSG_ID_EXPLORATION_INFO:
+                return  new msg_exploration_info(this);
+                        case msg_exploration_return_position.MAVLINK_MSG_ID_EXPLORATION_RETURN_POSITION:
+                return  new msg_exploration_return_position(this);
             
             default:
                 return null;
