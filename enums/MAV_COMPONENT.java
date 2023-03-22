@@ -135,6 +135,7 @@ public class MAV_COMPONENT {
    public static final int MAV_COMP_ID_OBSTACLE_AVOIDANCE = 196; /* Component that plans a collision free path between two points. | */
    public static final int MAV_COMP_ID_VISUAL_INERTIAL_ODOMETRY = 197; /* Component that provides position estimates using VIO techniques. | */
    public static final int MAV_COMP_ID_PAIRING_MANAGER = 198; /* Component that manages pairing of vehicle and GCS. | */
+   public static final int MAV_COMP_ID_AUTONOMY_ENGINE = 199; /* Component that manages autonomy behaviors/subsystems above and beyond those implemented by the autopilot (MAV_COMP_ID_AUTOPILOT1). Managed subsystems could include Kalman Filters integrating sensors not interfaced to the autopilot, obstacle avoidance, path planning, vision systems and other sensors. The autonomy engine may implement a superset of the functionality available from other seldom-used components such as MAV_COMP_ID_OBSTACLE_AVOIDANCE, MAV_COMP_ID_PATHPLANNER, MAV_COMP_ID_OBSTACLE_AVOIDANCE, and MAV_COMP_ID_ONBOARD_COMPUTER. | */
    public static final int MAV_COMP_ID_IMU = 200; /* Inertial Measurement Unit (IMU) #1. | */
    public static final int MAV_COMP_ID_IMU_2 = 201; /* Inertial Measurement Unit (IMU) #2. | */
    public static final int MAV_COMP_ID_IMU_3 = 202; /* Inertial Measurement Unit (IMU) #3. | */
