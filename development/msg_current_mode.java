@@ -21,7 +21,7 @@ import com.MAVLink.Messages.Description;
 public class msg_current_mode extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_CURRENT_MODE = 436;
-    public static final int MAVLINK_MSG_LENGTH = 6;
+    public static final int MAVLINK_MSG_LENGTH = 9;
     private static final long serialVersionUID = MAVLINK_MSG_ID_CURRENT_MODE;
 
     
@@ -33,18 +33,18 @@ public class msg_current_mode extends MAVLinkMessage {
     public long custom_mode;
     
     /**
+     * The custom_mode of the mode that was last commanded by the user (for example, with MAV_CMD_DO_SET_STANDARD_MODE, MAV_CMD_DO_SET_MODE or via RC). This should usually be the same as custom_mode. It will be different if the vehicle is unable to enter the intended mode, or has left that mode due to a failsafe condition. 0 indicates the intended custom mode is unknown/not supplied
+     */
+    @Description("The custom_mode of the mode that was last commanded by the user (for example, with MAV_CMD_DO_SET_STANDARD_MODE, MAV_CMD_DO_SET_MODE or via RC). This should usually be the same as custom_mode. It will be different if the vehicle is unable to enter the intended mode, or has left that mode due to a failsafe condition. 0 indicates the intended custom mode is unknown/not supplied")
+    @Units("")
+    public long intended_custom_mode;
+    
+    /**
      * Standard mode.
      */
     @Description("Standard mode.")
     @Units("")
     public short standard_mode;
-    
-    /**
-     * System mode bitmap.
-     */
-    @Description("System mode bitmap.")
-    @Units("")
-    public short base_mode;
     
 
     /**
@@ -59,8 +59,8 @@ public class msg_current_mode extends MAVLinkMessage {
         packet.msgid = MAVLINK_MSG_ID_CURRENT_MODE;
 
         packet.payload.putUnsignedInt(custom_mode);
+        packet.payload.putUnsignedInt(intended_custom_mode);
         packet.payload.putUnsignedByte(standard_mode);
-        packet.payload.putUnsignedByte(base_mode);
         
         if (isMavlink2) {
             
@@ -78,8 +78,8 @@ public class msg_current_mode extends MAVLinkMessage {
         payload.resetIndex();
 
         this.custom_mode = payload.getUnsignedInt();
+        this.intended_custom_mode = payload.getUnsignedInt();
         this.standard_mode = payload.getUnsignedByte();
-        this.base_mode = payload.getUnsignedByte();
         
         if (isMavlink2) {
             
@@ -96,27 +96,27 @@ public class msg_current_mode extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_current_mode( long custom_mode, short standard_mode, short base_mode) {
+    public msg_current_mode( long custom_mode, long intended_custom_mode, short standard_mode) {
         this.msgid = MAVLINK_MSG_ID_CURRENT_MODE;
 
         this.custom_mode = custom_mode;
+        this.intended_custom_mode = intended_custom_mode;
         this.standard_mode = standard_mode;
-        this.base_mode = base_mode;
         
     }
 
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_current_mode( long custom_mode, short standard_mode, short base_mode, int sysid, int compid, boolean isMavlink2) {
+    public msg_current_mode( long custom_mode, long intended_custom_mode, short standard_mode, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_CURRENT_MODE;
         this.sysid = sysid;
         this.compid = compid;
         this.isMavlink2 = isMavlink2;
 
         this.custom_mode = custom_mode;
+        this.intended_custom_mode = intended_custom_mode;
         this.standard_mode = standard_mode;
-        this.base_mode = base_mode;
         
     }
 
@@ -140,7 +140,7 @@ public class msg_current_mode extends MAVLinkMessage {
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_CURRENT_MODE - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" standard_mode:"+standard_mode+" base_mode:"+base_mode+"";
+        return "MAVLINK_MSG_ID_CURRENT_MODE - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" intended_custom_mode:"+intended_custom_mode+" standard_mode:"+standard_mode+"";
     }
 
     /**

@@ -23,7 +23,7 @@ import com.MAVLink.Messages.Description;
 public class msg_available_modes extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_AVAILABLE_MODES = 435;
-    public static final int MAVLINK_MSG_LENGTH = 58;
+    public static final int MAVLINK_MSG_LENGTH = 46;
     private static final long serialVersionUID = MAVLINK_MSG_ID_AVAILABLE_MODES;
 
     
@@ -33,6 +33,13 @@ public class msg_available_modes extends MAVLinkMessage {
     @Description("A bitfield for use for autopilot-specific flags")
     @Units("")
     public long custom_mode;
+    
+    /**
+     * Mode properties.
+     */
+    @Description("Mode properties.")
+    @Units("")
+    public long properties;
     
     /**
      * The total number of available modes for the current vehicle type.
@@ -56,18 +63,11 @@ public class msg_available_modes extends MAVLinkMessage {
     public short standard_mode;
     
     /**
-     * System mode bitmap.
-     */
-    @Description("System mode bitmap.")
-    @Units("")
-    public short base_mode;
-    
-    /**
      * Name of custom mode, with null termination character. Should be omitted for standard modes.
      */
     @Description("Name of custom mode, with null termination character. Should be omitted for standard modes.")
     @Units("")
-    public byte mode_name[] = new byte[50];
+    public byte mode_name[] = new byte[35];
     
 
     /**
@@ -82,10 +82,10 @@ public class msg_available_modes extends MAVLinkMessage {
         packet.msgid = MAVLINK_MSG_ID_AVAILABLE_MODES;
 
         packet.payload.putUnsignedInt(custom_mode);
+        packet.payload.putUnsignedInt(properties);
         packet.payload.putUnsignedByte(number_modes);
         packet.payload.putUnsignedByte(mode_index);
         packet.payload.putUnsignedByte(standard_mode);
-        packet.payload.putUnsignedByte(base_mode);
         
         for (int i = 0; i < mode_name.length; i++) {
             packet.payload.putByte(mode_name[i]);
@@ -108,10 +108,10 @@ public class msg_available_modes extends MAVLinkMessage {
         payload.resetIndex();
 
         this.custom_mode = payload.getUnsignedInt();
+        this.properties = payload.getUnsignedInt();
         this.number_modes = payload.getUnsignedByte();
         this.mode_index = payload.getUnsignedByte();
         this.standard_mode = payload.getUnsignedByte();
-        this.base_mode = payload.getUnsignedByte();
         
         for (int i = 0; i < this.mode_name.length; i++) {
             this.mode_name[i] = payload.getByte();
@@ -133,14 +133,14 @@ public class msg_available_modes extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_available_modes( long custom_mode, short number_modes, short mode_index, short standard_mode, short base_mode, byte[] mode_name) {
+    public msg_available_modes( long custom_mode, long properties, short number_modes, short mode_index, short standard_mode, byte[] mode_name) {
         this.msgid = MAVLINK_MSG_ID_AVAILABLE_MODES;
 
         this.custom_mode = custom_mode;
+        this.properties = properties;
         this.number_modes = number_modes;
         this.mode_index = mode_index;
         this.standard_mode = standard_mode;
-        this.base_mode = base_mode;
         this.mode_name = mode_name;
         
     }
@@ -148,17 +148,17 @@ public class msg_available_modes extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_available_modes( long custom_mode, short number_modes, short mode_index, short standard_mode, short base_mode, byte[] mode_name, int sysid, int compid, boolean isMavlink2) {
+    public msg_available_modes( long custom_mode, long properties, short number_modes, short mode_index, short standard_mode, byte[] mode_name, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_AVAILABLE_MODES;
         this.sysid = sysid;
         this.compid = compid;
         this.isMavlink2 = isMavlink2;
 
         this.custom_mode = custom_mode;
+        this.properties = properties;
         this.number_modes = number_modes;
         this.mode_index = mode_index;
         this.standard_mode = standard_mode;
-        this.base_mode = base_mode;
         this.mode_name = mode_name;
         
     }
@@ -182,12 +182,12 @@ public class msg_available_modes extends MAVLinkMessage {
     * Sets the buffer of this message with a string, adds the necessary padding
     */
     public void setMode_Name(String str) {
-        int len = Math.min(str.length(), 50);
+        int len = Math.min(str.length(), 35);
         for (int i=0; i<len; i++) {
             mode_name[i] = (byte) str.charAt(i);
         }
 
-        for (int i=len; i<50; i++) {            // padding for the rest of the buffer
+        for (int i=len; i<35; i++) {            // padding for the rest of the buffer
             mode_name[i] = 0;
         }
     }
@@ -197,7 +197,7 @@ public class msg_available_modes extends MAVLinkMessage {
     */
     public String getMode_Name() {
         StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 35; i++) {
             if (mode_name[i] != 0)
                 buf.append((char) mode_name[i]);
             else
@@ -212,7 +212,7 @@ public class msg_available_modes extends MAVLinkMessage {
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_AVAILABLE_MODES - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" number_modes:"+number_modes+" mode_index:"+mode_index+" standard_mode:"+standard_mode+" base_mode:"+base_mode+" mode_name:"+mode_name+"";
+        return "MAVLINK_MSG_ID_AVAILABLE_MODES - sysid:"+sysid+" compid:"+compid+" custom_mode:"+custom_mode+" properties:"+properties+" number_modes:"+number_modes+" mode_index:"+mode_index+" standard_mode:"+standard_mode+" mode_name:"+mode_name+"";
     }
 
     /**
