@@ -148,6 +148,7 @@ public class MAV_COMPONENT {
    public static final int MAV_COMP_ID_UART_BRIDGE = 241; /* Component to bridge to UART (i.e. from UDP). | */
    public static final int MAV_COMP_ID_TUNNEL_NODE = 242; /* Component handling TUNNEL messages (e.g. vendor specific GUI of a component). | */
    public static final int MAV_COMP_ID_SYSTEM_CONTROL = 250; /* Deprecated, don't use. Component for handling system messages (e.g. to ARM, takeoff, etc.). | */
-   public static final int MAV_COMPONENT_ENUM_END = 251; /*  | */
+   public static final int MAV_COMP_ID_MONOLITHIC = 254; /* A single component which presents many attributes and capabilities which prevent it from being binned into any of the other IDs in this enum. For context, refer to the monolithic generic component example in air-iop documentation release 1.2 | */
+   public static final int MAV_COMPONENT_ENUM_END = 255; /*  | */
 }
             

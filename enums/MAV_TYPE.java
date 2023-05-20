@@ -7,7 +7,7 @@
 package com.MAVLink.enums;
 
 /**
- * MAVLINK component type reported in HEARTBEAT message. Flight controllers must report the type of the vehicle on which they are mounted (e.g. MAV_TYPE_OCTOROTOR). All other components must report a value appropriate for their type (e.g. a camera must use MAV_TYPE_CAMERA).
+ * MAVLINK component type reported in HEARTBEAT message.
  */
 public class MAV_TYPE {
    public static final int MAV_TYPE_GENERIC = 0; /* Generic micro air vehicle | */
@@ -53,6 +53,7 @@ public class MAV_TYPE {
    public static final int MAV_TYPE_IMU = 40; /* IMU | */
    public static final int MAV_TYPE_GPS = 41; /* GPS | */
    public static final int MAV_TYPE_WINCH = 42; /* Winch | */
-   public static final int MAV_TYPE_ENUM_END = 43; /*  | */
+   public static final int MAV_TYPE_GENERIC_COMPONENT = 43; /* Generic component which implements the generic component attribute discovery and control interface through mavlink parameter exchange. | */
+   public static final int MAV_TYPE_ENUM_END = 44; /*  | */
 }
             
