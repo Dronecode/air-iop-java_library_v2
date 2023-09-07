@@ -30,9 +30,9 @@ public class msg_set_attitude_target extends MAVLinkMessage {
     public long time_boot_ms;
     
     /**
-     * Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
+     * Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0) from MAV_FRAME_LOCAL_NED to MAV_FRAME_BODY_FRD
      */
-    @Description("Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)")
+    @Description("Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0) from MAV_FRAME_LOCAL_NED to MAV_FRAME_BODY_FRD")
     @Units("")
     public float q[] = new float[4];
     

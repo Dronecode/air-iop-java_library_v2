@@ -346,8 +346,6 @@ public class MAVLinkPacket implements Serializable {
                 return  new msg_param_map_rc(this);
                         case msg_mission_request_int.MAVLINK_MSG_ID_MISSION_REQUEST_INT:
                 return  new msg_mission_request_int(this);
-                        case msg_mission_checksum.MAVLINK_MSG_ID_MISSION_CHECKSUM:
-                return  new msg_mission_checksum(this);
                         case msg_safety_set_allowed_area.MAVLINK_MSG_ID_SAFETY_SET_ALLOWED_AREA:
                 return  new msg_safety_set_allowed_area(this);
                         case msg_safety_allowed_area.MAVLINK_MSG_ID_SAFETY_ALLOWED_AREA:
@@ -702,6 +700,8 @@ public class MAVLinkPacket implements Serializable {
                 return  new msg_available_modes(this);
                         case msg_current_mode.MAVLINK_MSG_ID_CURRENT_MODE:
                 return  new msg_current_mode(this);
+                        case msg_available_modes_monitor.MAVLINK_MSG_ID_AVAILABLE_MODES_MONITOR:
+                return  new msg_available_modes_monitor(this);
                         case msg_target_absolute.MAVLINK_MSG_ID_TARGET_ABSOLUTE:
                 return  new msg_target_absolute(this);
                         case msg_target_relative.MAVLINK_MSG_ID_TARGET_RELATIVE:

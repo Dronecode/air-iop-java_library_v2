@@ -18,7 +18,7 @@ import com.MAVLink.Messages.Description;
 public class msg_manual_control extends MAVLinkMessage {
 
     public static final int MAVLINK_MSG_ID_MANUAL_CONTROL = 69;
-    public static final int MAVLINK_MSG_LENGTH = 18;
+    public static final int MAVLINK_MSG_LENGTH = 30;
     private static final long serialVersionUID = MAVLINK_MSG_ID_MANUAL_CONTROL;
 
     
@@ -72,9 +72,9 @@ public class msg_manual_control extends MAVLinkMessage {
     public int buttons2;
     
     /**
-     * Set bits to 1 to indicate which of the following extension fields contain valid data: bit 0: pitch, bit 1: roll.
+     * Set bits to 1 to indicate which of the following extension fields contain valid data: bit 0: pitch, bit 1: roll, bit 2: aux1, bit 3: aux2, bit 4: aux3, bit 5: aux4, bit 6: aux5, bit 7: aux6
      */
-    @Description("Set bits to 1 to indicate which of the following extension fields contain valid data: bit 0: pitch, bit 1: roll.")
+    @Description("Set bits to 1 to indicate which of the following extension fields contain valid data: bit 0: pitch, bit 1: roll, bit 2: aux1, bit 3: aux2, bit 4: aux3, bit 5: aux4, bit 6: aux5, bit 7: aux6")
     @Units("")
     public short enabled_extensions;
     
@@ -91,6 +91,48 @@ public class msg_manual_control extends MAVLinkMessage {
     @Description("Roll-only-axis, normalized to the range [-1000,1000]. Generally corresponds to roll on vehicles with additional degrees of freedom. Valid if bit 1 of enabled_extensions field is set. Set to 0 if invalid.")
     @Units("")
     public short t;
+    
+    /**
+     * Aux continuous input field 1. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 2 of enabled_extensions field is set. 0 if bit 2 is unset.
+     */
+    @Description("Aux continuous input field 1. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 2 of enabled_extensions field is set. 0 if bit 2 is unset.")
+    @Units("")
+    public short aux1;
+    
+    /**
+     * Aux continuous input field 2. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 3 of enabled_extensions field is set. 0 if bit 3 is unset.
+     */
+    @Description("Aux continuous input field 2. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 3 of enabled_extensions field is set. 0 if bit 3 is unset.")
+    @Units("")
+    public short aux2;
+    
+    /**
+     * Aux continuous input field 3. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 4 of enabled_extensions field is set. 0 if bit 4 is unset.
+     */
+    @Description("Aux continuous input field 3. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 4 of enabled_extensions field is set. 0 if bit 4 is unset.")
+    @Units("")
+    public short aux3;
+    
+    /**
+     * Aux continuous input field 4. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 5 of enabled_extensions field is set. 0 if bit 5 is unset.
+     */
+    @Description("Aux continuous input field 4. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 5 of enabled_extensions field is set. 0 if bit 5 is unset.")
+    @Units("")
+    public short aux4;
+    
+    /**
+     * Aux continuous input field 5. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 6 of enabled_extensions field is set. 0 if bit 6 is unset.
+     */
+    @Description("Aux continuous input field 5. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 6 of enabled_extensions field is set. 0 if bit 6 is unset.")
+    @Units("")
+    public short aux5;
+    
+    /**
+     * Aux continuous input field 6. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 7 of enabled_extensions field is set. 0 if bit 7 is unset.
+     */
+    @Description("Aux continuous input field 6. Normalized in the range [-1000,1000]. Purpose defined by recipient. Valid data if bit 7 of enabled_extensions field is set. 0 if bit 7 is unset.")
+    @Units("")
+    public short aux6;
     
 
     /**
@@ -116,6 +158,12 @@ public class msg_manual_control extends MAVLinkMessage {
              packet.payload.putUnsignedByte(enabled_extensions);
              packet.payload.putShort(s);
              packet.payload.putShort(t);
+             packet.payload.putShort(aux1);
+             packet.payload.putShort(aux2);
+             packet.payload.putShort(aux3);
+             packet.payload.putShort(aux4);
+             packet.payload.putShort(aux5);
+             packet.payload.putShort(aux6);
             
         }
         return packet;
@@ -142,6 +190,12 @@ public class msg_manual_control extends MAVLinkMessage {
              this.enabled_extensions = payload.getUnsignedByte();
              this.s = payload.getShort();
              this.t = payload.getShort();
+             this.aux1 = payload.getShort();
+             this.aux2 = payload.getShort();
+             this.aux3 = payload.getShort();
+             this.aux4 = payload.getShort();
+             this.aux5 = payload.getShort();
+             this.aux6 = payload.getShort();
             
         }
     }
@@ -156,7 +210,7 @@ public class msg_manual_control extends MAVLinkMessage {
     /**
      * Constructor for a new message, initializes msgid and all payload variables
      */
-    public msg_manual_control( short x, short y, short z, short r, int buttons, short target, int buttons2, short enabled_extensions, short s, short t) {
+    public msg_manual_control( short x, short y, short z, short r, int buttons, short target, int buttons2, short enabled_extensions, short s, short t, short aux1, short aux2, short aux3, short aux4, short aux5, short aux6) {
         this.msgid = MAVLINK_MSG_ID_MANUAL_CONTROL;
 
         this.x = x;
@@ -169,13 +223,19 @@ public class msg_manual_control extends MAVLinkMessage {
         this.enabled_extensions = enabled_extensions;
         this.s = s;
         this.t = t;
+        this.aux1 = aux1;
+        this.aux2 = aux2;
+        this.aux3 = aux3;
+        this.aux4 = aux4;
+        this.aux5 = aux5;
+        this.aux6 = aux6;
         
     }
 
     /**
      * Constructor for a new message, initializes everything
      */
-    public msg_manual_control( short x, short y, short z, short r, int buttons, short target, int buttons2, short enabled_extensions, short s, short t, int sysid, int compid, boolean isMavlink2) {
+    public msg_manual_control( short x, short y, short z, short r, int buttons, short target, int buttons2, short enabled_extensions, short s, short t, short aux1, short aux2, short aux3, short aux4, short aux5, short aux6, int sysid, int compid, boolean isMavlink2) {
         this.msgid = MAVLINK_MSG_ID_MANUAL_CONTROL;
         this.sysid = sysid;
         this.compid = compid;
@@ -191,6 +251,12 @@ public class msg_manual_control extends MAVLinkMessage {
         this.enabled_extensions = enabled_extensions;
         this.s = s;
         this.t = t;
+        this.aux1 = aux1;
+        this.aux2 = aux2;
+        this.aux3 = aux3;
+        this.aux4 = aux4;
+        this.aux5 = aux5;
+        this.aux6 = aux6;
         
     }
 
@@ -208,13 +274,13 @@ public class msg_manual_control extends MAVLinkMessage {
         unpack(mavLinkPacket.payload);
     }
 
-                        
+                                    
     /**
      * Returns a string with the MSG name and data
      */
     @Override
     public String toString() {
-        return "MAVLINK_MSG_ID_MANUAL_CONTROL - sysid:"+sysid+" compid:"+compid+" x:"+x+" y:"+y+" z:"+z+" r:"+r+" buttons:"+buttons+" target:"+target+" buttons2:"+buttons2+" enabled_extensions:"+enabled_extensions+" s:"+s+" t:"+t+"";
+        return "MAVLINK_MSG_ID_MANUAL_CONTROL - sysid:"+sysid+" compid:"+compid+" x:"+x+" y:"+y+" z:"+z+" r:"+r+" buttons:"+buttons+" target:"+target+" buttons2:"+buttons2+" enabled_extensions:"+enabled_extensions+" s:"+s+" t:"+t+" aux1:"+aux1+" aux2:"+aux2+" aux3:"+aux3+" aux4:"+aux4+" aux5:"+aux5+" aux6:"+aux6+"";
     }
 
     /**

@@ -73,9 +73,9 @@ public class msg_home_position extends MAVLinkMessage {
     public float z;
     
     /**
-     * World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground
+     *          Quaternion indicating world-to-surface-normal and heading transformation of the takeoff position.         Used to indicate the heading and slope of the ground.         All fields should be set to NaN if an accurate quaternion for both heading and surface slope cannot be supplied.       
      */
-    @Description("World to surface normal and heading transformation of the takeoff position. Used to indicate the heading and slope of the ground")
+    @Description("         Quaternion indicating world-to-surface-normal and heading transformation of the takeoff position.         Used to indicate the heading and slope of the ground.         All fields should be set to NaN if an accurate quaternion for both heading and surface slope cannot be supplied.       ")
     @Units("")
     public float q[] = new float[4];
     

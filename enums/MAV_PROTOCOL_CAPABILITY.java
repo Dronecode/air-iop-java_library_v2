@@ -26,7 +26,7 @@ public class MAV_PROTOCOL_CAPABILITY {
    public static final int MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_LOCAL_NED = 128; /* Autopilot supports commanding position and velocity targets in local NED frame. | */
    public static final int MAV_PROTOCOL_CAPABILITY_SET_POSITION_TARGET_GLOBAL_INT = 256; /* Autopilot supports commanding position and velocity targets in global scaled integers. | */
    public static final int MAV_PROTOCOL_CAPABILITY_TERRAIN = 512; /* Autopilot supports terrain protocol / data handling. | */
-   public static final int MAV_PROTOCOL_CAPABILITY_SET_ACTUATOR_TARGET = 1024; /* Autopilot supports direct actuator control. | */
+   public static final int MAV_PROTOCOL_CAPABILITY_RESERVED3 = 1024; /* Reserved for future use. | */
    public static final int MAV_PROTOCOL_CAPABILITY_FLIGHT_TERMINATION = 2048; /* Autopilot supports the MAV_CMD_DO_FLIGHTTERMINATION command (flight termination). | */
    public static final int MAV_PROTOCOL_CAPABILITY_COMPASS_CALIBRATION = 4096; /* Autopilot supports onboard compass calibration. | */
    public static final int MAV_PROTOCOL_CAPABILITY_MAVLINK2 = 8192; /* Autopilot supports MAVLink version 2. | */

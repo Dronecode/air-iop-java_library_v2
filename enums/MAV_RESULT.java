@@ -19,6 +19,7 @@ public class MAV_RESULT {
    public static final int MAV_RESULT_CANCELLED = 6; /* Command has been cancelled (as a result of receiving a COMMAND_CANCEL message). | */
    public static final int MAV_RESULT_COMMAND_LONG_ONLY = 7; /* Command is valid, but it is only accepted when sent as a COMMAND_LONG (as it has float values for params 5 and 6). | */
    public static final int MAV_RESULT_COMMAND_INT_ONLY = 8; /* Command is valid, but it is only accepted when sent as a COMMAND_INT (as it encodes a location in params 5, 6 and 7, and hence requires a reference MAV_FRAME). | */
-   public static final int MAV_RESULT_ENUM_END = 9; /*  | */
+   public static final int MAV_RESULT_COMMAND_UNSUPPORTED_MAV_FRAME = 9; /* Command is invalid because a frame is required and the specified frame is not supported. | */
+   public static final int MAV_RESULT_ENUM_END = 10; /*  | */
 }
             

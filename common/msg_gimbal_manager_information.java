@@ -79,9 +79,9 @@ public class msg_gimbal_manager_information extends MAVLinkMessage {
     public float yaw_max;
     
     /**
-     * Gimbal device ID that this gimbal manager is responsible for.
+     * Gimbal device ID that this gimbal manager is responsible for. Component ID of gimbal device (or 1-6 for non-MAVLink gimbal).
      */
-    @Description("Gimbal device ID that this gimbal manager is responsible for.")
+    @Description("Gimbal device ID that this gimbal manager is responsible for. Component ID of gimbal device (or 1-6 for non-MAVLink gimbal).")
     @Units("")
     public short gimbal_device_id;
     
